@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AproposRouteImport } from './routes/apropos'
+import { Route as DestinationsRouteImport } from './routes/destinations'
+import { Route as EquipeRouteImport } from './routes/equipe'
 import { Route as MissionRouteImport } from './routes/mission'
+import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as PrincipesRouteImport } from './routes/principes'
 import { Route as SmedlabRouteImport } from './routes/smedlab'
 import { Route as ValeursRouteImport } from './routes/valeurs'
@@ -27,9 +30,24 @@ const AproposRoute = AproposRouteImport.update({
   path: '/apropos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DestinationsRoute = DestinationsRouteImport.update({
+  id: '/destinations',
+  path: '/destinations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EquipeRoute = EquipeRouteImport.update({
+  id: '/equipe',
+  path: '/equipe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MissionRoute = MissionRouteImport.update({
   id: '/mission',
   path: '/mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartenairesRoute = PartenairesRouteImport.update({
+  id: '/partenaires',
+  path: '/partenaires',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrincipesRoute = PrincipesRouteImport.update({
@@ -56,7 +74,10 @@ const VisionRoute = VisionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/destinations': typeof DestinationsRoute
+  '/equipe': typeof EquipeRoute
   '/mission': typeof MissionRoute
+  '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
@@ -65,7 +86,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/destinations': typeof DestinationsRoute
+  '/equipe': typeof EquipeRoute
   '/mission': typeof MissionRoute
+  '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
@@ -75,7 +99,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/destinations': typeof DestinationsRoute
+  '/equipe': typeof EquipeRoute
   '/mission': typeof MissionRoute
+  '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
@@ -86,7 +113,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/apropos'
+    | '/destinations'
+    | '/equipe'
     | '/mission'
+    | '/partenaires'
     | '/principes'
     | '/smedlab'
     | '/valeurs'
@@ -95,7 +125,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/apropos'
+    | '/destinations'
+    | '/equipe'
     | '/mission'
+    | '/partenaires'
     | '/principes'
     | '/smedlab'
     | '/valeurs'
@@ -104,7 +137,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/apropos'
+    | '/destinations'
+    | '/equipe'
     | '/mission'
+    | '/partenaires'
     | '/principes'
     | '/smedlab'
     | '/valeurs'
@@ -114,7 +150,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AproposRoute: typeof AproposRoute
+  DestinationsRoute: typeof DestinationsRoute
+  EquipeRoute: typeof EquipeRoute
   MissionRoute: typeof MissionRoute
+  PartenairesRoute: typeof PartenairesRoute
   PrincipesRoute: typeof PrincipesRoute
   SmedlabRoute: typeof SmedlabRoute
   ValeursRoute: typeof ValeursRoute
@@ -137,11 +176,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AproposRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/destinations': {
+      id: '/destinations'
+      path: '/destinations'
+      fullPath: '/destinations'
+      preLoaderRoute: typeof DestinationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/equipe': {
+      id: '/equipe'
+      path: '/equipe'
+      fullPath: '/equipe'
+      preLoaderRoute: typeof EquipeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mission': {
       id: '/mission'
       path: '/mission'
       fullPath: '/mission'
       preLoaderRoute: typeof MissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partenaires': {
+      id: '/partenaires'
+      path: '/partenaires'
+      fullPath: '/partenaires'
+      preLoaderRoute: typeof PartenairesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/principes': {
@@ -178,7 +238,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AproposRoute: AproposRoute,
+  DestinationsRoute: DestinationsRoute,
+  EquipeRoute: EquipeRoute,
   MissionRoute: MissionRoute,
+  PartenairesRoute: PartenairesRoute,
   PrincipesRoute: PrincipesRoute,
   SmedlabRoute: SmedlabRoute,
   ValeursRoute: ValeursRoute,
