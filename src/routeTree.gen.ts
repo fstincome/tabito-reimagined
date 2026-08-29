@@ -10,33 +10,245 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AproposRouteImport } from './routes/apropos'
+import { Route as BouquetsRouteImport } from './routes/bouquets'
+import { Route as CircuitsRouteImport } from './routes/circuits'
+import { Route as DestinationsRouteImport } from './routes/destinations'
+import { Route as EmploisRouteImport } from './routes/emplois'
+import { Route as EquipeRouteImport } from './routes/equipe'
+import { Route as FinancementsRouteImport } from './routes/financements'
+import { Route as FormationsRouteImport } from './routes/formations'
+import { Route as GalerieRouteImport } from './routes/galerie'
+import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as MissionRouteImport } from './routes/mission'
+import { Route as PartenairesRouteImport } from './routes/partenaires'
+import { Route as PrincipesRouteImport } from './routes/principes'
+import { Route as SmedlabRouteImport } from './routes/smedlab'
+import { Route as ValeursRouteImport } from './routes/valeurs'
+import { Route as VisionRouteImport } from './routes/vision'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AproposRoute = AproposRouteImport.update({
+  id: '/apropos',
+  path: '/apropos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BouquetsRoute = BouquetsRouteImport.update({
+  id: '/bouquets',
+  path: '/bouquets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CircuitsRoute = CircuitsRouteImport.update({
+  id: '/circuits',
+  path: '/circuits',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestinationsRoute = DestinationsRouteImport.update({
+  id: '/destinations',
+  path: '/destinations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmploisRoute = EmploisRouteImport.update({
+  id: '/emplois',
+  path: '/emplois',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EquipeRoute = EquipeRouteImport.update({
+  id: '/equipe',
+  path: '/equipe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinancementsRoute = FinancementsRouteImport.update({
+  id: '/financements',
+  path: '/financements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormationsRoute = FormationsRouteImport.update({
+  id: '/formations',
+  path: '/formations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalerieRoute = GalerieRouteImport.update({
+  id: '/galerie',
+  path: '/galerie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesRoute = GuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MissionRoute = MissionRouteImport.update({
+  id: '/mission',
+  path: '/mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartenairesRoute = PartenairesRouteImport.update({
+  id: '/partenaires',
+  path: '/partenaires',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrincipesRoute = PrincipesRouteImport.update({
+  id: '/principes',
+  path: '/principes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SmedlabRoute = SmedlabRouteImport.update({
+  id: '/smedlab',
+  path: '/smedlab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValeursRoute = ValeursRouteImport.update({
+  id: '/valeurs',
+  path: '/valeurs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VisionRoute = VisionRouteImport.update({
+  id: '/vision',
+  path: '/vision',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/bouquets': typeof BouquetsRoute
+  '/circuits': typeof CircuitsRoute
+  '/destinations': typeof DestinationsRoute
+  '/emplois': typeof EmploisRoute
+  '/equipe': typeof EquipeRoute
+  '/financements': typeof FinancementsRoute
+  '/formations': typeof FormationsRoute
+  '/galerie': typeof GalerieRoute
+  '/guides': typeof GuidesRoute
+  '/mission': typeof MissionRoute
+  '/partenaires': typeof PartenairesRoute
+  '/principes': typeof PrincipesRoute
+  '/smedlab': typeof SmedlabRoute
+  '/valeurs': typeof ValeursRoute
+  '/vision': typeof VisionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/bouquets': typeof BouquetsRoute
+  '/circuits': typeof CircuitsRoute
+  '/destinations': typeof DestinationsRoute
+  '/emplois': typeof EmploisRoute
+  '/equipe': typeof EquipeRoute
+  '/financements': typeof FinancementsRoute
+  '/formations': typeof FormationsRoute
+  '/galerie': typeof GalerieRoute
+  '/guides': typeof GuidesRoute
+  '/mission': typeof MissionRoute
+  '/partenaires': typeof PartenairesRoute
+  '/principes': typeof PrincipesRoute
+  '/smedlab': typeof SmedlabRoute
+  '/valeurs': typeof ValeursRoute
+  '/vision': typeof VisionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/bouquets': typeof BouquetsRoute
+  '/circuits': typeof CircuitsRoute
+  '/destinations': typeof DestinationsRoute
+  '/emplois': typeof EmploisRoute
+  '/equipe': typeof EquipeRoute
+  '/financements': typeof FinancementsRoute
+  '/formations': typeof FormationsRoute
+  '/galerie': typeof GalerieRoute
+  '/guides': typeof GuidesRoute
+  '/mission': typeof MissionRoute
+  '/partenaires': typeof PartenairesRoute
+  '/principes': typeof PrincipesRoute
+  '/smedlab': typeof SmedlabRoute
+  '/valeurs': typeof ValeursRoute
+  '/vision': typeof VisionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/apropos'
+    | '/bouquets'
+    | '/circuits'
+    | '/destinations'
+    | '/emplois'
+    | '/equipe'
+    | '/financements'
+    | '/formations'
+    | '/galerie'
+    | '/guides'
+    | '/mission'
+    | '/partenaires'
+    | '/principes'
+    | '/smedlab'
+    | '/valeurs'
+    | '/vision'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/apropos'
+    | '/bouquets'
+    | '/circuits'
+    | '/destinations'
+    | '/emplois'
+    | '/equipe'
+    | '/financements'
+    | '/formations'
+    | '/galerie'
+    | '/guides'
+    | '/mission'
+    | '/partenaires'
+    | '/principes'
+    | '/smedlab'
+    | '/valeurs'
+    | '/vision'
+  id:
+    | '__root__'
+    | '/'
+    | '/apropos'
+    | '/bouquets'
+    | '/circuits'
+    | '/destinations'
+    | '/emplois'
+    | '/equipe'
+    | '/financements'
+    | '/formations'
+    | '/galerie'
+    | '/guides'
+    | '/mission'
+    | '/partenaires'
+    | '/principes'
+    | '/smedlab'
+    | '/valeurs'
+    | '/vision'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AproposRoute: typeof AproposRoute
+  BouquetsRoute: typeof BouquetsRoute
+  CircuitsRoute: typeof CircuitsRoute
+  DestinationsRoute: typeof DestinationsRoute
+  EmploisRoute: typeof EmploisRoute
+  EquipeRoute: typeof EquipeRoute
+  FinancementsRoute: typeof FinancementsRoute
+  FormationsRoute: typeof FormationsRoute
+  GalerieRoute: typeof GalerieRoute
+  GuidesRoute: typeof GuidesRoute
+  MissionRoute: typeof MissionRoute
+  PartenairesRoute: typeof PartenairesRoute
+  PrincipesRoute: typeof PrincipesRoute
+  SmedlabRoute: typeof SmedlabRoute
+  ValeursRoute: typeof ValeursRoute
+  VisionRoute: typeof VisionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +260,139 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apropos': {
+      id: '/apropos'
+      path: '/apropos'
+      fullPath: '/apropos'
+      preLoaderRoute: typeof AproposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bouquets': {
+      id: '/bouquets'
+      path: '/bouquets'
+      fullPath: '/bouquets'
+      preLoaderRoute: typeof BouquetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circuits': {
+      id: '/circuits'
+      path: '/circuits'
+      fullPath: '/circuits'
+      preLoaderRoute: typeof CircuitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destinations': {
+      id: '/destinations'
+      path: '/destinations'
+      fullPath: '/destinations'
+      preLoaderRoute: typeof DestinationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emplois': {
+      id: '/emplois'
+      path: '/emplois'
+      fullPath: '/emplois'
+      preLoaderRoute: typeof EmploisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/equipe': {
+      id: '/equipe'
+      path: '/equipe'
+      fullPath: '/equipe'
+      preLoaderRoute: typeof EquipeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/financements': {
+      id: '/financements'
+      path: '/financements'
+      fullPath: '/financements'
+      preLoaderRoute: typeof FinancementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations': {
+      id: '/formations'
+      path: '/formations'
+      fullPath: '/formations'
+      preLoaderRoute: typeof FormationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/galerie': {
+      id: '/galerie'
+      path: '/galerie'
+      fullPath: '/galerie'
+      preLoaderRoute: typeof GalerieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides': {
+      id: '/guides'
+      path: '/guides'
+      fullPath: '/guides'
+      preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mission': {
+      id: '/mission'
+      path: '/mission'
+      fullPath: '/mission'
+      preLoaderRoute: typeof MissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partenaires': {
+      id: '/partenaires'
+      path: '/partenaires'
+      fullPath: '/partenaires'
+      preLoaderRoute: typeof PartenairesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/principes': {
+      id: '/principes'
+      path: '/principes'
+      fullPath: '/principes'
+      preLoaderRoute: typeof PrincipesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/smedlab': {
+      id: '/smedlab'
+      path: '/smedlab'
+      fullPath: '/smedlab'
+      preLoaderRoute: typeof SmedlabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/valeurs': {
+      id: '/valeurs'
+      path: '/valeurs'
+      fullPath: '/valeurs'
+      preLoaderRoute: typeof ValeursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vision': {
+      id: '/vision'
+      path: '/vision'
+      fullPath: '/vision'
+      preLoaderRoute: typeof VisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AproposRoute: AproposRoute,
+  BouquetsRoute: BouquetsRoute,
+  CircuitsRoute: CircuitsRoute,
+  DestinationsRoute: DestinationsRoute,
+  EmploisRoute: EmploisRoute,
+  EquipeRoute: EquipeRoute,
+  FinancementsRoute: FinancementsRoute,
+  FormationsRoute: FormationsRoute,
+  GalerieRoute: GalerieRoute,
+  GuidesRoute: GuidesRoute,
+  MissionRoute: MissionRoute,
+  PartenairesRoute: PartenairesRoute,
+  PrincipesRoute: PrincipesRoute,
+  SmedlabRoute: SmedlabRoute,
+  ValeursRoute: ValeursRoute,
+  VisionRoute: VisionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
