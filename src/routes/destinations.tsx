@@ -29,7 +29,7 @@ export const Route = createFileRoute("/destinations")({
       },
     ],
   }),
-  component: Destinations;
+  component: Destinations,
 });
 
 function Destinations() {
