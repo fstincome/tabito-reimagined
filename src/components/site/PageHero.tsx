@@ -9,9 +9,10 @@ export function PageHero({
   image,
 }: {
   title: string;
-  subtitle?: string;
-  image?: string;
+  subtitle?: string | undefined;
+  image?: string | undefined;
 }) {
+
   return (
     <section className="relative isolate overflow-hidden">
       <img

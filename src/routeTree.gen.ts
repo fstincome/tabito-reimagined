@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AproposRouteImport } from './routes/apropos'
+import { Route as MissionRouteImport } from './routes/mission'
+import { Route as PrincipesRouteImport } from './routes/principes'
+import { Route as SmedlabRouteImport } from './routes/smedlab'
+import { Route as ValeursRouteImport } from './routes/valeurs'
+import { Route as VisionRouteImport } from './routes/vision'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AproposRoute = AproposRouteImport.update({
+  id: '/apropos',
+  path: '/apropos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MissionRoute = MissionRouteImport.update({
+  id: '/mission',
+  path: '/mission',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrincipesRoute = PrincipesRouteImport.update({
+  id: '/principes',
+  path: '/principes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SmedlabRoute = SmedlabRouteImport.update({
+  id: '/smedlab',
+  path: '/smedlab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValeursRoute = ValeursRouteImport.update({
+  id: '/valeurs',
+  path: '/valeurs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VisionRoute = VisionRouteImport.update({
+  id: '/vision',
+  path: '/vision',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/mission': typeof MissionRoute
+  '/principes': typeof PrincipesRoute
+  '/smedlab': typeof SmedlabRoute
+  '/valeurs': typeof ValeursRoute
+  '/vision': typeof VisionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/mission': typeof MissionRoute
+  '/principes': typeof PrincipesRoute
+  '/smedlab': typeof SmedlabRoute
+  '/valeurs': typeof ValeursRoute
+  '/vision': typeof VisionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apropos': typeof AproposRoute
+  '/mission': typeof MissionRoute
+  '/principes': typeof PrincipesRoute
+  '/smedlab': typeof SmedlabRoute
+  '/valeurs': typeof ValeursRoute
+  '/vision': typeof VisionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/apropos'
+    | '/mission'
+    | '/principes'
+    | '/smedlab'
+    | '/valeurs'
+    | '/vision'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/apropos'
+    | '/mission'
+    | '/principes'
+    | '/smedlab'
+    | '/valeurs'
+    | '/vision'
+  id:
+    | '__root__'
+    | '/'
+    | '/apropos'
+    | '/mission'
+    | '/principes'
+    | '/smedlab'
+    | '/valeurs'
+    | '/vision'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AproposRoute: typeof AproposRoute
+  MissionRoute: typeof MissionRoute
+  PrincipesRoute: typeof PrincipesRoute
+  SmedlabRoute: typeof SmedlabRoute
+  ValeursRoute: typeof ValeursRoute
+  VisionRoute: typeof VisionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apropos': {
+      id: '/apropos'
+      path: '/apropos'
+      fullPath: '/apropos'
+      preLoaderRoute: typeof AproposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mission': {
+      id: '/mission'
+      path: '/mission'
+      fullPath: '/mission'
+      preLoaderRoute: typeof MissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/principes': {
+      id: '/principes'
+      path: '/principes'
+      fullPath: '/principes'
+      preLoaderRoute: typeof PrincipesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/smedlab': {
+      id: '/smedlab'
+      path: '/smedlab'
+      fullPath: '/smedlab'
+      preLoaderRoute: typeof SmedlabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/valeurs': {
+      id: '/valeurs'
+      path: '/valeurs'
+      fullPath: '/valeurs'
+      preLoaderRoute: typeof ValeursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vision': {
+      id: '/vision'
+      path: '/vision'
+      fullPath: '/vision'
+      preLoaderRoute: typeof VisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AproposRoute: AproposRoute,
+  MissionRoute: MissionRoute,
+  PrincipesRoute: PrincipesRoute,
+  SmedlabRoute: SmedlabRoute,
+  ValeursRoute: ValeursRoute,
+  VisionRoute: VisionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
