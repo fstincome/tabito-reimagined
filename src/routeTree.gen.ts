@@ -27,6 +27,7 @@ import { Route as PrincipesRouteImport } from './routes/principes'
 import { Route as SmedlabRouteImport } from './routes/smedlab'
 import { Route as ValeursRouteImport } from './routes/valeurs'
 import { Route as VisionRouteImport } from './routes/vision'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -118,11 +119,16 @@ const VisionRoute = VisionRouteImport.update({
   path: '/vision',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/destinations': typeof DestinationsRoute
@@ -138,11 +144,12 @@ export interface FileRoutesByFullPath {
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
   '/vision': typeof VisionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/destinations': typeof DestinationsRoute
@@ -158,12 +165,13 @@ export interface FileRoutesByTo {
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
   '/vision': typeof VisionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/destinations': typeof DestinationsRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
   '/vision': typeof VisionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/smedlab'
     | '/valeurs'
     | '/vision'
+    | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/smedlab'
     | '/valeurs'
     | '/vision'
+    | '/blog/$slug'
   id:
     | '__root__'
     | '/'
@@ -241,12 +252,13 @@ export interface FileRouteTypes {
     | '/smedlab'
     | '/valeurs'
     | '/vision'
+    | '/blog/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AproposRoute: typeof AproposRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   BouquetsRoute: typeof BouquetsRoute
   CircuitsRoute: typeof CircuitsRoute
   DestinationsRoute: typeof DestinationsRoute
@@ -392,13 +404,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VisionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AproposRoute: AproposRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   BouquetsRoute: BouquetsRoute,
   CircuitsRoute: CircuitsRoute,
   DestinationsRoute: DestinationsRoute,
