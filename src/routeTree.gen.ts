@@ -17,6 +17,7 @@ import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as EmploisRouteImport } from './routes/emplois'
 import { Route as EquipeRouteImport } from './routes/equipe'
+import { Route as EvenementsRouteImport } from './routes/evenements'
 import { Route as FinancementsRouteImport } from './routes/financements'
 import { Route as FormationsRouteImport } from './routes/formations'
 import { Route as GalerieRouteImport } from './routes/galerie'
@@ -67,6 +68,11 @@ const EmploisRoute = EmploisRouteImport.update({
 const EquipeRoute = EquipeRouteImport.update({
   id: '/equipe',
   path: '/equipe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvenementsRoute = EvenementsRouteImport.update({
+  id: '/evenements',
+  path: '/evenements',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FinancementsRoute = FinancementsRouteImport.update({
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
+  '/evenements': typeof EvenementsRoute
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
+  '/evenements': typeof EvenementsRoute
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
+  '/evenements': typeof EvenementsRoute
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/emplois'
     | '/equipe'
+    | '/evenements'
     | '/financements'
     | '/formations'
     | '/galerie'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/emplois'
     | '/equipe'
+    | '/evenements'
     | '/financements'
     | '/formations'
     | '/galerie'
@@ -242,6 +253,7 @@ export interface FileRouteTypes {
     | '/destinations'
     | '/emplois'
     | '/equipe'
+    | '/evenements'
     | '/financements'
     | '/formations'
     | '/galerie'
@@ -264,6 +276,7 @@ export interface RootRouteChildren {
   DestinationsRoute: typeof DestinationsRoute
   EmploisRoute: typeof EmploisRoute
   EquipeRoute: typeof EquipeRoute
+  EvenementsRoute: typeof EvenementsRoute
   FinancementsRoute: typeof FinancementsRoute
   FormationsRoute: typeof FormationsRoute
   GalerieRoute: typeof GalerieRoute
@@ -332,6 +345,13 @@ declare module '@tanstack/react-router' {
       path: '/equipe'
       fullPath: '/equipe'
       preLoaderRoute: typeof EquipeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/evenements': {
+      id: '/evenements'
+      path: '/evenements'
+      fullPath: '/evenements'
+      preLoaderRoute: typeof EvenementsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/financements': {
@@ -433,6 +453,7 @@ const rootRouteChildren: RootRouteChildren = {
   DestinationsRoute: DestinationsRoute,
   EmploisRoute: EmploisRoute,
   EquipeRoute: EquipeRoute,
+  EvenementsRoute: EvenementsRoute,
   FinancementsRoute: FinancementsRoute,
   FormationsRoute: FormationsRoute,
   GalerieRoute: GalerieRoute,
