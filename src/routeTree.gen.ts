@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AproposRouteImport } from './routes/apropos'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BouquetsRouteImport } from './routes/bouquets'
 import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as DestinationsRouteImport } from './routes/destinations'
@@ -35,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
 const AproposRoute = AproposRouteImport.update({
   id: '/apropos',
   path: '/apropos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BouquetsRoute = BouquetsRouteImport.update({
@@ -116,6 +122,7 @@ const VisionRoute = VisionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/blog': typeof BlogRoute
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/destinations': typeof DestinationsRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/blog': typeof BlogRoute
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/destinations': typeof DestinationsRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/blog': typeof BlogRoute
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/destinations': typeof DestinationsRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/apropos'
+    | '/blog'
     | '/bouquets'
     | '/circuits'
     | '/destinations'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/apropos'
+    | '/blog'
     | '/bouquets'
     | '/circuits'
     | '/destinations'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/apropos'
+    | '/blog'
     | '/bouquets'
     | '/circuits'
     | '/destinations'
@@ -234,6 +246,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AproposRoute: typeof AproposRoute
+  BlogRoute: typeof BlogRoute
   BouquetsRoute: typeof BouquetsRoute
   CircuitsRoute: typeof CircuitsRoute
   DestinationsRoute: typeof DestinationsRoute
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       path: '/apropos'
       fullPath: '/apropos'
       preLoaderRoute: typeof AproposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bouquets': {
@@ -378,6 +398,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AproposRoute: AproposRoute,
+  BlogRoute: BlogRoute,
   BouquetsRoute: BouquetsRoute,
   CircuitsRoute: CircuitsRoute,
   DestinationsRoute: DestinationsRoute,
