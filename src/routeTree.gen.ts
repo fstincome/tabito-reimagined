@@ -11,21 +11,28 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AproposRouteImport } from './routes/apropos'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BouquetsRouteImport } from './routes/bouquets'
 import { Route as CircuitsRouteImport } from './routes/circuits'
+import { Route as ContactsRouteImport } from './routes/contacts'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as EmploisRouteImport } from './routes/emplois'
 import { Route as EquipeRouteImport } from './routes/equipe'
+import { Route as EvenementsRouteImport } from './routes/evenements'
 import { Route as FinancementsRouteImport } from './routes/financements'
 import { Route as FormationsRouteImport } from './routes/formations'
 import { Route as GalerieRouteImport } from './routes/galerie'
 import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as MissionRouteImport } from './routes/mission'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as PrincipesRouteImport } from './routes/principes'
 import { Route as SmedlabRouteImport } from './routes/smedlab'
 import { Route as ValeursRouteImport } from './routes/valeurs'
+import { Route as VillesRouteImport } from './routes/villes'
 import { Route as VisionRouteImport } from './routes/vision'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,6 +44,11 @@ const AproposRoute = AproposRouteImport.update({
   path: '/apropos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BouquetsRoute = BouquetsRouteImport.update({
   id: '/bouquets',
   path: '/bouquets',
@@ -45,6 +57,16 @@ const BouquetsRoute = BouquetsRouteImport.update({
 const CircuitsRoute = CircuitsRouteImport.update({
   id: '/circuits',
   path: '/circuits',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactsRoute = ContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DestinationsRoute = DestinationsRouteImport.update({
@@ -60,6 +82,11 @@ const EmploisRoute = EmploisRouteImport.update({
 const EquipeRoute = EquipeRouteImport.update({
   id: '/equipe',
   path: '/equipe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvenementsRoute = EvenementsRouteImport.update({
+  id: '/evenements',
+  path: '/evenements',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FinancementsRoute = FinancementsRouteImport.update({
@@ -80,6 +107,11 @@ const GalerieRoute = GalerieRouteImport.update({
 const GuidesRoute = GuidesRouteImport.update({
   id: '/guides',
   path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MissionRoute = MissionRouteImport.update({
@@ -107,147 +139,205 @@ const ValeursRoute = ValeursRouteImport.update({
   path: '/valeurs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VillesRoute = VillesRouteImport.update({
+  id: '/villes',
+  path: '/villes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VisionRoute = VisionRouteImport.update({
   id: '/vision',
   path: '/vision',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
+  '/contacts': typeof ContactsRoute
+  '/dashboard': typeof DashboardRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
+  '/evenements': typeof EvenementsRoute
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
+  '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
+  '/villes': typeof VillesRoute
   '/vision': typeof VisionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
+  '/contacts': typeof ContactsRoute
+  '/dashboard': typeof DashboardRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
+  '/evenements': typeof EvenementsRoute
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
+  '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
+  '/villes': typeof VillesRoute
   '/vision': typeof VisionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/apropos': typeof AproposRoute
+  '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
+  '/contacts': typeof ContactsRoute
+  '/dashboard': typeof DashboardRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
+  '/evenements': typeof EvenementsRoute
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
+  '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
+  '/villes': typeof VillesRoute
   '/vision': typeof VisionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/apropos'
+    | '/blog'
     | '/bouquets'
     | '/circuits'
+    | '/contacts'
+    | '/dashboard'
     | '/destinations'
     | '/emplois'
     | '/equipe'
+    | '/evenements'
     | '/financements'
     | '/formations'
     | '/galerie'
     | '/guides'
+    | '/login'
     | '/mission'
     | '/partenaires'
     | '/principes'
     | '/smedlab'
     | '/valeurs'
+    | '/villes'
     | '/vision'
+    | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/apropos'
+    | '/blog'
     | '/bouquets'
     | '/circuits'
+    | '/contacts'
+    | '/dashboard'
     | '/destinations'
     | '/emplois'
     | '/equipe'
+    | '/evenements'
     | '/financements'
     | '/formations'
     | '/galerie'
     | '/guides'
+    | '/login'
     | '/mission'
     | '/partenaires'
     | '/principes'
     | '/smedlab'
     | '/valeurs'
+    | '/villes'
     | '/vision'
+    | '/blog/$slug'
   id:
     | '__root__'
     | '/'
     | '/apropos'
+    | '/blog'
     | '/bouquets'
     | '/circuits'
+    | '/contacts'
+    | '/dashboard'
     | '/destinations'
     | '/emplois'
     | '/equipe'
+    | '/evenements'
     | '/financements'
     | '/formations'
     | '/galerie'
     | '/guides'
+    | '/login'
     | '/mission'
     | '/partenaires'
     | '/principes'
     | '/smedlab'
     | '/valeurs'
+    | '/villes'
     | '/vision'
+    | '/blog/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AproposRoute: typeof AproposRoute
+  BlogRoute: typeof BlogRouteWithChildren
   BouquetsRoute: typeof BouquetsRoute
   CircuitsRoute: typeof CircuitsRoute
+  ContactsRoute: typeof ContactsRoute
+  DashboardRoute: typeof DashboardRoute
   DestinationsRoute: typeof DestinationsRoute
   EmploisRoute: typeof EmploisRoute
   EquipeRoute: typeof EquipeRoute
+  EvenementsRoute: typeof EvenementsRoute
   FinancementsRoute: typeof FinancementsRoute
   FormationsRoute: typeof FormationsRoute
   GalerieRoute: typeof GalerieRoute
   GuidesRoute: typeof GuidesRoute
+  LoginRoute: typeof LoginRoute
   MissionRoute: typeof MissionRoute
   PartenairesRoute: typeof PartenairesRoute
   PrincipesRoute: typeof PrincipesRoute
   SmedlabRoute: typeof SmedlabRoute
   ValeursRoute: typeof ValeursRoute
+  VillesRoute: typeof VillesRoute
   VisionRoute: typeof VisionRoute
 }
 
@@ -267,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AproposRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bouquets': {
       id: '/bouquets'
       path: '/bouquets'
@@ -279,6 +376,20 @@ declare module '@tanstack/react-router' {
       path: '/circuits'
       fullPath: '/circuits'
       preLoaderRoute: typeof CircuitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contacts': {
+      id: '/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof ContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/destinations': {
@@ -300,6 +411,13 @@ declare module '@tanstack/react-router' {
       path: '/equipe'
       fullPath: '/equipe'
       preLoaderRoute: typeof EquipeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/evenements': {
+      id: '/evenements'
+      path: '/evenements'
+      fullPath: '/evenements'
+      preLoaderRoute: typeof EvenementsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/financements': {
@@ -328,6 +446,13 @@ declare module '@tanstack/react-router' {
       path: '/guides'
       fullPath: '/guides'
       preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mission': {
@@ -365,6 +490,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ValeursRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/villes': {
+      id: '/villes'
+      path: '/villes'
+      fullPath: '/villes'
+      preLoaderRoute: typeof VillesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vision': {
       id: '/vision'
       path: '/vision'
@@ -372,26 +504,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VisionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AproposRoute: AproposRoute,
+  BlogRoute: BlogRouteWithChildren,
   BouquetsRoute: BouquetsRoute,
   CircuitsRoute: CircuitsRoute,
+  ContactsRoute: ContactsRoute,
+  DashboardRoute: DashboardRoute,
   DestinationsRoute: DestinationsRoute,
   EmploisRoute: EmploisRoute,
   EquipeRoute: EquipeRoute,
+  EvenementsRoute: EvenementsRoute,
   FinancementsRoute: FinancementsRoute,
   FormationsRoute: FormationsRoute,
   GalerieRoute: GalerieRoute,
   GuidesRoute: GuidesRoute,
+  LoginRoute: LoginRoute,
   MissionRoute: MissionRoute,
   PartenairesRoute: PartenairesRoute,
   PrincipesRoute: PrincipesRoute,
   SmedlabRoute: SmedlabRoute,
   ValeursRoute: ValeursRoute,
+  VillesRoute: VillesRoute,
   VisionRoute: VisionRoute,
 }
 export const routeTree = rootRouteImport
