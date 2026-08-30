@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react";
 
-import logo from "@/assets/tabito-logo.png";
+import logoAsset from "@/assets/tabito-logo.png.asset.json";
+
+const logo = logoAsset.url;
 
 import { CONTACT, NAV } from "./nav-data";
 
