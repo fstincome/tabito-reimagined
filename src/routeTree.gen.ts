@@ -23,6 +23,7 @@ import { Route as FinancementsRouteImport } from './routes/financements'
 import { Route as FormationsRouteImport } from './routes/formations'
 import { Route as GalerieRouteImport } from './routes/galerie'
 import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as MissionRouteImport } from './routes/mission'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as PrincipesRouteImport } from './routes/principes'
@@ -102,6 +103,11 @@ const GuidesRoute = GuidesRouteImport.update({
   path: '/guides',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MissionRoute = MissionRouteImport.update({
   id: '/mission',
   path: '/mission',
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
+  '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
+  '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
+  '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/formations'
     | '/galerie'
     | '/guides'
+    | '/login'
     | '/mission'
     | '/partenaires'
     | '/principes'
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/formations'
     | '/galerie'
     | '/guides'
+    | '/login'
     | '/mission'
     | '/partenaires'
     | '/principes'
@@ -281,6 +292,7 @@ export interface FileRouteTypes {
     | '/formations'
     | '/galerie'
     | '/guides'
+    | '/login'
     | '/mission'
     | '/partenaires'
     | '/principes'
@@ -306,6 +318,7 @@ export interface RootRouteChildren {
   FormationsRoute: typeof FormationsRoute
   GalerieRoute: typeof GalerieRoute
   GuidesRoute: typeof GuidesRoute
+  LoginRoute: typeof LoginRoute
   MissionRoute: typeof MissionRoute
   PartenairesRoute: typeof PartenairesRoute
   PrincipesRoute: typeof PrincipesRoute
@@ -415,6 +428,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mission': {
       id: '/mission'
       path: '/mission'
@@ -499,6 +519,7 @@ const rootRouteChildren: RootRouteChildren = {
   FormationsRoute: FormationsRoute,
   GalerieRoute: GalerieRoute,
   GuidesRoute: GuidesRoute,
+  LoginRoute: LoginRoute,
   MissionRoute: MissionRoute,
   PartenairesRoute: PartenairesRoute,
   PrincipesRoute: PrincipesRoute,
