@@ -27,6 +27,7 @@ import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as PrincipesRouteImport } from './routes/principes'
 import { Route as SmedlabRouteImport } from './routes/smedlab'
 import { Route as ValeursRouteImport } from './routes/valeurs'
+import { Route as VillesRouteImport } from './routes/villes'
 import { Route as VisionRouteImport } from './routes/vision'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
@@ -120,6 +121,11 @@ const ValeursRoute = ValeursRouteImport.update({
   path: '/valeurs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VillesRoute = VillesRouteImport.update({
+  id: '/villes',
+  path: '/villes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VisionRoute = VisionRouteImport.update({
   id: '/vision',
   path: '/vision',
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
+  '/villes': typeof VillesRoute
   '/vision': typeof VisionRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
+  '/villes': typeof VillesRoute
   '/vision': typeof VisionRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -195,6 +203,7 @@ export interface FileRoutesById {
   '/principes': typeof PrincipesRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
+  '/villes': typeof VillesRoute
   '/vision': typeof VisionRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -219,6 +228,7 @@ export interface FileRouteTypes {
     | '/principes'
     | '/smedlab'
     | '/valeurs'
+    | '/villes'
     | '/vision'
     | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/principes'
     | '/smedlab'
     | '/valeurs'
+    | '/villes'
     | '/vision'
     | '/blog/$slug'
   id:
@@ -263,6 +274,7 @@ export interface FileRouteTypes {
     | '/principes'
     | '/smedlab'
     | '/valeurs'
+    | '/villes'
     | '/vision'
     | '/blog/$slug'
   fileRoutesById: FileRoutesById
@@ -286,6 +298,7 @@ export interface RootRouteChildren {
   PrincipesRoute: typeof PrincipesRoute
   SmedlabRoute: typeof SmedlabRoute
   ValeursRoute: typeof ValeursRoute
+  VillesRoute: typeof VillesRoute
   VisionRoute: typeof VisionRoute
 }
 
@@ -417,6 +430,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ValeursRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/villes': {
+      id: '/villes'
+      path: '/villes'
+      fullPath: '/villes'
+      preLoaderRoute: typeof VillesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vision': {
       id: '/vision'
       path: '/vision'
@@ -463,6 +483,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrincipesRoute: PrincipesRoute,
   SmedlabRoute: SmedlabRoute,
   ValeursRoute: ValeursRoute,
+  VillesRoute: VillesRoute,
   VisionRoute: VisionRoute,
 }
 export const routeTree = rootRouteImport
