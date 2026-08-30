@@ -14,6 +14,7 @@ import { Route as AproposRouteImport } from './routes/apropos'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BouquetsRouteImport } from './routes/bouquets'
 import { Route as CircuitsRouteImport } from './routes/circuits'
+import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as EmploisRouteImport } from './routes/emplois'
 import { Route as EquipeRouteImport } from './routes/equipe'
@@ -54,6 +55,11 @@ const BouquetsRoute = BouquetsRouteImport.update({
 const CircuitsRoute = CircuitsRouteImport.update({
   id: '/circuits',
   path: '/circuits',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactsRoute = ContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DestinationsRoute = DestinationsRouteImport.update({
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
+  '/contacts': typeof ContactsRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
+  '/contacts': typeof ContactsRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
@@ -190,6 +198,7 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
+  '/contacts': typeof ContactsRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/bouquets'
     | '/circuits'
+    | '/contacts'
     | '/destinations'
     | '/emplois'
     | '/equipe'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/bouquets'
     | '/circuits'
+    | '/contacts'
     | '/destinations'
     | '/emplois'
     | '/equipe'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/bouquets'
     | '/circuits'
+    | '/contacts'
     | '/destinations'
     | '/emplois'
     | '/equipe'
@@ -285,6 +297,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   BouquetsRoute: typeof BouquetsRoute
   CircuitsRoute: typeof CircuitsRoute
+  ContactsRoute: typeof ContactsRoute
   DestinationsRoute: typeof DestinationsRoute
   EmploisRoute: typeof EmploisRoute
   EquipeRoute: typeof EquipeRoute
@@ -337,6 +350,13 @@ declare module '@tanstack/react-router' {
       path: '/circuits'
       fullPath: '/circuits'
       preLoaderRoute: typeof CircuitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contacts': {
+      id: '/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof ContactsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/destinations': {
@@ -470,6 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   BouquetsRoute: BouquetsRoute,
   CircuitsRoute: CircuitsRoute,
+  ContactsRoute: ContactsRoute,
   DestinationsRoute: DestinationsRoute,
   EmploisRoute: EmploisRoute,
   EquipeRoute: EquipeRoute,
