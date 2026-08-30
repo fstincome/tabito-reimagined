@@ -15,6 +15,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BouquetsRouteImport } from './routes/bouquets'
 import { Route as CircuitsRouteImport } from './routes/circuits'
 import { Route as ContactsRouteImport } from './routes/contacts'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as EmploisRouteImport } from './routes/emplois'
 import { Route as EquipeRouteImport } from './routes/equipe'
@@ -61,6 +62,11 @@ const CircuitsRoute = CircuitsRouteImport.update({
 const ContactsRoute = ContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DestinationsRoute = DestinationsRouteImport.update({
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/contacts': typeof ContactsRoute
+  '/dashboard': typeof DashboardRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/contacts': typeof ContactsRoute
+  '/dashboard': typeof DashboardRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/bouquets': typeof BouquetsRoute
   '/circuits': typeof CircuitsRoute
   '/contacts': typeof ContactsRoute
+  '/dashboard': typeof DashboardRoute
   '/destinations': typeof DestinationsRoute
   '/emplois': typeof EmploisRoute
   '/equipe': typeof EquipeRoute
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/bouquets'
     | '/circuits'
     | '/contacts'
+    | '/dashboard'
     | '/destinations'
     | '/emplois'
     | '/equipe'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/bouquets'
     | '/circuits'
     | '/contacts'
+    | '/dashboard'
     | '/destinations'
     | '/emplois'
     | '/equipe'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/bouquets'
     | '/circuits'
     | '/contacts'
+    | '/dashboard'
     | '/destinations'
     | '/emplois'
     | '/equipe'
@@ -310,6 +322,7 @@ export interface RootRouteChildren {
   BouquetsRoute: typeof BouquetsRoute
   CircuitsRoute: typeof CircuitsRoute
   ContactsRoute: typeof ContactsRoute
+  DashboardRoute: typeof DashboardRoute
   DestinationsRoute: typeof DestinationsRoute
   EmploisRoute: typeof EmploisRoute
   EquipeRoute: typeof EquipeRoute
@@ -370,6 +383,13 @@ declare module '@tanstack/react-router' {
       path: '/contacts'
       fullPath: '/contacts'
       preLoaderRoute: typeof ContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/destinations': {
@@ -511,6 +531,7 @@ const rootRouteChildren: RootRouteChildren = {
   BouquetsRoute: BouquetsRoute,
   CircuitsRoute: CircuitsRoute,
   ContactsRoute: ContactsRoute,
+  DashboardRoute: DashboardRoute,
   DestinationsRoute: DestinationsRoute,
   EmploisRoute: EmploisRoute,
   EquipeRoute: EquipeRoute,
