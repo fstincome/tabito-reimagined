@@ -355,9 +355,10 @@ function Home() {
         <section className="section-y bg-background">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
-              eyebrow="Circuits & bouquets"
-              title="Nos formules de voyage"
-              description="Des programmes prêts à partir, ou des bouquets à assembler selon votre rythme."
+              {...sec("formules", {
+                eyebrow: "Circuits & bouquets",
+                title: "Nos formules de voyage",
+              })}
             />
             <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {[...circuits, ...bouquets].map((p) => (
@@ -402,9 +403,10 @@ function Home() {
         <section className="section-y bg-sand">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
-              eyebrow="Nos guides"
-              title="Des passionnés à vos côtés"
-              description="Multilingues, formés et originaires des régions qu'ils vous font découvrir."
+              {...sec("guides", {
+                eyebrow: "Nos guides",
+                title: "Des passionnés à vos côtés",
+              })}
             />
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {guides.slice(0, 4).map((g) => (
@@ -441,9 +443,7 @@ function Home() {
         <section className="section-y bg-background">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
-              eyebrow="Actualités"
-              title="Les dernières nouvelles"
-              description="Reportages, conseils de voyage et évènements culturels du Burundi."
+              {...sec("blog", { eyebrow: "Actualités", title: "Les dernières nouvelles" })}
             />
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {posts.slice(0, 3).map((post) => (
@@ -492,7 +492,7 @@ function Home() {
       {testimonials.length > 0 && (
         <section className="section-y relative isolate overflow-hidden">
           <img
-            src={tambours}
+            src={imageOr(sec("temoignages", { eyebrow: "", title: "" }).image, tambours)}
             alt=""
             aria-hidden="true"
             width={1920}
@@ -504,8 +504,10 @@ function Home() {
           <div className="relative mx-auto max-w-7xl px-6">
             <SectionHeading
               light
-              eyebrow="Témoignages"
-              title="Ils ont voyagé avec TABITO"
+              {...sec("temoignages", {
+                eyebrow: "Témoignages",
+                title: "Ils ont voyagé avec TABITO",
+              })}
             />
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {testimonials.slice(0, 3).map((t) => (
