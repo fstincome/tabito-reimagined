@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Languages, Phone } from "lucide-react";
 
 import tambours from "@/assets/hero-tambours.jpg";
+import { BioDialog } from "@/components/site/BioDialog";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
