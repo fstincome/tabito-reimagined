@@ -89,6 +89,17 @@ function Equipe() {
                         </a>
                       )}
                     </div>
+                    <BioDialog
+                      person={{
+                        name: m.name,
+                        photo: imageOr(m.photo_url, tambours),
+                        role: m.role_title,
+                        bio: m.bio,
+                        facebook: m.facebook,
+                        twitter: m.twitter,
+                        linkedin: m.linkedin,
+                      }}
+                    />
                   </div>
                 </article>
               ))}
