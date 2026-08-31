@@ -75,6 +75,15 @@ function Guides() {
                         {g.phone}
                       </p>
                     )}
+                    <BioDialog
+                      person={{
+                        name: g.name,
+                        photo: imageOr(g.photo_url, tambours),
+                        speciality: g.speciality,
+                        languages: g.languages,
+                        phone: g.phone,
+                      }}
+                    />
                   </div>
                 </article>
               ))}
