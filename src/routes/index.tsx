@@ -27,6 +27,7 @@ import { SitesMap } from "@/components/site/SitesMap";
 import { Button } from "@/components/ui/button";
 import {
   blogQuery,
+  homeSectionsQuery,
   destinationsQuery,
   guidesQuery,
   packagesQuery,
@@ -191,6 +192,7 @@ function Hero() {
 }
 
 function Home() {
+  const { data: sections = {} } = useQuery(homeSectionsQuery);
   const { data: destinations } = useQuery(destinationsQuery);
   const { data: packages = [] } = useQuery(packagesQuery);
   const { data: guides = [] } = useQuery(guidesQuery);
@@ -199,6 +201,21 @@ function Home() {
 
   const dests =
     destinations && destinations.length > 0 ? destinations.slice(0, 4) : FALLBACK_DESTINATIONS;
+  const sec = (slug: string, fb: { eyebrow: string; title: string; description?: string }) => {
+    const row = sections[`accueil-${slug}`];
+    return {
+      eyebrow: row?.subtitle || fb.eyebrow,
+      title: row?.title || fb.title,
+      description: row?.body || fb.description,
+      image: row?.hero_image_url ?? null,
+    };
+  };
+
+  const about = sec("apropos", {
+    eyebrow: "À propos de nous",
+    title: "TABITO, votre pont vers le Burundi",
+  });
+
   const circuits = packages.filter((p) => p.type !== "bouquet").slice(0, 3);
   const bouquets = packages.filter((p) => p.type === "bouquet").slice(0, 3);
 
@@ -211,7 +228,7 @@ function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2">
           <div className="relative">
             <img
-              src={tanganyika}
+              src={imageOr(about.image, tanganyika)}
               alt="Rivage du lac Tanganyika au Burundi"
               width={1920}
               height={1088}
@@ -226,25 +243,9 @@ function Home() {
             </div>
           </div>
           <div>
-            <SectionHeading
-              align="left"
-              eyebrow="À propos de nous"
-              title="TABITO, votre pont vers le Burundi"
-            />
-            <div className="mt-8 space-y-4 text-sm leading-relaxed text-muted-foreground lg:text-base">
-              <p>
-                <strong className="text-primary">
-                  TABITO — Tanganyika e-Bridge International Tours
-                </strong>{" "}
-                est une agence burundaise de voyages et de promotion touristique. Nous relions les
-                visiteurs internationaux aux richesses naturelles, culturelles et humaines du
-                Burundi, et accompagnons les acteurs locaux dans la valorisation de leur patrimoine.
-              </p>
-              <p>
-                De la forêt de la Kibira aux plages du lac Tanganyika, des tambours sacrés aux
-                musées vivants, nous construisons des expériences authentiques, sûres et
-                responsables.
-              </p>
+            <SectionHeading align="left" eyebrow={about.eyebrow} title={about.title} />
+            <div className="mt-8 space-y-4 whitespace-pre-line text-sm leading-relaxed text-muted-foreground lg:text-base">
+              {about.description}
             </div>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {[
@@ -272,9 +273,7 @@ function Home() {
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
-            eyebrow="Carte interactive"
-            title="Les sites touristiques du Burundi"
-            description="Explorez les sites enregistrés par notre équipe : parcs nationaux, réserves, plages, chutes d'eau et lieux de mémoire."
+            {...sec("carte", { eyebrow: "Carte interactive", title: "Les sites touristiques du Burundi" })}
           />
           <div className="mt-14">
             <ClientOnly
@@ -292,9 +291,7 @@ function Home() {
       <section className="section-y bg-background">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
-            eyebrow="Nos services"
-            title="Tout ce qu'il faut pour bien voyager"
-            description="TABITO prend en charge l'ensemble de votre séjour, de la première idée jusqu'au retour."
+            {...sec("services", { eyebrow: "Nos services", title: "Tout ce qu'il faut pour bien voyager" })}
           />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map(({ Icon, title, text }) => (
@@ -314,9 +311,7 @@ function Home() {
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
-            eyebrow="Destinations"
-            title="Des lieux qui marquent à vie"
-            description="Une sélection de destinations phares préparées par nos guides."
+            {...sec("destinations", { eyebrow: "Destinations", title: "Des lieux qui marquent à vie" })}
           />
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {dests.map((d) => (
