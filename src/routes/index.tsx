@@ -206,7 +206,7 @@ function Home() {
     return {
       eyebrow: row?.subtitle || fb.eyebrow,
       title: row?.title || fb.title,
-      description: row?.body || fb.description,
+      description: row?.body || fb.description || "",
       image: row?.hero_image_url ?? null,
     };
   };
