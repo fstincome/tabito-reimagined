@@ -128,6 +128,18 @@ export const guidesQuery = queryOptions({
     pub<Guide[]>(supabase.from("guides").select("*").eq("published", true).order("sort_order")),
 });
 
+/** All editable homepage sections (pages whose slug starts with `accueil-`). */
+export const homeSectionsQuery = queryOptions({
+  queryKey: ["pages", "accueil"],
+  queryFn: async () => {
+    const { data, error } = await supabase.from("pages").select("*").like("slug", "accueil-%");
+    if (error) throw error;
+    const map: Record<string, PageRow> = {};
+    for (const row of (data ?? []) as PageRow[]) map[row.slug] = row;
+    return map;
+  },
+});
+
 export function pageQuery(slug: string) {
   return queryOptions({
     queryKey: ["pages", slug],

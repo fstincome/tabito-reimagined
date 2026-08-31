@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Linkedin, Twitter } from "lucide-react";
 
 import tambours from "@/assets/hero-tambours.jpg";
+import { BioDialog } from "@/components/site/BioDialog";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -89,6 +90,17 @@ function Equipe() {
                         </a>
                       )}
                     </div>
+                    <BioDialog
+                      person={{
+                        name: m.name,
+                        photo: imageOr(m.photo_url, tambours),
+                        role: m.role_title,
+                        bio: m.bio,
+                        facebook: m.facebook,
+                        twitter: m.twitter,
+                        linkedin: m.linkedin,
+                      }}
+                    />
                   </div>
                 </article>
               ))}
