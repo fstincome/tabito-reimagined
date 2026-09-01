@@ -56,6 +56,51 @@ export type Database = {
         }
         Relationships: []
       }
+      bookings: {
+        Row: {
+          category: string
+          created_at: string
+          email: string
+          handled: boolean
+          id: string
+          item_id: string | null
+          item_label: string | null
+          message: string | null
+          name: string
+          people: number | null
+          phone: string | null
+          travel_date: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          email: string
+          handled?: boolean
+          id?: string
+          item_id?: string | null
+          item_label?: string | null
+          message?: string | null
+          name: string
+          people?: number | null
+          phone?: string | null
+          travel_date?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          email?: string
+          handled?: boolean
+          id?: string
+          item_id?: string | null
+          item_label?: string | null
+          message?: string | null
+          name?: string
+          people?: number | null
+          phone?: string | null
+          travel_date?: string | null
+        }
+        Relationships: []
+      }
       cities: {
         Row: {
           created_at: string
