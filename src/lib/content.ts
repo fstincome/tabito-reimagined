@@ -18,6 +18,7 @@ export type TeamMember = Tables["team_members"]["Row"];
 export type Testimonial = Tables["testimonials"]["Row"];
 export type Guide = Tables["guides"]["Row"];
 export type PageRow = Tables["pages"]["Row"];
+export type City = Tables["cities"]["Row"];
 
 async function pub<T>(promise: PromiseLike<{ data: T | null; error: unknown }>): Promise<T> {
   const { data, error } = await promise;
