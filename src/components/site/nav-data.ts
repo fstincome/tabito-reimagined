@@ -42,6 +42,7 @@ export const NAV: NavItem[] = [
       { label: "Galerie", to: "/galerie" },
     ],
   },
+  { label: "Réserver", to: "/reservation" },
   { label: "Partenaires", to: "/partenaires" },
   { label: "Contacts", to: "/contacts" },
 ];
