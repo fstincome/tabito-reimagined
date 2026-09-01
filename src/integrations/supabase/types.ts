@@ -56,6 +56,48 @@ export type Database = {
         }
         Relationships: []
       }
+      cities: {
+        Row: {
+          created_at: string
+          description: string | null
+          highlights: Json
+          id: string
+          image_url: string | null
+          name: string
+          province: string | null
+          published: boolean
+          sort_order: number
+          summary: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          highlights?: Json
+          id?: string
+          image_url?: string | null
+          name: string
+          province?: string | null
+          published?: boolean
+          sort_order?: number
+          summary?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          highlights?: Json
+          id?: string
+          image_url?: string | null
+          name?: string
+          province?: string | null
+          published?: boolean
+          sort_order?: number
+          summary?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string

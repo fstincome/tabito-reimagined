@@ -18,6 +18,7 @@ export type TeamMember = Tables["team_members"]["Row"];
 export type Testimonial = Tables["testimonials"]["Row"];
 export type Guide = Tables["guides"]["Row"];
 export type PageRow = Tables["pages"]["Row"];
+export type City = Tables["cities"]["Row"];
 
 async function pub<T>(promise: PromiseLike<{ data: T | null; error: unknown }>): Promise<T> {
   const { data, error } = await promise;
@@ -120,6 +121,12 @@ export const testimonialsQuery = queryOptions({
     pub<Testimonial[]>(
       supabase.from("testimonials").select("*").eq("published", true).order("sort_order"),
     ),
+});
+
+export const citiesQuery = queryOptions({
+  queryKey: ["cities"],
+  queryFn: () =>
+    pub<City[]>(supabase.from("cities").select("*").eq("published", true).order("sort_order")),
 });
 
 export const guidesQuery = queryOptions({

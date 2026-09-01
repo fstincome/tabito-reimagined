@@ -34,7 +34,7 @@ function Partenaires() {
         subtitle="Nous travaillons main dans la main avec les institutions et les opérateurs du secteur."
       />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow="Réseau" title="Ils nous font confiance" />
           {partners.length === 0 ? (
             <p className="mt-14 text-center text-sm text-muted-foreground">

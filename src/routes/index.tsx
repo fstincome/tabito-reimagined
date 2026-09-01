@@ -153,7 +153,7 @@ function Hero() {
       ))}
       <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.19_0.05_262/0.88)] via-[oklch(0.19_0.05_262/0.55)] to-transparent" />
 
-      <div className="relative mx-auto flex min-h-[76vh] max-w-7xl flex-col justify-center px-6 py-24">
+      <div className="relative mx-auto flex min-h-[76vh] max-w-[95%] flex-col justify-center px-6 py-24">
         <p className="eyebrow">Tanganyika e-Bridge International Tours</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
           {active?.title}
@@ -225,7 +225,7 @@ function Home() {
 
       {/* À propos */}
       <section className="section-y bg-background">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-[95%] items-center gap-12 px-6 lg:grid-cols-2">
           <div className="relative">
             <img
               src={imageOr(about.image, tanganyika)}
@@ -271,7 +271,7 @@ function Home() {
 
       {/* Carte des sites */}
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
             {...sec("carte", { eyebrow: "Carte interactive", title: "Les sites touristiques du Burundi" })}
           />
@@ -289,7 +289,7 @@ function Home() {
 
       {/* Services */}
       <section className="section-y bg-background">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
             {...sec("services", { eyebrow: "Nos services", title: "Tout ce qu'il faut pour bien voyager" })}
           />
@@ -309,7 +309,7 @@ function Home() {
 
       {/* Destinations */}
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
             {...sec("destinations", { eyebrow: "Destinations", title: "Des lieux qui marquent à vie" })}
           />
@@ -353,7 +353,7 @@ function Home() {
       {/* Circuits & bouquets */}
       {(circuits.length > 0 || bouquets.length > 0) && (
         <section className="section-y bg-background">
-          <div className="mx-auto max-w-7xl px-6">
+          <div className="mx-auto max-w-[95%] px-6">
             <SectionHeading
               {...sec("formules", {
                 eyebrow: "Circuits & bouquets",
@@ -401,7 +401,7 @@ function Home() {
       {/* Guides */}
       {guides.length > 0 && (
         <section className="section-y bg-sand">
-          <div className="mx-auto max-w-7xl px-6">
+          <div className="mx-auto max-w-[95%] px-6">
             <SectionHeading
               {...sec("guides", {
                 eyebrow: "Nos guides",
@@ -441,7 +441,7 @@ function Home() {
       {/* Blog */}
       {posts.length > 0 && (
         <section className="section-y bg-background">
-          <div className="mx-auto max-w-7xl px-6">
+          <div className="mx-auto max-w-[95%] px-6">
             <SectionHeading
               {...sec("blog", { eyebrow: "Actualités", title: "Les dernières nouvelles" })}
             />
@@ -501,7 +501,7 @@ function Home() {
             className="absolute inset-0 size-full object-cover"
           />
           <div className="absolute inset-0 gradient-lagoon opacity-90" />
-          <div className="relative mx-auto max-w-7xl px-6">
+          <div className="relative mx-auto max-w-[95%] px-6">
             <SectionHeading
               light
               {...sec("temoignages", {

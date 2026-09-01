@@ -81,6 +81,22 @@ export const RESOURCES: Resource[] = [
     ],
   },
   {
+    table: "cities",
+    label: "Villes du Burundi",
+    titleField: "name",
+    orderBy: { column: "sort_order", ascending: true },
+    fields: [
+      { name: "name", label: "Nom de la ville", type: "text", required: true },
+      { name: "province", label: "Province", type: "text" },
+      { name: "summary", label: "Résumé", type: "textarea" },
+      { name: "description", label: "Description", type: "textarea" },
+      { name: "highlights", label: "À voir (un par ligne)", type: "list" },
+      { name: "image_url", label: "Image", type: "image" },
+      SORT,
+      PUBLISHED,
+    ],
+  },
+  {
     table: "packages",
     label: "Circuits & bouquets",
     titleField: "title",

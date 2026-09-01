@@ -30,7 +30,7 @@ export function CmsPage({
         image={isHttpUrl(page?.hero_image_url) ? (page?.hero_image_url as string) : undefined}
       />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <div className="surface-card p-8 lg:p-12">
             <div className="rainbow-bar mb-8 rounded-full" />
             {page?.body ? (

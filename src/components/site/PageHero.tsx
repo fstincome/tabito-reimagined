@@ -24,7 +24,7 @@ export function PageHero({
         className="absolute inset-0 size-full object-cover"
       />
       <div className="absolute inset-0 gradient-lagoon opacity-80" />
-      <div className="relative mx-auto max-w-7xl px-6 py-20 text-primary-foreground lg:py-28">
+      <div className="relative mx-auto max-w-[95%] px-6 py-20 text-primary-foreground lg:py-28">
         <h1 className="rainbow-underline text-4xl font-bold lg:text-5xl">{title}</h1>
         {subtitle && (
           <p className="mt-8 max-w-2xl text-sm text-primary-foreground/85 lg:text-base">

@@ -69,7 +69,7 @@ function Contacts() {
         subtitle="Une question, un devis, une réservation ? Notre équipe vous répond depuis Bujumbura."
       />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow="Écrivez-nous" title="Parlons de votre voyage" />
 
           <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.4fr]">

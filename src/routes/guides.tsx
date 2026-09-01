@@ -37,7 +37,7 @@ function Guides() {
         image={tambours}
       />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
             eyebrow="Accompagnement"
             title="Nos guides"

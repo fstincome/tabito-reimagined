@@ -47,7 +47,7 @@ function Evenements() {
         subtitle="Festivals, expositions, rencontres professionnelles et célébrations culturelles."
       />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow="Agenda" title="Prochains et derniers évènements" />
 
           {events.length === 0 ? (
