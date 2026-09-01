@@ -123,6 +123,12 @@ export const testimonialsQuery = queryOptions({
     ),
 });
 
+export const citiesQuery = queryOptions({
+  queryKey: ["cities"],
+  queryFn: () =>
+    pub<City[]>(supabase.from("cities").select("*").eq("published", true).order("sort_order")),
+});
+
 export const guidesQuery = queryOptions({
   queryKey: ["guides"],
   queryFn: () =>
