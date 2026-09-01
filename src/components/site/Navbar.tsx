@@ -58,7 +58,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="lagoon" size="sm" className="hidden sm:inline-flex">
-            <Link to="/contacts">Réserver un circuit</Link>
+            <Link to="/reservation">Réserver</Link>
           </Button>
           <button
             type="button"
