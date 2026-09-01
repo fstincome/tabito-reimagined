@@ -36,7 +36,7 @@ function Equipe() {
         subtitle="Des professionnels burundais du voyage, de la logistique et de la médiation culturelle."
       />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
             eyebrow="L'équipe TABITO"
             title="Celles et ceux qui préparent votre voyage"

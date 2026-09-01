@@ -38,7 +38,7 @@ export function PackageList({
     <SiteLayout>
       <PageHero title={title} subtitle={subtitle} image={heroImage} />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow={eyebrow} title={heading} description={description} />
           {isLoading ? (
             <div className="mt-14 grid gap-6 md:grid-cols-3">

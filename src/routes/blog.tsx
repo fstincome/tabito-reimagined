@@ -47,7 +47,7 @@ function Blog() {
         subtitle="Nos récits, conseils pratiques et actualités sur le tourisme au Burundi."
       />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow="Actualités" title="Derniers articles" />
 
           {posts.length === 0 ? (

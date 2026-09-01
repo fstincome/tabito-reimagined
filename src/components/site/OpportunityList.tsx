@@ -27,7 +27,7 @@ export function OpportunityList({
     <SiteLayout>
       <PageHero title={title} subtitle={subtitle} />
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow={eyebrow} title={heading} />
           {isLoading ? (
             <div className="mt-14 space-y-4">

@@ -53,7 +53,7 @@ function Destinations() {
       />
 
       <section className="section-y bg-background">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
             eyebrow="Sélection"
             title="Nos destinations phares"
@@ -118,7 +118,7 @@ function Destinations() {
       </section>
 
       <section className="section-y bg-sand">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
             eyebrow="Carte"
             title="Tous les sites recensés"

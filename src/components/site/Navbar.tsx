@@ -16,7 +16,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
       <div className="rainbow-bar" />
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
+      <div className="mx-auto flex max-w-[95%] items-center justify-between gap-4 px-6 py-3">
         <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="Logo TABITO" width={56} height={56} className="size-14 object-contain" />
           <span className="flex flex-col leading-none">
@@ -73,7 +73,7 @@ export function Navbar() {
 
       {open && (
         <div className="border-t border-border bg-card lg:hidden">
-          <div className="mx-auto max-w-7xl px-6 py-3">
+          <div className="mx-auto max-w-[95%] px-6 py-3">
             {NAV.map((item) => (
               <div key={item.label} className="border-b border-border/60 last:border-0">
                 <div className="flex items-center justify-between">
