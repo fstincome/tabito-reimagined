@@ -28,6 +28,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MissionRouteImport } from './routes/mission'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as PrincipesRouteImport } from './routes/principes'
+import { Route as ReservationRouteImport } from './routes/reservation'
 import { Route as SmedlabRouteImport } from './routes/smedlab'
 import { Route as ValeursRouteImport } from './routes/valeurs'
 import { Route as VillesRouteImport } from './routes/villes'
@@ -129,6 +130,11 @@ const PrincipesRoute = PrincipesRouteImport.update({
   path: '/principes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReservationRoute = ReservationRouteImport.update({
+  id: '/reservation',
+  path: '/reservation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SmedlabRoute = SmedlabRouteImport.update({
   id: '/smedlab',
   path: '/smedlab',
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
+  '/reservation': typeof ReservationRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
   '/villes': typeof VillesRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
+  '/reservation': typeof ReservationRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
   '/villes': typeof VillesRoute
@@ -228,6 +236,7 @@ export interface FileRoutesById {
   '/mission': typeof MissionRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
+  '/reservation': typeof ReservationRoute
   '/smedlab': typeof SmedlabRoute
   '/valeurs': typeof ValeursRoute
   '/villes': typeof VillesRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/mission'
     | '/partenaires'
     | '/principes'
+    | '/reservation'
     | '/smedlab'
     | '/valeurs'
     | '/villes'
@@ -282,6 +292,7 @@ export interface FileRouteTypes {
     | '/mission'
     | '/partenaires'
     | '/principes'
+    | '/reservation'
     | '/smedlab'
     | '/valeurs'
     | '/villes'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
     | '/mission'
     | '/partenaires'
     | '/principes'
+    | '/reservation'
     | '/smedlab'
     | '/valeurs'
     | '/villes'
@@ -335,6 +347,7 @@ export interface RootRouteChildren {
   MissionRoute: typeof MissionRoute
   PartenairesRoute: typeof PartenairesRoute
   PrincipesRoute: typeof PrincipesRoute
+  ReservationRoute: typeof ReservationRoute
   SmedlabRoute: typeof SmedlabRoute
   ValeursRoute: typeof ValeursRoute
   VillesRoute: typeof VillesRoute
@@ -476,6 +489,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrincipesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reservation': {
+      id: '/reservation'
+      path: '/reservation'
+      fullPath: '/reservation'
+      preLoaderRoute: typeof ReservationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/smedlab': {
       id: '/smedlab'
       path: '/smedlab'
@@ -544,6 +564,7 @@ const rootRouteChildren: RootRouteChildren = {
   MissionRoute: MissionRoute,
   PartenairesRoute: PartenairesRoute,
   PrincipesRoute: PrincipesRoute,
+  ReservationRoute: ReservationRoute,
   SmedlabRoute: SmedlabRoute,
   ValeursRoute: ValeursRoute,
   VillesRoute: VillesRoute,
