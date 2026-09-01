@@ -1,6 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { MapPin } from "lucide-react";
 
-import { CmsPage } from "@/components/site/CmsPage";
+import karera from "@/assets/karera.jpg";
+import { PageHero } from "@/components/site/PageHero";
+import { SectionHeading } from "@/components/site/SectionHeading";
+import { SiteLayout } from "@/components/site/SiteLayout";
+import { citiesQuery, pageQuery } from "@/lib/content";
+import { imageOr, isHttpUrl } from "@/lib/media";
 
 export const Route = createFileRoute("/villes")({
   head: () => ({
@@ -16,46 +23,91 @@ export const Route = createFileRoute("/villes")({
         property: "og:description",
         content: "Guide des principales villes burundaises et de leurs attractions.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: () => (
-    <CmsPage
-      slug="villes"
-      title="Villes du Burundi"
-      subtitle="Des rives du lac Tanganyika aux collines du centre, chaque ville a son caractère."
-      fallback={
-        <>
-          <h2>Bujumbura</h2>
-          <p>
-            Capitale économique, posée sur les rives du lac Tanganyika : plages de Saga, marché
-            central, musée vivant, vie nocturne et couchers de soleil sur les monts de la RDC.
-          </p>
-          <h2>Gitega</h2>
-          <p>
-            Capitale politique au cœur du pays, berceau du tambour sacré. Le musée national et les
-            sites royaux racontent l'histoire du royaume du Burundi.
-          </p>
-          <h2>Ngozi</h2>
-          <p>
-            Ville du nord entourée de plantations de café et de thé, point de départ vers le parc de
-            la Kibira et les sources thermales de la région.
-          </p>
-          <h2>Rumonge</h2>
-          <p>
-            Ville de pêcheurs au sud de Bujumbura : palmeraies, plages, sanctuaire de Vyanda et
-            source chaude de Mugara.
-          </p>
-          <h2>Makamba, Rutana et Bururi</h2>
-          <p>
-            Le grand sud touristique : chutes de la Karera, faille de Nyakazu (« la brèche des
-            Allemands »), réserves forestières et paysages de collines.
-          </p>
-          <p>
-            Chaque ville peut être combinée dans un circuit sur mesure. Contactez-nous pour composer
-            votre itinéraire.
-          </p>
-        </>
-      }
-    />
-  ),
+  component: Villes,
 });
+
+function highlightsOf(value: unknown): string[] {
+  if (Array.isArray(value)) return value.filter((v): v is string => typeof v === "string");
+  return [];
+}
+
+function Villes() {
+  const { data: cities = [] } = useQuery(citiesQuery);
+  const { data: page } = useQuery(pageQuery("villes"));
+
+  return (
+    <SiteLayout>
+      <PageHero
+        title={page?.title || "Villes du Burundi"}
+        subtitle={
+          page?.subtitle ||
+          "Des rives du lac Tanganyika aux collines du centre, chaque ville a son caractère."
+        }
+        image={isHttpUrl(page?.hero_image_url) ? (page?.hero_image_url as string) : undefined}
+      />
+
+      <section className="section-y bg-background">
+        <div className="mx-auto max-w-[95%] px-6">
+          <SectionHeading
+            eyebrow="Territoires"
+            title="Les villes à découvrir"
+            description={
+              page?.body ||
+              "Chaque ville peut être combinée dans un circuit sur mesure. Contactez-nous pour composer votre itinéraire."
+            }
+          />
+
+          {cities.length === 0 ? (
+            <p className="mt-12 text-center text-sm text-muted-foreground">
+              Les villes seront publiées prochainement depuis le tableau de bord.
+            </p>
+          ) : (
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {cities.map((c) => (
+                <article key={c.id} className="hover-lift surface-card overflow-hidden">
+                  <img
+                    src={imageOr(c.image_url, karera)}
+                    alt={c.name}
+                    width={1200}
+                    height={800}
+                    loading="lazy"
+                    className="h-56 w-full object-cover"
+                  />
+                  <div className="p-6">
+                    {c.province && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-wider text-primary">
+                        <MapPin className="h-3 w-3" /> {c.province}
+                      </span>
+                    )}
+                    <h2 className="mt-3 font-display text-lg font-semibold text-primary">
+                      {c.name}
+                    </h2>
+                    {(c.summary || c.description) && (
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        {c.summary || c.description}
+                      </p>
+                    )}
+                    {highlightsOf(c.highlights).length > 0 && (
+                      <ul className="mt-4 space-y-1.5 text-sm text-foreground">
+                        {highlightsOf(c.highlights).map((h) => (
+                          <li key={h} className="flex gap-2">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                            <span>{h}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </SiteLayout>
+  );
+}
