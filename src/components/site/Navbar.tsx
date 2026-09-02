@@ -6,36 +6,44 @@ import logoAsset from "@/assets/tabito-logo.png.asset.json";
 
 const logo = logoAsset.url;
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/lib/i18n";
 
 import { NAV } from "./nav-data";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const { t } = useI18n();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
       <div className="rainbow-bar" />
       <div className="mx-auto flex max-w-[95%] items-center justify-between gap-4 px-6 py-3">
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Logo TABITO" width={56} height={56} className="size-14 object-contain" />
+          <img
+            src={logo}
+            alt={t("navbar.logoAlt")}
+            width={56}
+            height={56}
+            className="size-14 object-contain"
+          />
           <span className="flex flex-col leading-none">
             <span className="font-display text-xl font-bold tracking-tight text-primary">TABITO</span>
             <span className="text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
-              Tanganyika e-Bridge
+              {t("navbar.tagline")}
             </span>
           </span>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((item) => (
-            <div key={item.label} className="group relative">
+            <div key={item.labelKey} className="group relative">
               <Link
                 to={item.to}
                 activeProps={{ className: "text-accent" }}
                 className="flex items-center gap-1 rounded-md px-3 py-2 font-display text-sm font-medium text-foreground transition-colors hover:text-accent"
               >
-                {item.label}
+                {t(item.labelKey)}
                 {item.children && <ChevronDown className="size-3.5" aria-hidden="true" />}
               </Link>
               {item.children && (
@@ -47,7 +55,7 @@ export function Navbar() {
                       activeProps={{ className: "bg-secondary text-primary" }}
                       className="block rounded-lg px-3 py-2 text-sm text-foreground transition-colors hover:bg-secondary hover:text-primary"
                     >
-                      {child.label}
+                      {t(child.labelKey)}
                     </Link>
                   ))}
                 </div>
@@ -58,11 +66,11 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="lagoon" size="sm" className="hidden sm:inline-flex">
-            <Link to="/reservation">Réserver</Link>
+            <Link to="/reservation">{t("nav.book")}</Link>
           </Button>
           <button
             type="button"
-            aria-label="Ouvrir le menu"
+            aria-label={t("navbar.openMenu")}
             onClick={() => setOpen((v) => !v)}
             className="rounded-md p-2 text-primary lg:hidden"
           >
@@ -75,29 +83,31 @@ export function Navbar() {
         <div className="border-t border-border bg-card lg:hidden">
           <div className="mx-auto max-w-[95%] px-6 py-3">
             {NAV.map((item) => (
-              <div key={item.label} className="border-b border-border/60 last:border-0">
+              <div key={item.labelKey} className="border-b border-border/60 last:border-0">
                 <div className="flex items-center justify-between">
                   <Link
                     to={item.to}
                     onClick={() => setOpen(false)}
                     className="block flex-1 py-3 font-display text-sm font-medium"
                   >
-                    {item.label}
+                    {t(item.labelKey)}
                   </Link>
                   {item.children && (
                     <button
                       type="button"
-                      aria-label={`Sous-menu ${item.label}`}
-                      onClick={() => setExpanded(expanded === item.label ? null : item.label)}
+                      aria-label={`${t("navbar.submenu")} ${t(item.labelKey)}`}
+                      onClick={() =>
+                        setExpanded(expanded === item.labelKey ? null : item.labelKey)
+                      }
                       className="p-2 text-muted-foreground"
                     >
                       <ChevronDown
-                        className={`size-4 transition-transform ${expanded === item.label ? "rotate-180" : ""}`}
+                        className={`size-4 transition-transform ${expanded === item.labelKey ? "rotate-180" : ""}`}
                       />
                     </button>
                   )}
                 </div>
-                {item.children && expanded === item.label && (
+                {item.children && expanded === item.labelKey && (
                   <div className="pb-2 pl-3">
                     {item.children.map((child) => (
                       <Link
@@ -106,7 +116,7 @@ export function Navbar() {
                         onClick={() => setOpen(false)}
                         className="block py-2 text-sm text-muted-foreground"
                       >
-                        {child.label}
+                        {t(child.labelKey)}
                       </Link>
                     ))}
                   </div>
@@ -118,7 +128,7 @@ export function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-3 block py-2 text-sm font-medium text-accent"
             >
-              Espace admin
+              {t("top.admin")}
             </Link>
           </div>
         </div>
