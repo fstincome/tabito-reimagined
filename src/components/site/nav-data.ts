@@ -1,50 +1,51 @@
 export type NavItem = {
-  label: string;
+  /** i18n key resolved with `t()` at render time. */
+  labelKey: string;
   to: string;
-  children?: { label: string; to: string }[];
+  children?: { labelKey: string; to: string }[];
 };
 
 export const NAV: NavItem[] = [
-  { label: "Accueil", to: "/" },
+  { labelKey: "nav.home", to: "/" },
   {
-    label: "À propos",
+    labelKey: "nav.about",
     to: "/apropos",
     children: [
-      { label: "Qui sommes-nous", to: "/apropos" },
-      { label: "Notre mission", to: "/mission" },
-      { label: "Notre vision", to: "/vision" },
-      { label: "Nos valeurs", to: "/valeurs" },
-      { label: "Nos principes", to: "/principes" },
-      { label: "Notre équipe", to: "/equipe" },
-      { label: "SMED LAB", to: "/smedlab" },
+      { labelKey: "nav.who", to: "/apropos" },
+      { labelKey: "nav.mission", to: "/mission" },
+      { labelKey: "nav.vision", to: "/vision" },
+      { labelKey: "nav.values", to: "/valeurs" },
+      { labelKey: "nav.principles", to: "/principes" },
+      { labelKey: "nav.team", to: "/equipe" },
+      { labelKey: "nav.smedlab", to: "/smedlab" },
     ],
   },
   {
-    label: "Actualités",
+    labelKey: "nav.news",
     to: "/blog",
     children: [
-      { label: "Blog", to: "/blog" },
-      { label: "Évènements", to: "/evenements" },
-      { label: "Emplois", to: "/emplois" },
-      { label: "Financements", to: "/financements" },
-      { label: "Formations", to: "/formations" },
+      { labelKey: "nav.blog", to: "/blog" },
+      { labelKey: "nav.events", to: "/evenements" },
+      { labelKey: "nav.jobs", to: "/emplois" },
+      { labelKey: "nav.funding", to: "/financements" },
+      { labelKey: "nav.training", to: "/formations" },
     ],
   },
   {
-    label: "Destinations",
+    labelKey: "nav.destinations",
     to: "/destinations",
     children: [
-      { label: "Sites touristiques", to: "/destinations" },
-      { label: "Villes du Burundi", to: "/villes" },
-      { label: "Circuits", to: "/circuits" },
-      { label: "Bouquets", to: "/bouquets" },
-      { label: "Guides touristiques", to: "/guides" },
-      { label: "Galerie", to: "/galerie" },
+      { labelKey: "nav.sites", to: "/destinations" },
+      { labelKey: "nav.cities", to: "/villes" },
+      { labelKey: "nav.tours", to: "/circuits" },
+      { labelKey: "nav.bundles", to: "/bouquets" },
+      { labelKey: "nav.guides", to: "/guides" },
+      { labelKey: "nav.gallery", to: "/galerie" },
     ],
   },
-  { label: "Réserver", to: "/reservation" },
-  { label: "Partenaires", to: "/partenaires" },
-  { label: "Contacts", to: "/contacts" },
+  { labelKey: "nav.book", to: "/reservation" },
+  { labelKey: "nav.partners", to: "/partenaires" },
+  { labelKey: "nav.contacts", to: "/contacts" },
 ];
 
 export const CONTACT = {
