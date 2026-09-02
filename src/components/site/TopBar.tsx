@@ -1,9 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Mail, Phone, ShieldCheck, Twitter } from "lucide-react";
 
+import { useI18n } from "@/lib/i18n";
+
 import { CONTACT } from "./nav-data";
 
 export function TopBar() {
+  const { t, lang, setLang } = useI18n();
   return (
     <div className="hidden bg-primary text-primary-foreground lg:block">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-2 text-[0.8rem]">
@@ -41,12 +44,29 @@ export function TopBar() {
               </a>
             ))}
           </div>
+          <div className="flex items-center gap-1" aria-label={t("top.language")}>
+            {(["fr", "en"] as const).map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setLang(code)}
+                aria-pressed={lang === code}
+                className={`rounded-full px-2 py-0.5 text-[0.7rem] font-semibold uppercase transition-colors ${
+                  lang === code
+                    ? "bg-primary-foreground text-primary"
+                    : "opacity-70 hover:opacity-100"
+                }`}
+              >
+                {code}
+              </button>
+            ))}
+          </div>
           <Link
             to="/login"
             className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 font-medium text-accent-foreground transition-transform hover:-translate-y-px"
           >
             <ShieldCheck className="size-3.5" aria-hidden="true" />
-            Espace admin
+            {t("top.admin")}
           </Link>
         </div>
       </div>
