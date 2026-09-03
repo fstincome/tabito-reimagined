@@ -44,6 +44,7 @@ export const NAV: NavItem[] = [
     ],
   },
   { labelKey: "nav.book", to: "/reservation" },
+  { labelKey: "nav.account", to: "/mon-compte" },
   { labelKey: "nav.partners", to: "/partenaires" },
   { labelKey: "nav.contacts", to: "/contacts" },
 ];

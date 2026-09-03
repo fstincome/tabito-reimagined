@@ -38,6 +38,7 @@ const DICT: Record<string, { fr: string; en: string }> = {
   "nav.guides": { fr: "Guides touristiques", en: "Tour guides" },
   "nav.gallery": { fr: "Galerie", en: "Gallery" },
   "nav.book": { fr: "Réserver", en: "Book now" },
+  "nav.account": { fr: "Mon espace", en: "My account" },
   "nav.partners": { fr: "Partenaires", en: "Partners" },
   "nav.contacts": { fr: "Contacts", en: "Contact" },
 

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Linkedin, Mail, Phone, ShieldCheck, Twitter } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, Phone, ShieldCheck, Twitter, UserCircle } from "lucide-react";
 
 import { useI18n } from "@/lib/i18n";
 
@@ -61,6 +61,13 @@ export function TopBar() {
               </button>
             ))}
           </div>
+          <Link
+            to="/mon-compte"
+            className="flex items-center gap-1.5 rounded-full border border-primary-foreground/40 px-3 py-1 font-medium transition-colors hover:bg-primary-foreground/10"
+          >
+            <UserCircle className="size-3.5" aria-hidden="true" />
+            {t("nav.account")}
+          </Link>
           <Link
             to="/login"
             className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 font-medium text-accent-foreground transition-transform hover:-translate-y-px"
