@@ -60,6 +60,7 @@ export type Database = {
         Row: {
           category: string
           created_at: string
+          departure_point: string | null
           email: string
           handled: boolean
           id: string
@@ -69,11 +70,16 @@ export type Database = {
           name: string
           people: number | null
           phone: string | null
+          return_date: string | null
+          status: string
           travel_date: string | null
+          updated_at: string
+          user_id: string | null
         }
         Insert: {
           category: string
           created_at?: string
+          departure_point?: string | null
           email: string
           handled?: boolean
           id?: string
@@ -83,11 +89,16 @@ export type Database = {
           name: string
           people?: number | null
           phone?: string | null
+          return_date?: string | null
+          status?: string
           travel_date?: string | null
+          updated_at?: string
+          user_id?: string | null
         }
         Update: {
           category?: string
           created_at?: string
+          departure_point?: string | null
           email?: string
           handled?: boolean
           id?: string
@@ -97,7 +108,11 @@ export type Database = {
           name?: string
           people?: number | null
           phone?: string | null
+          return_date?: string | null
+          status?: string
           travel_date?: string | null
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
