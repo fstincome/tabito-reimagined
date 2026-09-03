@@ -124,9 +124,16 @@ export function Navbar() {
               </div>
             ))}
             <Link
+              to="/mon-compte"
+              onClick={() => setOpen(false)}
+              className="mt-3 block py-2 text-sm font-medium text-primary"
+            >
+              {t("nav.account")}
+            </Link>
+            <Link
               to="/login"
               onClick={() => setOpen(false)}
-              className="mt-3 block py-2 text-sm font-medium text-accent"
+              className="block py-2 text-sm font-medium text-accent"
             >
               {t("top.admin")}
             </Link>
