@@ -26,6 +26,7 @@ import { Route as GalerieRouteImport } from './routes/galerie'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MissionRouteImport } from './routes/mission'
+import { Route as MonCompteRouteImport } from './routes/mon-compte'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as PrincipesRouteImport } from './routes/principes'
 import { Route as ReservationRouteImport } from './routes/reservation'
@@ -120,6 +121,11 @@ const MissionRoute = MissionRouteImport.update({
   path: '/mission',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MonCompteRoute = MonCompteRouteImport.update({
+  id: '/mon-compte',
+  path: '/mon-compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PartenairesRoute = PartenairesRouteImport.update({
   id: '/partenaires',
   path: '/partenaires',
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
+  '/mon-compte': typeof MonCompteRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/reservation': typeof ReservationRoute
@@ -206,6 +213,7 @@ export interface FileRoutesByTo {
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
+  '/mon-compte': typeof MonCompteRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/reservation': typeof ReservationRoute
@@ -234,6 +242,7 @@ export interface FileRoutesById {
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
   '/mission': typeof MissionRoute
+  '/mon-compte': typeof MonCompteRoute
   '/partenaires': typeof PartenairesRoute
   '/principes': typeof PrincipesRoute
   '/reservation': typeof ReservationRoute
@@ -263,6 +272,7 @@ export interface FileRouteTypes {
     | '/guides'
     | '/login'
     | '/mission'
+    | '/mon-compte'
     | '/partenaires'
     | '/principes'
     | '/reservation'
@@ -290,6 +300,7 @@ export interface FileRouteTypes {
     | '/guides'
     | '/login'
     | '/mission'
+    | '/mon-compte'
     | '/partenaires'
     | '/principes'
     | '/reservation'
@@ -317,6 +328,7 @@ export interface FileRouteTypes {
     | '/guides'
     | '/login'
     | '/mission'
+    | '/mon-compte'
     | '/partenaires'
     | '/principes'
     | '/reservation'
@@ -345,6 +357,7 @@ export interface RootRouteChildren {
   GuidesRoute: typeof GuidesRoute
   LoginRoute: typeof LoginRoute
   MissionRoute: typeof MissionRoute
+  MonCompteRoute: typeof MonCompteRoute
   PartenairesRoute: typeof PartenairesRoute
   PrincipesRoute: typeof PrincipesRoute
   ReservationRoute: typeof ReservationRoute
@@ -475,6 +488,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MissionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mon-compte': {
+      id: '/mon-compte'
+      path: '/mon-compte'
+      fullPath: '/mon-compte'
+      preLoaderRoute: typeof MonCompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/partenaires': {
       id: '/partenaires'
       path: '/partenaires'
@@ -562,6 +582,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuidesRoute: GuidesRoute,
   LoginRoute: LoginRoute,
   MissionRoute: MissionRoute,
+  MonCompteRoute: MonCompteRoute,
   PartenairesRoute: PartenairesRoute,
   PrincipesRoute: PrincipesRoute,
   ReservationRoute: ReservationRoute,

@@ -290,7 +290,7 @@ function Space({ session }: { session: Session }) {
     setSavingProfile(true);
     const { error } = await supabase
       .from("profiles")
-      .upsert({ id: session.user.id, email: session.user.email, full_name: fullName.trim() });
+      .upsert({ id: session.user.id, email: session.user.email ?? null, full_name: fullName.trim() });
     setSavingProfile(false);
     if (error) {
       toast.error("Enregistrement impossible.");
