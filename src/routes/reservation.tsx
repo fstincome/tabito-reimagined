@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { CalendarCheck, Send } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { CalendarCheck, Send, UserCircle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { PageHero } from "@/components/site/PageHero";
@@ -77,6 +77,20 @@ function Reservation() {
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      const user = data.session?.user;
+      if (!user) return;
+      setUserId(user.id);
+      setForm((f) => ({
+        ...f,
+        email: f.email || (user.email ?? ""),
+        name: f.name || ((user.user_metadata?.["full_name"] as string) ?? ""),
+      }));
+    });
+  }, []);
 
   const options = useMemo<Option[]>(() => {
     switch (category) {
@@ -110,6 +124,7 @@ function Reservation() {
     const selected = options.find((o) => o.id === item);
     setLoading(true);
     const { error } = await supabase.from("bookings").insert({
+      user_id: userId,
       name: form.name.trim().slice(0, 120),
       email: form.email.trim().slice(0, 255),
       phone: form.phone.trim().slice(0, 40) || null,
@@ -128,7 +143,11 @@ function Reservation() {
     setCategory("");
     setItem("");
     setForm({ name: "", email: "", phone: "", travel_date: "", people: "2", message: "" });
-    toast.success("Demande de réservation envoyée ! Notre équipe vous contacte très vite.");
+    toast.success(
+      userId
+        ? "Demande envoyée ! Suivez son avancement dans votre espace personnel."
+        : "Demande de réservation envoyée ! Notre équipe vous contacte très vite.",
+    );
   }
 
   return (
@@ -248,6 +267,7 @@ function Reservation() {
                 onChange={(e) => set("message", e.target.value)}
               />
 
+              <div className="flex flex-wrap items-center gap-3">
               <Button type="submit" variant="lagoon" disabled={loading}>
                 {loading ? (
                   <>
@@ -261,6 +281,13 @@ function Reservation() {
                   </>
                 )}
               </Button>
+              <Button asChild type="button" variant="outline">
+                <Link to="/mon-compte">
+                  <UserCircle className="size-4" aria-hidden="true" />
+                  {userId ? "Mon espace voyageur" : "Créer un compte pour suivre mes trajets"}
+                </Link>
+              </Button>
+              </div>
             </div>
           </form>
         </div>
