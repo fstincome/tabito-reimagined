@@ -140,6 +140,7 @@ function Reservation() {
       toast.error("Réservation impossible pour le moment. Réessayez plus tard.");
       return;
     }
+    void notifyBooking({ data: { email: form.email.trim() } }).catch(() => undefined);
     setCategory("");
     setItem("");
     setForm({ name: "", email: "", phone: "", travel_date: "", people: "2", message: "" });
