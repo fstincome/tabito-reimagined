@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
+import { notifyNewsletterSignup } from "@/lib/notify.functions";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export function Newsletter() {
       );
       return;
     }
+    void notifyNewsletterSignup({ data: { email: email.trim() } }).catch(() => undefined);
     setEmail("");
     toast.success(t("newsletter.success"));
   }
