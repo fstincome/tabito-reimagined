@@ -104,9 +104,9 @@ function isUuid(value: unknown): value is string {
 
 /** Notifie l'équipe + accuse réception au visiteur pour une nouvelle réservation. */
 export const notifyBooking = createServerFn({ method: "POST" })
-  .inputValidator((input: { id: string }) => {
-    if (!isUuid(input?.id)) throw new Error("invalid_id");
-    return { id: input.id };
+  .inputValidator((input: { email: string }) => {
+    if (!isEmail(input?.email)) throw new Error("invalid_email");
+    return { email: input.email };
   })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -115,7 +115,10 @@ export const notifyBooking = createServerFn({ method: "POST" })
       .select(
         "id,name,email,phone,category,item_label,travel_date,return_date,departure_point,people,message,created_at",
       )
-      .eq("id", data.id)
+      .eq("email", data.email)
+      .gte("created_at", new Date(Date.now() - 5 * 60 * 1000).toISOString())
+      .order("created_at", { ascending: false })
+      .limit(1)
       .maybeSingle();
     if (error || !booking) return { sent: false, reason: "not_found" } satisfies SendResult;
 
@@ -155,16 +158,19 @@ export const notifyBooking = createServerFn({ method: "POST" })
 
 /** Notifie l'équipe + accuse réception au visiteur pour un message de contact. */
 export const notifyContactMessage = createServerFn({ method: "POST" })
-  .inputValidator((input: { id: string }) => {
-    if (!isUuid(input?.id)) throw new Error("invalid_id");
-    return { id: input.id };
+  .inputValidator((input: { email: string }) => {
+    if (!isEmail(input?.email)) throw new Error("invalid_email");
+    return { email: input.email };
   })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: msg, error } = await supabaseAdmin
       .from("contact_messages")
-      .select("id,name,email,phone,subject,message")
-      .eq("id", data.id)
+      .select("id,name,email,phone,subject,message,created_at")
+      .eq("email", data.email)
+      .gte("created_at", new Date(Date.now() - 5 * 60 * 1000).toISOString())
+      .order("created_at", { ascending: false })
+      .limit(1)
       .maybeSingle();
     if (error || !msg) return { sent: false, reason: "not_found" } satisfies SendResult;
 
