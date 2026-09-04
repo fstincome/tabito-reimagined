@@ -316,10 +316,11 @@ export async function listRows(resource: Resource): Promise<any[]> {
 
 export async function saveRow(resource: Resource, id: string | null, values: any) {
   const query = id
-    ? db.from(resource.table).update(values).eq("id", id)
-    : db.from(resource.table).insert(values);
-  const { error } = await query;
+    ? db.from(resource.table).update(values).eq("id", id).select("id")
+    : db.from(resource.table).insert(values).select("id");
+  const { data, error } = await query;
   if (error) throw error;
+  return (data?.[0] as { id?: string } | undefined) ?? null;
 }
 
 export async function deleteRow(resource: Resource, id: string) {
