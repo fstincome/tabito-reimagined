@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
+import { notifyBooking } from "@/lib/notify.functions";
 import {
   citiesQuery,
   destinationsQuery,
@@ -140,6 +141,7 @@ function Reservation() {
       toast.error("Réservation impossible pour le moment. Réessayez plus tard.");
       return;
     }
+    void notifyBooking({ data: { email: form.email.trim() } }).catch(() => undefined);
     setCategory("");
     setItem("");
     setForm({ name: "", email: "", phone: "", travel_date: "", people: "2", message: "" });

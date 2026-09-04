@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
+import { notifyContactMessage } from "@/lib/notify.functions";
 
 export const Route = createFileRoute("/contacts")({
   head: () => ({
@@ -58,6 +59,7 @@ function Contacts() {
       toast.error("Envoi impossible pour le moment. Réessayez plus tard.");
       return;
     }
+    void notifyContactMessage({ data: { email: form.email.trim() } }).catch(() => undefined);
     setForm({ name: "", email: "", phone: "", subject: "", message: "" });
     toast.success("Message envoyé ! Nous vous répondons dans les meilleurs délais.");
   }

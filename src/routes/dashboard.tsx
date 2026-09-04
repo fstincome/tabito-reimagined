@@ -20,6 +20,7 @@ import {
   type Resource,
 } from "@/lib/admin";
 import { isHttpUrl, uploadMedia } from "@/lib/media";
+import { notifyEventAnnouncement } from "@/lib/notify.functions";
 
 const logo = logoAsset.url;
 
@@ -124,8 +125,18 @@ function Dashboard() {
                 : v;
     }
     try {
-      await saveRow(resource, editing.id, payload);
+      const saved = await saveRow(resource, editing.id, payload);
       toast.success("Contenu enregistré.");
+      const savedId = (saved as any)?.id ?? editing.id;
+      if (resource.table === "events" && payload["published"] && savedId) {
+        try {
+          const result = await notifyEventAnnouncement({ data: { id: savedId } });
+          if (result.sent > 0)
+            toast.success(`Évènement annoncé par e-mail à ${result.sent} abonné(s).`);
+        } catch {
+          toast.error("L'annonce par e-mail n'a pas pu être envoyée.");
+        }
+      }
       setEditing(null);
       await refresh();
     } catch {
