@@ -25,6 +25,7 @@ import { Route as FormationsRouteImport } from './routes/formations'
 import { Route as GalerieRouteImport } from './routes/galerie'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MerciRouteImport } from './routes/merci'
 import { Route as MissionRouteImport } from './routes/mission'
 import { Route as MonCompteRouteImport } from './routes/mon-compte'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
@@ -116,6 +117,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MerciRoute = MerciRouteImport.update({
+  id: '/merci',
+  path: '/merci',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MissionRoute = MissionRouteImport.update({
   id: '/mission',
   path: '/mission',
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
+  '/merci': typeof MerciRoute
   '/mission': typeof MissionRoute
   '/mon-compte': typeof MonCompteRoute
   '/partenaires': typeof PartenairesRoute
@@ -212,6 +219,7 @@ export interface FileRoutesByTo {
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
+  '/merci': typeof MerciRoute
   '/mission': typeof MissionRoute
   '/mon-compte': typeof MonCompteRoute
   '/partenaires': typeof PartenairesRoute
@@ -241,6 +249,7 @@ export interface FileRoutesById {
   '/galerie': typeof GalerieRoute
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
+  '/merci': typeof MerciRoute
   '/mission': typeof MissionRoute
   '/mon-compte': typeof MonCompteRoute
   '/partenaires': typeof PartenairesRoute
@@ -271,6 +280,7 @@ export interface FileRouteTypes {
     | '/galerie'
     | '/guides'
     | '/login'
+    | '/merci'
     | '/mission'
     | '/mon-compte'
     | '/partenaires'
@@ -299,6 +309,7 @@ export interface FileRouteTypes {
     | '/galerie'
     | '/guides'
     | '/login'
+    | '/merci'
     | '/mission'
     | '/mon-compte'
     | '/partenaires'
@@ -327,6 +338,7 @@ export interface FileRouteTypes {
     | '/galerie'
     | '/guides'
     | '/login'
+    | '/merci'
     | '/mission'
     | '/mon-compte'
     | '/partenaires'
@@ -356,6 +368,7 @@ export interface RootRouteChildren {
   GalerieRoute: typeof GalerieRoute
   GuidesRoute: typeof GuidesRoute
   LoginRoute: typeof LoginRoute
+  MerciRoute: typeof MerciRoute
   MissionRoute: typeof MissionRoute
   MonCompteRoute: typeof MonCompteRoute
   PartenairesRoute: typeof PartenairesRoute
@@ -481,6 +494,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/merci': {
+      id: '/merci'
+      path: '/merci'
+      fullPath: '/merci'
+      preLoaderRoute: typeof MerciRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mission': {
       id: '/mission'
       path: '/mission'
@@ -581,6 +601,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalerieRoute: GalerieRoute,
   GuidesRoute: GuidesRoute,
   LoginRoute: LoginRoute,
+  MerciRoute: MerciRoute,
   MissionRoute: MissionRoute,
   MonCompteRoute: MonCompteRoute,
   PartenairesRoute: PartenairesRoute,

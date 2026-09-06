@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -35,6 +35,7 @@ export const Route = createFileRoute("/contacts")({
 
 function Contacts() {
   const { L } = useI18n();
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
 
@@ -76,6 +77,7 @@ function Contacts() {
     }).catch(() => undefined);
     setForm({ name: "", email: "", phone: "", subject: "", message: "" });
     toast.success(L("Message envoyé ! Nous vous répondons dans les meilleurs délais.", "Message sent! We'll get back to you as soon as possible."));
+    void navigate({ to: "/merci" });
   }
 
   return (
