@@ -2,13 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { CalendarDays, User } from "lucide-react";
 
-import karera from "@/assets/karera.jpg";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { CmsSectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { blogQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -67,7 +66,7 @@ function Blog() {
               {posts.map((post) => (
                 <article key={post.id} className="surface-card hover-lift overflow-hidden">
                   <img
-                    src={imageOr(post.image_url, karera)}
+                    src={imageOr(post.image_url, PLACEHOLDER_IMAGE)}
                     alt={tx(post, "title")}
                     width={1200}
                     height={800}

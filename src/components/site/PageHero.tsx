@@ -2,10 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 
-import heroDefault from "@/assets/hero-tanganyika.jpg";
 import { pageQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { isHttpUrl } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, isHttpUrl } from "@/lib/media";
 
 export function PageHero({
   title,
@@ -21,7 +20,7 @@ export function PageHero({
   return (
     <section className="relative isolate overflow-hidden">
       <img
-        src={image ?? heroDefault}
+        src={image ?? PLACEHOLDER_IMAGE}
         alt=""
         aria-hidden="true"
         width={1920}

@@ -3,8 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 import { useState } from "react";
 
-import kibira from "@/assets/hero-kibira.jpg";
-import karera from "@/assets/karera.jpg";
 import { ClientOnly } from "@/components/site/ClientOnly";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { CmsSectionHeading } from "@/components/site/SectionHeading";
@@ -12,7 +10,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { SitesMap } from "@/components/site/SitesMap";
 import { useI18n } from "@/lib/i18n";
 import { destinationsQuery, sitesQuery } from "@/lib/content";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/destinations")({
   head: () => ({
@@ -55,7 +53,7 @@ function Destinations() {
           "Du lac Tanganyika aux forêts de montagne, une mosaïque de paysages à moins de trois heures de route.",
           "From Lake Tanganyika to mountain forests, a mosaic of landscapes less than three hours away.",
         )}
-        image={kibira}
+        image={PLACEHOLDER_IMAGE}
       />
 
       <section className="section-y bg-background">
@@ -101,7 +99,7 @@ function Destinations() {
               {visible.map((d) => (
                 <article key={d.id} className="hover-lift surface-card overflow-hidden">
                   <img
-                    src={imageOr(d.image_url, karera)}
+                    src={imageOr(d.image_url, PLACEHOLDER_IMAGE)}
                     alt={tx(d, "name")}
                     width={1200}
                     height={800}

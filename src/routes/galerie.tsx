@@ -3,13 +3,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import { useState } from "react";
 
-import karera from "@/assets/karera.jpg";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { galleryQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/galerie")({
   head: () => ({
@@ -48,7 +47,7 @@ function Galerie() {
           "Un aperçu de ce que vous verrez : collines, lac, faune, traditions et villes.",
           "A preview of what you'll see: hills, lake, wildlife, traditions and cities.",
         )}
-        image={karera}
+        image={PLACEHOLDER_IMAGE}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
@@ -86,11 +85,11 @@ function Galerie() {
                 <button
                   key={img.id}
                   type="button"
-                  onClick={() => setActive(imageOr(img.image_url, karera))}
+                  onClick={() => setActive(imageOr(img.image_url, PLACEHOLDER_IMAGE))}
                   className="hover-lift group block overflow-hidden rounded-2xl"
                 >
                   <img
-                    src={imageOr(img.image_url, karera)}
+                    src={imageOr(img.image_url, PLACEHOLDER_IMAGE)}
                     alt={tx(img, "title") || L("Photo du Burundi", "Photo of Burundi")}
                     width={1200}
                     height={900}

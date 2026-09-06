@@ -2,12 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowLeft, CalendarDays, User } from "lucide-react";
 
-import karera from "@/assets/karera.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { blogQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/blog/$slug")({
   head: () => ({
@@ -46,7 +45,7 @@ function BlogPostPage() {
       <PageHero
         title={post ? tx(post, "title") : L("Article", "Article")}
         subtitle={post ? tx(post, "excerpt") || undefined : undefined}
-        image={post?.image_url ? imageOr(post.image_url, karera) : undefined}
+        image={post?.image_url ? imageOr(post.image_url, PLACEHOLDER_IMAGE) : undefined}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">

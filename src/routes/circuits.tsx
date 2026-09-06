@@ -1,6 +1,6 @@
+import { PLACEHOLDER_IMAGE } from "@/lib/media";
 import { createFileRoute } from "@tanstack/react-router";
 
-import kibira from "@/assets/hero-kibira.jpg";
 import { PackageList } from "@/components/site/PackageList";
 import { useI18n } from "@/lib/i18n";
 
@@ -29,7 +29,7 @@ function CircuitsPage() {
     <PackageList
       mode="circuit"
       slug="circuits"
-      heroImage={kibira}
+      heroImage={PLACEHOLDER_IMAGE}
       title={L("Circuits", "Tours")}
       subtitle={L(
         "Des itinéraires pensés par nos guides, du week-end à la grande traversée du pays.",
