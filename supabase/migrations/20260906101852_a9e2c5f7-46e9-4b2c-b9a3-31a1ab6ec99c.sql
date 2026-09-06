@@ -1,0 +1,15 @@
+ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS subtitle_en text, ADD COLUMN IF NOT EXISTS body_en text;
+ALTER TABLE public.slides ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS subtitle_en text, ADD COLUMN IF NOT EXISTS cta_label_en text;
+ALTER TABLE public.services ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS description_en text;
+ALTER TABLE public.destinations ADD COLUMN IF NOT EXISTS name_en text, ADD COLUMN IF NOT EXISTS categorie_en text, ADD COLUMN IF NOT EXISTS summary_en text, ADD COLUMN IF NOT EXISTS description_en text;
+ALTER TABLE public.cities ADD COLUMN IF NOT EXISTS name_en text, ADD COLUMN IF NOT EXISTS summary_en text, ADD COLUMN IF NOT EXISTS description_en text, ADD COLUMN IF NOT EXISTS highlights_en jsonb NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE public.packages ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS duration_en text, ADD COLUMN IF NOT EXISTS price_en text, ADD COLUMN IF NOT EXISTS description_en text, ADD COLUMN IF NOT EXISTS highlights_en jsonb NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE public.sites ADD COLUMN IF NOT EXISTS nom_site_en text, ADD COLUMN IF NOT EXISTS categorie_en text, ADD COLUMN IF NOT EXISTS description_en text;
+ALTER TABLE public.blog_posts ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS excerpt_en text, ADD COLUMN IF NOT EXISTS content_en text;
+ALTER TABLE public.events ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS description_en text, ADD COLUMN IF NOT EXISTS place_en text;
+ALTER TABLE public.opportunities ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS description_en text, ADD COLUMN IF NOT EXISTS organisation_en text;
+ALTER TABLE public.gallery_images ADD COLUMN IF NOT EXISTS title_en text, ADD COLUMN IF NOT EXISTS categorie_en text;
+ALTER TABLE public.partners ADD COLUMN IF NOT EXISTS description_en text;
+ALTER TABLE public.team_members ADD COLUMN IF NOT EXISTS role_title_en text, ADD COLUMN IF NOT EXISTS bio_en text;
+ALTER TABLE public.guides ADD COLUMN IF NOT EXISTS speciality_en text, ADD COLUMN IF NOT EXISTS languages_en text;
+ALTER TABLE public.testimonials ADD COLUMN IF NOT EXISTS role_title_en text, ADD COLUMN IF NOT EXISTS message_en text;
