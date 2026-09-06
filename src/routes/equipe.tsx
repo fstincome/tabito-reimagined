@@ -95,7 +95,7 @@ function MemberCard({ m }: { m: TeamMember }) {
         <BioDialog
           person={{
             name: m.name,
-            photo: imageOr(m.photo_url, tambours),
+            photo: m.photo_url,
             role: m.role_title,
             bio: m.bio,
             facebook: m.facebook,
