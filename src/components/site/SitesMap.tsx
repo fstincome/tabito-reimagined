@@ -17,16 +17,16 @@ export function SitesMap() {
 
     async function render() {
       if (!containerRef.current) return;
-      const L = (await import("leaflet")).default;
+      const Leaf = (await import("leaflet")).default;
       await import("leaflet/dist/leaflet.css");
       if (cancelled || !containerRef.current) return;
 
       if (!mapRef.current) {
-        const map = L.map(containerRef.current, { scrollWheelZoom: false }).setView(
+        const map = Leaf.map(containerRef.current, { scrollWheelZoom: false }).setView(
           BURUNDI_CENTER,
           8,
         );
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        Leaf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 18,
           attribution: "&copy; OpenStreetMap",
         }).addTo(map);
@@ -35,10 +35,10 @@ export function SitesMap() {
 
       const map = mapRef.current as import("leaflet").Map;
       map.eachLayer((layer) => {
-        if (layer instanceof L.Marker) map.removeLayer(layer);
+        if (layer instanceof Leaf.Marker) map.removeLayer(layer);
       });
 
-      const icon = L.divIcon({
+      const icon = Leaf.divIcon({
         className: "",
         html: `<span style="display:block;width:16px;height:16px;border-radius:50%;background:oklch(0.72 0.113 205);border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.35)"></span>`,
         iconSize: [16, 16],
@@ -102,7 +102,7 @@ export function SitesMap() {
     return () => {
       cancelled = true;
     };
-  }, [sites]);
+  }, [sites, lang, L, tx]);
 
   useEffect(() => {
     return () => {
@@ -116,7 +116,7 @@ export function SitesMap() {
     <div
       ref={containerRef}
       role="application"
-      aria-label="Carte des sites touristiques du Burundi"
+      aria-label={L("Carte des sites touristiques du Burundi", "Map of tourist sites in Burundi")}
       className="h-[460px] w-full overflow-hidden rounded-2xl border border-border shadow-[var(--shadow-card)]"
     />
   );

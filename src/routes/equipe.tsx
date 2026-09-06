@@ -6,6 +6,7 @@ import { BioDialog, initialsOf } from "@/components/site/BioDialog";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { useI18n } from "@/lib/i18n";
 import { teamQuery, type TeamMember } from "@/lib/content";
 
 export const Route = createFileRoute("/equipe")({
@@ -24,30 +25,10 @@ export const Route = createFileRoute("/equipe")({
   component: Equipe,
 });
 
-const GROUPS: { key: string; label: string; subtitle: string }[] = [
-  {
-    key: "board",
-    label: "Conseil d'administration",
-    subtitle: "Board of Directors — la gouvernance de l'agence.",
-  },
-  {
-    key: "advisors",
-    label: "Conseil consultatif",
-    subtitle: "Board of Advisors — nos sages conseillers.",
-  },
-  {
-    key: "operational",
-    label: "Équipe opérationnelle",
-    subtitle: "Les responsables qui préparent et accompagnent vos voyages.",
-  },
-  {
-    key: "it",
-    label: "Équipe IT & webmasters",
-    subtitle: "Développeurs et administrateurs de nos outils numériques.",
-  },
-];
-
 function MemberCard({ m }: { m: TeamMember }) {
+  const { L, tx } = useI18n();
+  const roleTitle = tx(m, "role_title");
+  const bio = tx(m, "bio");
   return (
     <article className="hover-lift surface-card overflow-hidden">
       {m.photo_url ? (
@@ -69,23 +50,23 @@ function MemberCard({ m }: { m: TeamMember }) {
       )}
       <div className="p-5">
         <h3 className="font-display text-base font-semibold text-primary">{m.name}</h3>
-        {m.role_title && (
-          <p className="mt-1 text-xs uppercase tracking-wider text-accent">{m.role_title}</p>
+        {roleTitle && (
+          <p className="mt-1 text-xs uppercase tracking-wider text-accent">{roleTitle}</p>
         )}
-        {m.bio && <p className="mt-3 line-clamp-4 text-sm text-muted-foreground">{m.bio}</p>}
+        {bio && <p className="mt-3 line-clamp-4 text-sm text-muted-foreground">{bio}</p>}
         <div className="mt-4 flex gap-3 text-muted-foreground">
           {m.facebook && (
-            <a href={m.facebook} aria-label={`Facebook de ${m.name}`}>
+            <a href={m.facebook} aria-label={L(`Facebook de ${m.name}`, `Facebook of ${m.name}`)}>
               <Facebook className="size-4" aria-hidden="true" />
             </a>
           )}
           {m.twitter && (
-            <a href={m.twitter} aria-label={`Twitter de ${m.name}`}>
+            <a href={m.twitter} aria-label={L(`Twitter de ${m.name}`, `Twitter of ${m.name}`)}>
               <Twitter className="size-4" aria-hidden="true" />
             </a>
           )}
           {m.linkedin && (
-            <a href={m.linkedin} aria-label={`LinkedIn de ${m.name}`}>
+            <a href={m.linkedin} aria-label={L(`LinkedIn de ${m.name}`, `LinkedIn of ${m.name}`)}>
               <Linkedin className="size-4" aria-hidden="true" />
             </a>
           )}
@@ -94,8 +75,8 @@ function MemberCard({ m }: { m: TeamMember }) {
           person={{
             name: m.name,
             photo: m.photo_url,
-            role: m.role_title,
-            bio: m.bio,
+            role: roleTitle,
+            bio,
             facebook: m.facebook,
             twitter: m.twitter,
             linkedin: m.linkedin,
@@ -107,7 +88,40 @@ function MemberCard({ m }: { m: TeamMember }) {
 }
 
 function Equipe() {
+  const { L } = useI18n();
   const { data: team = [], isLoading } = useQuery(teamQuery);
+
+  const GROUPS: { key: string; label: string; subtitle: string }[] = [
+    {
+      key: "board",
+      label: L("Conseil d'administration", "Board of Directors"),
+      subtitle: L(
+        "Board of Directors — la gouvernance de l'agence.",
+        "The governing body of the agency.",
+      ),
+    },
+    {
+      key: "advisors",
+      label: L("Conseil consultatif", "Advisory Board"),
+      subtitle: L("Board of Advisors — nos sages conseillers.", "Our trusted advisors."),
+    },
+    {
+      key: "operational",
+      label: L("Équipe opérationnelle", "Operational team"),
+      subtitle: L(
+        "Les responsables qui préparent et accompagnent vos voyages.",
+        "The managers who prepare and support your trips.",
+      ),
+    },
+    {
+      key: "it",
+      label: L("Équipe IT & webmasters", "IT & webmasters team"),
+      subtitle: L(
+        "Développeurs et administrateurs de nos outils numériques.",
+        "Developers and administrators of our digital tools.",
+      ),
+    },
+  ];
 
   const byGroup = new Map<string, TeamMember[]>();
   for (const m of team) {
@@ -127,15 +141,22 @@ function Equipe() {
 
   return (
     <SiteLayout>
-      <CmsPageHero slug="equipe"
-        title="Notre équipe"
-        subtitle="Des professionnels burundais du voyage, de la logistique et de la médiation culturelle."
+      <CmsPageHero
+        slug="equipe"
+        title={L("Notre équipe", "Our team")}
+        subtitle={L(
+          "Des professionnels burundais du voyage, de la logistique et de la médiation culturelle.",
+          "Burundian professionals in travel, logistics and cultural mediation.",
+        )}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
-            eyebrow="L'équipe TABITO"
-            title="Celles et ceux qui préparent votre voyage"
+            eyebrow={L("L'équipe TABITO", "The TABITO team")}
+            title={L(
+              "Celles et ceux qui préparent votre voyage",
+              "The people who prepare your journey",
+            )}
           />
           {isLoading ? (
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -145,7 +166,10 @@ function Equipe() {
             </div>
           ) : team.length === 0 ? (
             <p className="mt-14 text-center text-sm text-muted-foreground">
-              Les membres de l'équipe seront publiés prochainement.
+              {L(
+                "Les membres de l'équipe seront publiés prochainement.",
+                "Team members will be published soon.",
+              )}
             </p>
           ) : (
             GROUPS.map((g) => {
