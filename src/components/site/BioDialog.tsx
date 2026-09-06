@@ -10,9 +10,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+export function initialsOf(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 export type BioPerson = {
   name: string;
-  photo: string;
+  photo?: string | null;
   role?: string | null;
   bio?: string | null;
   speciality?: string | null;
@@ -40,13 +49,23 @@ export function BioDialog({ person, label = "Voir bio" }: { person: BioPerson; l
           </DialogDescription>
         </DialogHeader>
 
-        <img
-          src={person.photo}
-          alt={person.name}
-          width={800}
-          height={600}
-          className="max-h-72 w-full rounded-xl bg-muted object-contain p-2"
-        />
+        {person.photo ? (
+          <img
+            src={person.photo}
+            alt={person.name}
+            width={800}
+            height={600}
+            className="max-h-72 w-full rounded-xl bg-muted object-contain p-2"
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className="flex h-40 w-full items-center justify-center rounded-xl bg-primary/10 font-display text-4xl font-semibold text-primary"
+          >
+            {initialsOf(person.name)}
+          </div>
+        )}
+
 
         {person.bio && (
           <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">

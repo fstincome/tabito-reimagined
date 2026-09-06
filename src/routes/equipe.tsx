@@ -2,13 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Linkedin, Twitter } from "lucide-react";
 
-import tambours from "@/assets/hero-tambours.jpg";
-import { BioDialog } from "@/components/site/BioDialog";
+import { BioDialog, initialsOf } from "@/components/site/BioDialog";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { teamQuery, type TeamMember } from "@/lib/content";
-import { imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/equipe")({
   head: () => ({
@@ -52,14 +50,23 @@ const GROUPS: { key: string; label: string; subtitle: string }[] = [
 function MemberCard({ m }: { m: TeamMember }) {
   return (
     <article className="hover-lift surface-card overflow-hidden">
-      <img
-        src={imageOr(m.photo_url, tambours)}
-        alt={m.name}
-        width={600}
-        height={600}
-        loading="lazy"
-        className="h-64 w-full bg-muted object-contain p-2"
-      />
+      {m.photo_url ? (
+        <img
+          src={m.photo_url}
+          alt={m.name}
+          width={600}
+          height={600}
+          loading="lazy"
+          className="h-64 w-full bg-muted object-contain p-2"
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          className="flex h-64 w-full items-center justify-center bg-primary/10 font-display text-5xl font-semibold text-primary"
+        >
+          {initialsOf(m.name)}
+        </div>
+      )}
       <div className="p-5">
         <h3 className="font-display text-base font-semibold text-primary">{m.name}</h3>
         {m.role_title && (
@@ -86,7 +93,7 @@ function MemberCard({ m }: { m: TeamMember }) {
         <BioDialog
           person={{
             name: m.name,
-            photo: imageOr(m.photo_url, tambours),
+            photo: m.photo_url,
             role: m.role_title,
             bio: m.bio,
             facebook: m.facebook,
