@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { notifyContactMessage } from "@/lib/notify.functions";
+import { messageTeam } from "@/lib/messages";
 
 export const Route = createFileRoute("/contacts")({
   head: () => ({
