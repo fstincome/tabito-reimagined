@@ -86,34 +86,43 @@ const FALLBACK_SLIDES = [
   },
 ];
 
+const SERVICE_ICONS: Record<string, typeof Compass> = {
+  route: RouteIcon,
+  bus: BusFront,
+  compass: Compass,
+  ambulance: Ambulance,
+  mappin: MapPin,
+  ticket: Ticket,
+};
+
 const SERVICES = [
   {
-    Icon: RouteIcon,
+    icon: "route",
     title: "Itinéraires sur mesure",
     text: "Nous concevons votre programme de voyage jour par jour selon vos envies, votre budget et la saison.",
   },
   {
-    Icon: BusFront,
+    icon: "bus",
     title: "Transport terrestre",
     text: "Véhicules confortables et chauffeurs expérimentés pour tous vos déplacements à travers le pays.",
   },
   {
-    Icon: Compass,
+    icon: "compass",
     title: "Visites guidées",
     text: "Des guides locaux passionnés qui racontent l'histoire, la nature et les traditions du Burundi.",
   },
   {
-    Icon: Ambulance,
+    icon: "ambulance",
     title: "Premiers secours & santé",
     text: "Kits de premiers soins, assistance et conseils sanitaires pendant toute la durée du séjour.",
   },
   {
-    Icon: MapPin,
+    icon: "mappin",
     title: "Attractions & loisirs",
     text: "Accès aux parcs, réserves, plages, musées vivants et évènements culturels du pays.",
   },
   {
-    Icon: Ticket,
+    icon: "ticket",
     title: "Billetterie de voyage",
     text: "Réservation de billets, transferts aéroport et formalités simplifiées pour vos déplacements.",
   },
