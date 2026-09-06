@@ -36,6 +36,7 @@ import {
   testimonialsQuery,
 } from "@/lib/content";
 import { imageOr } from "@/lib/media";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,35 +58,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const FALLBACK_SLIDES = [
-  {
-    id: "f1",
-    title: "Le Burundi, cœur vert de l'Afrique",
-    subtitle:
-      "Des collines infinies aux plages du lac Tanganyika : laissez TABITO composer votre voyage.",
-    cta_label: "Découvrir nos destinations",
-    cta_link: "/destinations",
-    image_url: tanganyika,
-  },
-  {
-    id: "f2",
-    title: "Une culture qui bat au rythme des tambours",
-    subtitle:
-      "Rencontrez les tambourinaires du Burundi, les musées vivants et l'artisanat des collines.",
-    cta_label: "Voir nos circuits",
-    cta_link: "/circuits",
-    image_url: tambours,
-  },
-  {
-    id: "f3",
-    title: "Kibira, sanctuaires et cascades",
-    subtitle: "Forêts de montagne, chutes de la Karera, sources du Nil et faune protégée.",
-    cta_label: "Nos bouquets de voyage",
-    cta_link: "/bouquets",
-    image_url: kibira,
-  },
-];
-
 const SERVICE_ICONS: Record<string, typeof Compass> = {
   route: RouteIcon,
   bus: BusFront,
@@ -94,46 +66,6 @@ const SERVICE_ICONS: Record<string, typeof Compass> = {
   mappin: MapPin,
   ticket: Ticket,
 };
-
-const SERVICES = [
-  {
-    icon: "route",
-    title: "Itinéraires sur mesure",
-    text: "Nous concevons votre programme de voyage jour par jour selon vos envies, votre budget et la saison.",
-  },
-  {
-    icon: "bus",
-    title: "Transport terrestre",
-    text: "Véhicules confortables et chauffeurs expérimentés pour tous vos déplacements à travers le pays.",
-  },
-  {
-    icon: "compass",
-    title: "Visites guidées",
-    text: "Des guides locaux passionnés qui racontent l'histoire, la nature et les traditions du Burundi.",
-  },
-  {
-    icon: "ambulance",
-    title: "Premiers secours & santé",
-    text: "Kits de premiers soins, assistance et conseils sanitaires pendant toute la durée du séjour.",
-  },
-  {
-    icon: "mappin",
-    title: "Attractions & loisirs",
-    text: "Accès aux parcs, réserves, plages, musées vivants et évènements culturels du pays.",
-  },
-  {
-    icon: "ticket",
-    title: "Billetterie de voyage",
-    text: "Réservation de billets, transferts aéroport et formalités simplifiées pour vos déplacements.",
-  },
-];
-
-const FALLBACK_DESTINATIONS = [
-  { id: "d1", name: "Parc national de la Kibira", categorie: "Nature", image_url: kibira },
-  { id: "d2", name: "Lac Tanganyika", categorie: "Plages", image_url: tanganyika },
-  { id: "d3", name: "Chutes de la Karera", categorie: "Cascades", image_url: karera },
-  { id: "d4", name: "Musées vivants", categorie: "Culture", image_url: tambours },
-];
 
 function Hero() {
   const { data: slides, isPending } = useQuery(slidesQuery);
