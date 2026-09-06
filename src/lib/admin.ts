@@ -65,6 +65,24 @@ export const RESOURCES: Resource[] = [
     ],
   },
   {
+    table: "services",
+    label: "Services (accueil)",
+    titleField: "title",
+    orderBy: { column: "sort_order", ascending: true },
+    fields: [
+      { name: "title", label: "Titre", type: "text", required: true },
+      { name: "description", label: "Texte", type: "textarea" },
+      {
+        name: "icon",
+        label: "Icône",
+        type: "select",
+        options: ["route", "bus", "compass", "ambulance", "mappin", "ticket"],
+      },
+      SORT,
+      PUBLISHED,
+    ],
+  },
+  {
     table: "slides",
     label: "Diapositives d'accueil",
     titleField: "title",

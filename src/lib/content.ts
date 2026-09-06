@@ -135,6 +135,31 @@ export const guidesQuery = queryOptions({
     pub<Guide[]>(supabase.from("guides").select("*").eq("published", true).order("sort_order")),
 });
 
+/** Homepage service cards (table créée après la génération des types). */
+export type Service = {
+  id: string;
+  title: string;
+  description: string | null;
+  icon: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+export const servicesQuery = queryOptions({
+  queryKey: ["services"],
+  queryFn: async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const db = supabase as any;
+    const { data, error } = await db
+      .from("services")
+      .select("*")
+      .eq("published", true)
+      .order("sort_order");
+    if (error) throw error;
+    return (data ?? []) as Service[];
+  },
+});
+
 /** All editable homepage sections (pages whose slug starts with `accueil-`). */
 export const homeSectionsQuery = queryOptions({
   queryKey: ["pages", "accueil"],
