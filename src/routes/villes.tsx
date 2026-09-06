@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 
-import karera from "@/assets/karera.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -81,7 +80,7 @@ function Villes() {
               {cities.map((c) => (
                 <article key={c.id} className="hover-lift surface-card overflow-hidden">
                   <img
-                    src={imageOr(c.image_url, karera)}
+                    src={imageOr(c.image_url, PLACEHOLDER_IMAGE)}
                     alt={tx(c, "name")}
                     width={1200}
                     height={800}

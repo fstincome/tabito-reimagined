@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Languages, Phone } from "lucide-react";
 
-import tambours from "@/assets/hero-tambours.jpg";
 import { BioDialog } from "@/components/site/BioDialog";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -39,7 +38,7 @@ function Guides() {
           "Ils connaissent les sentiers, les histoires et les meilleurs moments pour chaque visite.",
           "They know the trails, the stories and the best moments for every visit.",
         )}
-        image={tambours}
+        image={PLACEHOLDER_IMAGE}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
@@ -63,7 +62,7 @@ function Guides() {
               {guides.map((g) => (
                 <article key={g.id} className="hover-lift surface-card overflow-hidden text-center">
                   <img
-                    src={imageOr(g.photo_url, tambours)}
+                    src={imageOr(g.photo_url, PLACEHOLDER_IMAGE)}
                     alt={tx(g, "name")}
                     width={600}
                     height={600}
@@ -91,7 +90,7 @@ function Guides() {
                       label={L("Voir bio", "View bio")}
                       person={{
                         name: tx(g, "name"),
-                        photo: imageOr(g.photo_url, tambours),
+                        photo: imageOr(g.photo_url, PLACEHOLDER_IMAGE),
                         speciality: tx(g, "speciality"),
                         languages: tx(g, "languages"),
                         phone: g.phone,

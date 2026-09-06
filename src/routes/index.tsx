@@ -16,10 +16,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import kibira from "@/assets/hero-kibira.jpg";
-import tambours from "@/assets/hero-tambours.jpg";
-import tanganyika from "@/assets/hero-tanganyika.jpg";
-import karera from "@/assets/karera.jpg";
 import { ClientOnly } from "@/components/site/ClientOnly";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -93,12 +89,12 @@ function Hero() {
       ),
       cta_label: L("Découvrir nos destinations", "Discover our destinations"),
       cta_link: "/destinations",
-      image_url: tanganyika,
+      image_url: PLACEHOLDER_IMAGE,
     },
     {
       id: "f2",
       title: L(
-        "Une culture qui bat au rythme des tambours",
+        "Une culture qui bat au rythme des PLACEHOLDER_IMAGE",
         "A culture that beats to the rhythm of drums",
       ),
       subtitle: L(
@@ -107,7 +103,7 @@ function Hero() {
       ),
       cta_label: L("Voir nos circuits", "See our tours"),
       cta_link: "/circuits",
-      image_url: tambours,
+      image_url: PLACEHOLDER_IMAGE,
     },
     {
       id: "f3",
@@ -118,7 +114,7 @@ function Hero() {
       ),
       cta_label: L("Nos bouquets de voyage", "Our travel packages"),
       cta_link: "/bouquets",
-      image_url: kibira,
+      image_url: PLACEHOLDER_IMAGE,
     },
   ];
 
@@ -133,7 +129,7 @@ function Hero() {
         subtitle: tx(slide, "subtitle"),
         cta_label: tx(slide, "cta_label"),
         cta_link: slide.cta_link ?? "/destinations",
-        image_url: imageOr(slide.image_url, tanganyika),
+        image_url: imageOr(slide.image_url, PLACEHOLDER_IMAGE),
       }));
   const [index, setIndex] = useState(0);
 
@@ -155,7 +151,7 @@ function Hero() {
         list.map((slide, i) => (
           <img
             key={slide.id}
-            src={slide.image_url || tanganyika}
+            src={slide.image_url || PLACEHOLDER_IMAGE}
             alt={slide.title ?? ""}
             width={1920}
             height={1088}
@@ -166,7 +162,7 @@ function Hero() {
         ))
       ) : (
         <img
-          src={tanganyika}
+          src={PLACEHOLDER_IMAGE}
           alt=""
           aria-hidden="true"
           width={1920}
@@ -234,25 +230,25 @@ function Home() {
       id: "d1",
       name: L("Parc national de la Kibira", "Kibira National Park"),
       categorie: L("Nature", "Nature"),
-      image_url: kibira,
+      image_url: PLACEHOLDER_IMAGE,
     },
     {
       id: "d2",
       name: L("Lac Tanganyika", "Lake Tanganyika"),
       categorie: L("Plages", "Beaches"),
-      image_url: tanganyika,
+      image_url: PLACEHOLDER_IMAGE,
     },
     {
       id: "d3",
       name: L("Chutes de la Karera", "Karera Falls"),
       categorie: L("Cascades", "Waterfalls"),
-      image_url: karera,
+      image_url: PLACEHOLDER_IMAGE,
     },
     {
       id: "d4",
       name: L("Musées vivants", "Living museums"),
       categorie: L("Culture", "Culture"),
-      image_url: tambours,
+      image_url: PLACEHOLDER_IMAGE,
     },
   ];
 
@@ -262,7 +258,7 @@ function Home() {
           id: d.id,
           name: tx(d, "name"),
           categorie: tx(d, "categorie"),
-          image_url: imageOr(d.image_url, karera),
+          image_url: imageOr(d.image_url, PLACEHOLDER_IMAGE),
         }))
       : fallbackDestinations;
 
@@ -343,7 +339,7 @@ function Home() {
   const bouquets = packages.filter((p) => p.type === "bouquet").slice(0, 3);
   const localizedPackages = [...circuits, ...bouquets].map((p) => ({
     id: p.id,
-    image_url: imageOr(p.image_url, kibira),
+    image_url: imageOr(p.image_url, PLACEHOLDER_IMAGE),
     title: tx(p, "title"),
     description: tx(p, "description"),
     duration: p.duration,
@@ -360,7 +356,7 @@ function Home() {
         <div className="mx-auto grid max-w-[95%] items-center gap-12 px-6 lg:grid-cols-2">
           <div className="relative">
             <img
-              src={imageOr(about.image, tanganyika)}
+              src={imageOr(about.image, PLACEHOLDER_IMAGE)}
               alt={L("Rivage du lac Tanganyika au Burundi", "Shore of Lake Tanganyika in Burundi")}
               width={1920}
               height={1088}
@@ -556,7 +552,7 @@ function Home() {
               {guides.slice(0, 4).map((g) => (
                 <article key={g.id} className="hover-lift surface-card overflow-hidden text-center">
                   <img
-                    src={imageOr(g.photo_url, tambours)}
+                    src={imageOr(g.photo_url, PLACEHOLDER_IMAGE)}
                     alt={g.name}
                     width={600}
                     height={600}
@@ -596,7 +592,7 @@ function Home() {
                 return (
                   <article key={post.id} className="hover-lift surface-card overflow-hidden">
                     <img
-                      src={imageOr(post.image_url, kibira)}
+                      src={imageOr(post.image_url, PLACEHOLDER_IMAGE)}
                       alt={title}
                       width={1200}
                       height={800}
@@ -643,7 +639,7 @@ function Home() {
       {testimonials.length > 0 && (
         <section className="section-y relative isolate overflow-hidden">
           <img
-            src={imageOr(sec("temoignages", { eyebrow: "", title: "" }).image, tambours)}
+            src={imageOr(sec("temoignages", { eyebrow: "", title: "" }).image, PLACEHOLDER_IMAGE)}
             alt=""
             aria-hidden="true"
             width={1920}

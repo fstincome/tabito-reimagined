@@ -58,3 +58,13 @@ export async function registerGalleryImage(
     published: true,
   });
 }
+
+/**
+ * Neutral placeholder (dégradé sable/turquoise) utilisé quand aucune vraie
+ * photo n'a encore été téléversée. Évite d'afficher des images générées.
+ */
+export const PLACEHOLDER_IMAGE =
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9e3d8"/><stop offset="1" stop-color="#cfe3e6"/></linearGradient></defs><rect width="1200" height="800" fill="url(#g)"/></svg>`,
+  );

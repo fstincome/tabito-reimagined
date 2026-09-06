@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { CalendarDays, MapPin } from "lucide-react";
 
-import karera from "@/assets/karera.jpg";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -70,7 +69,7 @@ function Evenements() {
                   className="surface-card hover-lift flex flex-col overflow-hidden sm:flex-row"
                 >
                   <img
-                    src={imageOr(ev.image_url, karera)}
+                    src={imageOr(ev.image_url, PLACEHOLDER_IMAGE)}
                     alt={tx(ev, "title")}
                     width={800}
                     height={800}

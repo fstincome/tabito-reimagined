@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { CalendarDays, Check } from "lucide-react";
 
-import kibira from "@/assets/hero-kibira.jpg";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -63,7 +62,7 @@ export function PackageList({
                 return (
                   <article key={p.id} className="hover-lift surface-card flex flex-col overflow-hidden">
                     <img
-                      src={imageOr(p.image_url, kibira)}
+                      src={imageOr(p.image_url, PLACEHOLDER_IMAGE)}
                       alt={pTitle}
                       width={1200}
                       height={800}
