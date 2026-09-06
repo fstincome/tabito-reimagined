@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import { useI18n } from "@/lib/i18n";
 
 const logo = logoAsset.url;
 
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/login")({
 });
 
 function Login() {
+  const { L } = useI18n();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,10 +51,10 @@ function Login() {
     });
     setLoading(false);
     if (error) {
-      toast.error("Identifiants invalides.");
+      toast.error(L("Identifiants invalides.", "Invalid credentials."));
       return;
     }
-    toast.success("Bienvenue !");
+    toast.success(L("Bienvenue !", "Welcome!"));
     navigate({ to: "/dashboard" });
   }
 
@@ -63,15 +65,15 @@ function Login() {
           <div className="surface-card p-8">
             <div className="rainbow-bar mb-8 rounded-full" />
             <div className="flex flex-col items-center text-center">
-              <img src={logo} alt="Logo TABITO" width={72} height={72} className="size-16 object-contain" />
-              <h1 className="mt-4 font-display text-2xl font-bold text-primary">Espace admin</h1>
+              <img src={logo} alt={L("Logo TABITO", "TABITO logo")} width={72} height={72} className="size-16 object-contain" />
+              <h1 className="mt-4 font-display text-2xl font-bold text-primary">{L("Espace admin", "Admin area")}</h1>
               <p className="mt-2 text-sm text-muted-foreground">
-                Connectez-vous pour gérer le contenu du site.
+                {L("Connectez-vous pour gérer le contenu du site.", "Sign in to manage the site's content.")}
               </p>
             </div>
             <form onSubmit={onSubmit} className="mt-8 space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Adresse e-mail</Label>
+                <Label htmlFor="email">{L("Adresse e-mail", "Email address")}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -82,7 +84,7 @@ function Login() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Mot de passe</Label>
+                <Label htmlFor="password">{L("Mot de passe", "Password")}</Label>
                 <Input
                   id="password"
                   type="password"
@@ -94,7 +96,7 @@ function Login() {
               </div>
               <Button type="submit" variant="lagoon" className="w-full" disabled={loading}>
                 <LockKeyhole className="size-4" aria-hidden="true" />
-                {loading ? "Connexion…" : "Se connecter"}
+                {loading ? L("Connexion…", "Signing in…") : L("Se connecter", "Sign in")}
               </Button>
             </form>
           </div>

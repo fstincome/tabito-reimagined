@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 
 import heroDefault from "@/assets/hero-tanganyika.jpg";
 import { pageQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 import { isHttpUrl } from "@/lib/media";
 
 export function PageHero({
@@ -15,6 +16,7 @@ export function PageHero({
   subtitle?: string | undefined;
   image?: string | undefined;
 }) {
+  const { L } = useI18n();
 
   return (
     <section className="relative isolate overflow-hidden">
@@ -35,11 +37,11 @@ export function PageHero({
           </p>
         )}
         <nav
-          aria-label="Fil d'ariane"
+          aria-label={L("Fil d'ariane", "Breadcrumb")}
           className="mt-6 flex items-center gap-2 text-xs text-primary-foreground/80"
         >
           <Link to="/" className="hover:text-primary-foreground">
-            Accueil
+            {L("Accueil", "Home")}
           </Link>
           <ChevronRight className="size-3.5" aria-hidden="true" />
           <span className="font-medium text-primary-foreground">{title}</span>
@@ -64,11 +66,12 @@ export function CmsPageHero({
   subtitle?: string | undefined;
   image?: string | undefined;
 }) {
+  const { tx } = useI18n();
   const { data: page } = useQuery(pageQuery(slug));
   return (
     <PageHero
-      title={page?.title || title}
-      subtitle={page?.subtitle || subtitle}
+      title={tx(page, "title") || title}
+      subtitle={tx(page, "subtitle") || subtitle}
       image={isHttpUrl(page?.hero_image_url) ? (page?.hero_image_url as string) : image}
     />
   );

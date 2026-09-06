@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { OpportunityList } from "@/components/site/OpportunityList";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/formations")({
   head: () => ({
@@ -15,15 +16,26 @@ export const Route = createFileRoute("/formations")({
       { property: "og:description", content: "Se former aux métiers du tourisme au Burundi." },
     ],
   }),
-  component: () => (
+  component: FormationsPage,
+});
+
+function FormationsPage() {
+  const { L } = useI18n();
+  return (
     <OpportunityList
       kind="formation"
       slug="formations"
-      title="Formations"
-      subtitle="Se former aux métiers de l'accueil, du guidage et de la gestion touristique."
-      eyebrow="SMED LAB"
-      heading="Formations ouvertes"
-      empty="Aucune formation n'est ouverte aux inscriptions pour le moment."
+      title={L("Formations", "Training")}
+      subtitle={L(
+        "Se former aux métiers de l'accueil, du guidage et de la gestion touristique.",
+        "Train for careers in hospitality, guiding and tourism management.",
+      )}
+      eyebrow={L("SMED LAB", "SMED LAB")}
+      heading={L("Formations ouvertes", "Open training programs")}
+      empty={L(
+        "Aucune formation n'est ouverte aux inscriptions pour le moment.",
+        "No training program is open for registration at the moment.",
+      )}
     />
-  ),
-});
+  );
+}

@@ -58,6 +58,8 @@ export function PackageList({
                 const highlights = tlist(p, "highlights");
                 const pTitle = tx(p, "title");
                 const pDescription = tx(p, "description");
+                const pDuration = tx(p, "duration");
+                const pPrice = tx(p, "price");
                 return (
                   <article key={p.id} className="hover-lift surface-card flex flex-col overflow-hidden">
                     <img
@@ -69,10 +71,10 @@ export function PackageList({
                       className="h-52 w-full object-cover"
                     />
                     <div className="flex flex-1 flex-col p-6">
-                      {p.duration && (
+                      {pDuration && (
                         <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                           <CalendarDays className="size-3.5" aria-hidden="true" />
-                          {p.duration}
+                          {pDuration}
                         </p>
                       )}
                       <h3 className="mt-2 font-display text-lg font-semibold text-primary">
@@ -94,8 +96,8 @@ export function PackageList({
                         </ul>
                       )}
                       <div className="mt-auto pt-6">
-                        {p.price && (
-                          <p className="font-display text-xl font-semibold text-accent">{p.price}</p>
+                        {pPrice && (
+                          <p className="font-display text-xl font-semibold text-accent">{pPrice}</p>
                         )}
                         <Button asChild className="mt-3 w-full" variant="hero">
                           <Link to="/contacts">{L("Demander un devis", "Request a quote")}</Link>

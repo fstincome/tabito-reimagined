@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CmsPage } from "@/components/site/CmsPage";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/valeurs")({
   head: () => ({
@@ -18,40 +19,58 @@ export const Route = createFileRoute("/valeurs")({
       },
     ],
   }),
-  component: () => (
+  component: Valeurs,
+});
+
+function Valeurs() {
+  const { L } = useI18n();
+  return (
     <CmsPage
       slug="valeurs"
-      title="Nos valeurs"
-      subtitle="Ce qui guide chacune de nos décisions et chacun de nos voyages."
+      title={L("Nos valeurs", "Our values")}
+      subtitle={L(
+        "Ce qui guide chacune de nos décisions et chacun de nos voyages.",
+        "What guides every one of our decisions and every one of our journeys.",
+      )}
       fallback={
         <>
-          <h2>Hospitalité</h2>
+          <h2>{L("Hospitalité", "Hospitality")}</h2>
           <p>
-            L'accueil burundais est notre première richesse. Chaque voyageur est reçu comme un hôte,
-            pas comme un client.
+            {L(
+              "L'accueil burundais est notre première richesse. Chaque voyageur est reçu comme un hôte, pas comme un client.",
+              "Burundian hospitality is our greatest asset. Every traveller is welcomed as a guest, not just a customer.",
+            )}
           </p>
-          <h2>Intégrité</h2>
+          <h2>{L("Intégrité", "Integrity")}</h2>
           <p>
-            Des prix clairs, des engagements tenus, une information honnête sur les conditions de
-            voyage et de sécurité.
+            {L(
+              "Des prix clairs, des engagements tenus, une information honnête sur les conditions de voyage et de sécurité.",
+              "Clear pricing, commitments kept, and honest information about travel and safety conditions.",
+            )}
           </p>
-          <h2>Respect</h2>
+          <h2>{L("Respect", "Respect")}</h2>
           <p>
-            Respect des communautés, de leurs traditions et de leur consentement ; respect des
-            milieux naturels et des espèces protégées.
+            {L(
+              "Respect des communautés, de leurs traditions et de leur consentement ; respect des milieux naturels et des espèces protégées.",
+              "Respect for communities, their traditions and their consent; respect for natural environments and protected species.",
+            )}
           </p>
-          <h2>Excellence</h2>
+          <h2>{L("Excellence", "Excellence")}</h2>
           <p>
-            Formation continue de nos équipes, exigence sur la qualité du transport, de
-            l'hébergement et du guidage.
+            {L(
+              "Formation continue de nos équipes, exigence sur la qualité du transport, de l'hébergement et du guidage.",
+              "Ongoing training of our teams, high standards for transport, accommodation and guiding quality.",
+            )}
           </p>
-          <h2>Solidarité</h2>
+          <h2>{L("Solidarité", "Solidarity")}</h2>
           <p>
-            Une part de notre activité soutient les initiatives locales : artisanat, jeunesse,
-            éducation environnementale.
+            {L(
+              "Une part de notre activité soutient les initiatives locales : artisanat, jeunesse, éducation environnementale.",
+              "Part of our activity supports local initiatives: crafts, youth and environmental education.",
+            )}
           </p>
         </>
       }
     />
-  ),
-});
+  );
+}

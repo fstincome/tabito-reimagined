@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { messageTeam } from "@/lib/messages";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/contacts")({
   head: () => ({
@@ -33,6 +34,7 @@ export const Route = createFileRoute("/contacts")({
 });
 
 function Contacts() {
+  const { L } = useI18n();
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +45,7 @@ function Contacts() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
-      toast.error("Merci de remplir votre nom, votre e-mail et votre message.");
+      toast.error(L("Merci de remplir votre nom, votre e-mail et votre message.", "Please fill in your name, email and message."));
       return;
     }
     setLoading(true);
@@ -56,7 +58,7 @@ function Contacts() {
     });
     setLoading(false);
     if (error) {
-      toast.error("Envoi impossible pour le moment. Réessayez plus tard.");
+      toast.error(L("Envoi impossible pour le moment. Réessayez plus tard.", "Unable to send right now. Please try again later."));
       return;
     }
     void messageTeam({
@@ -73,18 +75,18 @@ function Contacts() {
       link: "/dashboard",
     }).catch(() => undefined);
     setForm({ name: "", email: "", phone: "", subject: "", message: "" });
-    toast.success("Message envoyé ! Nous vous répondons dans les meilleurs délais.");
+    toast.success(L("Message envoyé ! Nous vous répondons dans les meilleurs délais.", "Message sent! We'll get back to you as soon as possible."));
   }
 
   return (
     <SiteLayout>
       <CmsPageHero slug="contacts"
-        title="Contacts"
-        subtitle="Une question, un devis, une réservation ? Notre équipe vous répond depuis Bujumbura."
+        title={L("Contacts", "Contact")}
+        subtitle={L("Une question, un devis, une réservation ? Notre équipe vous répond depuis Bujumbura.", "A question, a quote, a booking? Our team answers from Bujumbura.")}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
-          <SectionHeading eyebrow="Écrivez-nous" title="Parlons de votre voyage" />
+          <SectionHeading eyebrow={L("Écrivez-nous", "Write to us")} title={L("Parlons de votre voyage", "Let's talk about your trip")} />
 
           <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.4fr]">
             <div className="surface-card space-y-6 p-8">
@@ -92,7 +94,7 @@ function Contacts() {
               <div className="flex items-start gap-3">
                 <Phone className="mt-0.5 size-5 text-accent" aria-hidden="true" />
                 <div>
-                  <p className="font-display text-sm font-semibold text-primary">Téléphone</p>
+                  <p className="font-display text-sm font-semibold text-primary">{L("Téléphone", "Phone")}</p>
                   <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} className="text-sm text-muted-foreground hover:text-accent">
                     {CONTACT.phone}
                   </a>
@@ -110,7 +112,7 @@ function Contacts() {
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 size-5 text-accent" aria-hidden="true" />
                 <div>
-                  <p className="font-display text-sm font-semibold text-primary">Adresse</p>
+                  <p className="font-display text-sm font-semibold text-primary">{L("Adresse", "Address")}</p>
                   <p className="text-sm text-muted-foreground">{CONTACT.address}</p>
                 </div>
               </div>
@@ -119,36 +121,36 @@ function Contacts() {
             <form onSubmit={onSubmit} className="surface-card space-y-4 p-8">
               <div className="grid gap-4 sm:grid-cols-2">
                 <Input
-                  placeholder="Votre nom *"
+                  placeholder={L("Votre nom *", "Your name *")}
                   value={form.name}
                   onChange={(e) => set("name", e.target.value)}
                 />
                 <Input
                   type="email"
-                  placeholder="Votre e-mail *"
+                  placeholder={L("Votre e-mail *", "Your email *")}
                   value={form.email}
                   onChange={(e) => set("email", e.target.value)}
                 />
                 <Input
-                  placeholder="Téléphone"
+                  placeholder={L("Téléphone", "Phone")}
                   value={form.phone}
                   onChange={(e) => set("phone", e.target.value)}
                 />
                 <Input
-                  placeholder="Sujet"
+                  placeholder={L("Sujet", "Subject")}
                   value={form.subject}
                   onChange={(e) => set("subject", e.target.value)}
                 />
               </div>
               <Textarea
                 rows={7}
-                placeholder="Votre message *"
+                placeholder={L("Votre message *", "Your message *")}
                 value={form.message}
                 onChange={(e) => set("message", e.target.value)}
               />
               <Button type="submit" variant="lagoon" disabled={loading}>
                 <Send className="size-4" aria-hidden="true" />
-                {loading ? "Envoi…" : "Envoyer le message"}
+                {loading ? L("Envoi…", "Sending…") : L("Envoyer le message", "Send message")}
               </Button>
             </form>
           </div>

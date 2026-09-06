@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { OpportunityList } from "@/components/site/OpportunityList";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/emplois")({
   head: () => ({
@@ -15,15 +16,26 @@ export const Route = createFileRoute("/emplois")({
       { property: "og:description", content: "Emplois et stages du secteur touristique burundais." },
     ],
   }),
-  component: () => (
+  component: EmploisPage,
+});
+
+function EmploisPage() {
+  const { L } = useI18n();
+  return (
     <OpportunityList
       kind="emploi"
       slug="emplois"
-      title="Emplois"
-      subtitle="Les opportunités professionnelles du tourisme et de l'économie créative au Burundi."
-      eyebrow="Carrières"
-      heading="Offres d'emploi et de stage"
-      empty="Aucune offre d'emploi n'est publiée pour le moment."
+      title={L("Emplois", "Jobs")}
+      subtitle={L(
+        "Les opportunités professionnelles du tourisme et de l'économie créative au Burundi.",
+        "Professional opportunities in tourism and the creative economy in Burundi.",
+      )}
+      eyebrow={L("Carrières", "Careers")}
+      heading={L("Offres d'emploi et de stage", "Job and internship offers")}
+      empty={L(
+        "Aucune offre d'emploi n'est publiée pour le moment.",
+        "No job offers are published at the moment.",
+      )}
     />
-  ),
-});
+  );
+}

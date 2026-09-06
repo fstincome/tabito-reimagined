@@ -7,6 +7,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { citiesQuery, pageQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 import { imageOr, isHttpUrl } from "@/lib/media";
 
 export const Route = createFileRoute("/villes")({
@@ -36,16 +37,20 @@ function highlightsOf(value: unknown): string[] {
 }
 
 function Villes() {
+  const { L, tx, tlist } = useI18n();
   const { data: cities = [] } = useQuery(citiesQuery);
   const { data: page } = useQuery(pageQuery("villes"));
 
   return (
     <SiteLayout>
       <PageHero
-        title={page?.title || "Villes du Burundi"}
+        title={tx(page, "title") || L("Villes du Burundi", "Cities of Burundi")}
         subtitle={
-          page?.subtitle ||
-          "Des rives du lac Tanganyika aux collines du centre, chaque ville a son caractère."
+          tx(page, "subtitle") ||
+          L(
+            "Des rives du lac Tanganyika aux collines du centre, chaque ville a son caractère.",
+            "From the shores of Lake Tanganyika to the central hills, each city has its own character.",
+          )
         }
         image={isHttpUrl(page?.hero_image_url) ? (page?.hero_image_url as string) : undefined}
       />
@@ -53,17 +58,23 @@ function Villes() {
       <section className="section-y bg-background">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
-            eyebrow="Territoires"
-            title="Les villes à découvrir"
+            eyebrow={L("Territoires", "Territories")}
+            title={L("Les villes à découvrir", "Cities to discover")}
             description={
-              page?.body ||
-              "Chaque ville peut être combinée dans un circuit sur mesure. Contactez-nous pour composer votre itinéraire."
+              tx(page, "body") ||
+              L(
+                "Chaque ville peut être combinée dans un circuit sur mesure. Contactez-nous pour composer votre itinéraire.",
+                "Each city can be combined into a tailor-made tour. Contact us to build your itinerary.",
+              )
             }
           />
 
           {cities.length === 0 ? (
             <p className="mt-12 text-center text-sm text-muted-foreground">
-              Les villes seront publiées prochainement depuis le tableau de bord.
+              {L(
+                "Les villes seront publiées prochainement depuis le tableau de bord.",
+                "Cities will be published soon from the dashboard.",
+              )}
             </p>
           ) : (
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -71,7 +82,7 @@ function Villes() {
                 <article key={c.id} className="hover-lift surface-card overflow-hidden">
                   <img
                     src={imageOr(c.image_url, karera)}
-                    alt={c.name}
+                    alt={tx(c, "name")}
                     width={1200}
                     height={800}
                     loading="lazy"
@@ -84,16 +95,16 @@ function Villes() {
                       </span>
                     )}
                     <h2 className="mt-3 font-display text-lg font-semibold text-primary">
-                      {c.name}
+                      {tx(c, "name")}
                     </h2>
                     {(c.summary || c.description) && (
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        {c.summary || c.description}
+                        {tx(c, "summary") || tx(c, "description")}
                       </p>
                     )}
-                    {highlightsOf(c.highlights).length > 0 && (
+                    {highlightsOf(tlist(c, "highlights")).length > 0 && (
                       <ul className="mt-4 space-y-1.5 text-sm text-foreground">
-                        {highlightsOf(c.highlights).map((h) => (
+                        {tlist(c, "highlights").map((h) => (
                           <li key={h} className="flex gap-2">
                             <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                             <span>{h}</span>
