@@ -368,25 +368,26 @@ export const RESOURCES: Resource[] = [
 const db = supabase as any;
 
 export async function listRows(resource: Resource): Promise<any[]> {
-  const { data, error } = await db
-    .from(resource.table)
-    .select("*")
-    .order(resource.orderBy.column, {
-      ascending: resource.orderBy.ascending,
-      nullsFirst: false,
-    });
+  let q = db.from(resource.table).select("*");
+  for (const [col, val] of Object.entries(resource.filter ?? {})) q = q.eq(col, val);
+  const { data, error } = await q.order(resource.orderBy.column, {
+    ascending: resource.orderBy.ascending,
+    nullsFirst: false,
+  });
   if (error) throw error;
   return data ?? [];
 }
 
 export async function saveRow(resource: Resource, id: string | null, values: any) {
+  const payload = { ...values, ...(resource.filter ?? {}) };
   const query = id
-    ? db.from(resource.table).update(values).eq("id", id).select("id")
-    : db.from(resource.table).insert(values).select("id");
+    ? db.from(resource.table).update(payload).eq("id", id).select("id")
+    : db.from(resource.table).insert(payload).select("id");
   const { data, error } = await query;
   if (error) throw error;
   return (data?.[0] as { id?: string } | undefined) ?? null;
 }
+
 
 export async function deleteRow(resource: Resource, id: string) {
   const { error } = await db.from(resource.table).delete().eq("id", id);
