@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { notifyBooking } from "@/lib/notify.functions";
+import { messageTeam, messageUser } from "@/lib/messages";
 import {
   citiesQuery,
   destinationsQuery,
