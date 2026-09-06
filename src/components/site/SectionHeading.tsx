@@ -1,3 +1,35 @@
+import { useQuery } from "@tanstack/react-query";
+
+import { pageQuery } from "@/lib/content";
+
+/**
+ * Section heading whose eyebrow (sous-titre), title and description
+ * (contenu) are editable from the dashboard via a `pages` row.
+ */
+export function CmsSectionHeading({
+  slug,
+  eyebrow,
+  title,
+  description,
+  align = "center",
+}: {
+  slug: string;
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: "center" | "left";
+}) {
+  const { data: page } = useQuery(pageQuery(slug));
+  return (
+    <SectionHeading
+      eyebrow={page?.subtitle || eyebrow}
+      title={page?.title || title}
+      description={page?.body || description}
+      align={align}
+    />
+  );
+}
+
 export function SectionHeading({
   eyebrow,
   title,
@@ -5,11 +37,11 @@ export function SectionHeading({
   align = "center",
   light = false,
 }: {
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  description?: string;
-  align?: "center" | "left";
-  light?: boolean;
+  description?: string | undefined;
+  align?: "center" | "left" | undefined;
+  light?: boolean | undefined;
 }) {
   const centered = align === "center";
   return (

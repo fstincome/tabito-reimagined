@@ -7,7 +7,7 @@ import kibira from "@/assets/hero-kibira.jpg";
 import karera from "@/assets/karera.jpg";
 import { ClientOnly } from "@/components/site/ClientOnly";
 import { CmsPageHero } from "@/components/site/PageHero";
-import { SectionHeading } from "@/components/site/SectionHeading";
+import { CmsSectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SitesMap } from "@/components/site/SitesMap";
 import { destinationsQuery, sitesQuery } from "@/lib/content";
@@ -54,7 +54,8 @@ function Destinations() {
 
       <section className="section-y bg-background">
         <div className="mx-auto max-w-[95%] px-6">
-          <SectionHeading
+          <CmsSectionHeading
+            slug="destinations-selection"
             eyebrow="Sélection"
             title="Nos destinations phares"
             description="Chaque destination peut être visitée seule ou intégrée dans un circuit plus large."
@@ -119,7 +120,8 @@ function Destinations() {
 
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
-          <SectionHeading
+          <CmsSectionHeading
+            slug="destinations-carte"
             eyebrow="Carte"
             title="Tous les sites recensés"
             description="Les coordonnées sont saisies par notre équipe depuis le tableau de bord et s'affichent instantanément ici."

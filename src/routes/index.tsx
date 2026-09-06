@@ -31,6 +31,7 @@ import {
   destinationsQuery,
   guidesQuery,
   packagesQuery,
+  servicesQuery,
   slidesQuery,
   testimonialsQuery,
 } from "@/lib/content";
@@ -85,34 +86,43 @@ const FALLBACK_SLIDES = [
   },
 ];
 
+const SERVICE_ICONS: Record<string, typeof Compass> = {
+  route: RouteIcon,
+  bus: BusFront,
+  compass: Compass,
+  ambulance: Ambulance,
+  mappin: MapPin,
+  ticket: Ticket,
+};
+
 const SERVICES = [
   {
-    Icon: RouteIcon,
+    icon: "route",
     title: "Itinéraires sur mesure",
     text: "Nous concevons votre programme de voyage jour par jour selon vos envies, votre budget et la saison.",
   },
   {
-    Icon: BusFront,
+    icon: "bus",
     title: "Transport terrestre",
     text: "Véhicules confortables et chauffeurs expérimentés pour tous vos déplacements à travers le pays.",
   },
   {
-    Icon: Compass,
+    icon: "compass",
     title: "Visites guidées",
     text: "Des guides locaux passionnés qui racontent l'histoire, la nature et les traditions du Burundi.",
   },
   {
-    Icon: Ambulance,
+    icon: "ambulance",
     title: "Premiers secours & santé",
     text: "Kits de premiers soins, assistance et conseils sanitaires pendant toute la durée du séjour.",
   },
   {
-    Icon: MapPin,
+    icon: "mappin",
     title: "Attractions & loisirs",
     text: "Accès aux parcs, réserves, plages, musées vivants et évènements culturels du pays.",
   },
   {
-    Icon: Ticket,
+    icon: "ticket",
     title: "Billetterie de voyage",
     text: "Réservation de billets, transferts aéroport et formalités simplifiées pour vos déplacements.",
   },
@@ -193,6 +203,7 @@ function Hero() {
 
 function Home() {
   const { data: sections = {} } = useQuery(homeSectionsQuery);
+  const { data: services = [] } = useQuery(servicesQuery);
   const { data: destinations } = useQuery(destinationsQuery);
   const { data: packages = [] } = useQuery(packagesQuery);
   const { data: guides = [] } = useQuery(guidesQuery);
@@ -294,15 +305,21 @@ function Home() {
             {...sec("services", { eyebrow: "Nos services", title: "Tout ce qu'il faut pour bien voyager" })}
           />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map(({ Icon, title, text }) => (
-              <article key={title} className="hover-lift surface-card p-7">
-                <span className="flex size-12 items-center justify-center rounded-xl bg-secondary text-primary">
-                  <Icon className="size-6" aria-hidden="true" />
-                </span>
-                <h3 className="mt-5 text-lg font-semibold text-primary">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
-              </article>
-            ))}
+            {(services.length > 0
+              ? services.map((s) => ({ icon: s.icon ?? "compass", title: s.title, text: s.description ?? "" }))
+              : SERVICES
+            ).map(({ icon, title, text }) => {
+              const Icon = SERVICE_ICONS[icon] ?? Compass;
+              return (
+                <article key={title} className="hover-lift surface-card p-7">
+                  <span className="flex size-12 items-center justify-center rounded-xl bg-secondary text-primary">
+                    <Icon className="size-6" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold text-primary">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
