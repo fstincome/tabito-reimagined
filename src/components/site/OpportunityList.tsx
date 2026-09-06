@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { CalendarClock, Download, ExternalLink } from "lucide-react";
 
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { opportunitiesQuery } from "@/lib/content";
