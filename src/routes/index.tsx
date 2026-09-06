@@ -31,7 +31,7 @@ import {
   slidesQuery,
   testimonialsQuery,
 } from "@/lib/content";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({

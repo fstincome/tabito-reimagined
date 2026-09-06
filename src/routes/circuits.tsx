@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGE } from "@/lib/media";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { PackageList } from "@/components/site/PackageList";

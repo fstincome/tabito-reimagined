@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { packagesQuery } from "@/lib/content";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 import { useI18n } from "@/lib/i18n";
 
 export function PackageList({

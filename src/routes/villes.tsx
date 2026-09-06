@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { citiesQuery, pageQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { imageOr, isHttpUrl } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr, isHttpUrl } from "@/lib/media";
 
 export const Route = createFileRoute("/villes")({
   head: () => ({

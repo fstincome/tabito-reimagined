@@ -10,7 +10,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { SitesMap } from "@/components/site/SitesMap";
 import { useI18n } from "@/lib/i18n";
 import { destinationsQuery, sitesQuery } from "@/lib/content";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/destinations")({
   head: () => ({

@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 
 import { pageQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { isHttpUrl } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, isHttpUrl } from "@/lib/media";
 
 export function PageHero({
   title,

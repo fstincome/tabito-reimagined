@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { eventsQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { imageOr } from "@/lib/media";
+import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/evenements")({
   head: () => ({
