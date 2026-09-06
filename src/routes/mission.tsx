@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CmsPage } from "@/components/site/CmsPage";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/mission")({
   head: () => ({
@@ -18,28 +19,67 @@ export const Route = createFileRoute("/mission")({
       },
     ],
   }),
-  component: () => (
+  component: Mission,
+});
+
+function Mission() {
+  const { L } = useI18n();
+  return (
     <CmsPage
       slug="mission"
-      title="Notre mission"
-      subtitle="Faire du tourisme un moteur de développement pour le Burundi."
+      title={L("Notre mission", "Our mission")}
+      subtitle={L(
+        "Faire du tourisme un moteur de développement pour le Burundi.",
+        "Making tourism a driver of development for Burundi.",
+      )}
       fallback={
         <>
           <p>
-            TABITO a pour mission de <strong>promouvoir la destination Burundi</strong> et de
-            faciliter l'accès des voyageurs aux richesses du pays, tout en garantissant un impact
-            positif pour les communautés d'accueil.
+            {L(
+              "TABITO a pour mission de",
+              "TABITO's mission is to",
+            )}{" "}
+            <strong>{L("promouvoir la destination Burundi", "promote Burundi as a destination")}</strong>{" "}
+            {L(
+              "et de faciliter l'accès des voyageurs aux richesses du pays, tout en garantissant un impact positif pour les communautés d'accueil.",
+              "and to make it easier for travellers to access the country's riches, while ensuring a positive impact for host communities.",
+            )}
           </p>
-          <h2>Nos axes de mission</h2>
+          <h2>{L("Nos axes de mission", "Our mission areas")}</h2>
           <ul>
-            <li>Structurer une offre touristique lisible, fiable et de qualité.</li>
-            <li>Digitaliser l'information touristique : sites, cartes, circuits, évènements.</li>
-            <li>Créer des emplois durables pour les jeunes et les femmes du secteur.</li>
-            <li>Protéger et valoriser le patrimoine naturel et culturel burundais.</li>
-            <li>Faciliter la coopération régionale autour du lac Tanganyika.</li>
+            <li>
+              {L(
+                "Structurer une offre touristique lisible, fiable et de qualité.",
+                "Structure a clear, reliable and high-quality tourism offer.",
+              )}
+            </li>
+            <li>
+              {L(
+                "Digitaliser l'information touristique : sites, cartes, circuits, évènements.",
+                "Digitalise tourism information: sites, maps, tours, events.",
+              )}
+            </li>
+            <li>
+              {L(
+                "Créer des emplois durables pour les jeunes et les femmes du secteur.",
+                "Create sustainable jobs for young people and women in the sector.",
+              )}
+            </li>
+            <li>
+              {L(
+                "Protéger et valoriser le patrimoine naturel et culturel burundais.",
+                "Protect and promote Burundi's natural and cultural heritage.",
+              )}
+            </li>
+            <li>
+              {L(
+                "Faciliter la coopération régionale autour du lac Tanganyika.",
+                "Facilitate regional cooperation around Lake Tanganyika.",
+              )}
+            </li>
           </ul>
         </>
       }
     />
-  ),
-});
+  );
+}

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { PackageList } from "@/components/site/PackageList";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/bouquets")({
   head: () => ({
@@ -18,16 +19,30 @@ export const Route = createFileRoute("/bouquets")({
       },
     ],
   }),
-  component: () => (
+  component: BouquetsPage,
+});
+
+function BouquetsPage() {
+  const { L } = useI18n();
+  return (
     <PackageList
       mode="bouquet"
       slug="bouquets"
-      title="Bouquets"
-      subtitle="Des formules modulables : vous choisissez les composantes, nous assemblons le séjour."
-      eyebrow="Formules"
-      heading="Nos bouquets de voyage"
-      description="Nature, culture, détente ou affaires : chaque bouquet regroupe un ensemble de prestations cohérentes."
-      empty="Les bouquets seront publiés prochainement depuis le tableau de bord."
+      title={L("Bouquets", "Packages")}
+      subtitle={L(
+        "Des formules modulables : vous choisissez les composantes, nous assemblons le séjour.",
+        "Flexible packages: you choose the components, we assemble the trip.",
+      )}
+      eyebrow={L("Formules", "Packages")}
+      heading={L("Nos bouquets de voyage", "Our travel packages")}
+      description={L(
+        "Nature, culture, détente ou affaires : chaque bouquet regroupe un ensemble de prestations cohérentes.",
+        "Nature, culture, relaxation or business: each package brings together a coherent set of services.",
+      )}
+      empty={L(
+        "Les bouquets seront publiés prochainement depuis le tableau de bord.",
+        "Packages will be published soon from the dashboard.",
+      )}
     />
-  ),
-});
+  );
+}

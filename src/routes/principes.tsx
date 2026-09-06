@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CmsPage } from "@/components/site/CmsPage";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/principes")({
   head: () => ({
@@ -18,41 +19,67 @@ export const Route = createFileRoute("/principes")({
       },
     ],
   }),
-  component: () => (
+  component: Principes,
+});
+
+function Principes() {
+  const { L } = useI18n();
+  return (
     <CmsPage
       slug="principes"
-      title="Nos principes"
-      subtitle="Des règles simples appliquées à tous nos séjours."
+      title={L("Nos principes", "Our principles")}
+      subtitle={L(
+        "Des règles simples appliquées à tous nos séjours.",
+        "Simple rules applied to all our stays.",
+      )}
       fallback={
         <>
           <ol>
             <li>
-              <strong>Sécurité d'abord</strong> — évaluation des itinéraires, kits de premiers
-              secours, contacts d'urgence pour chaque circuit.
+              <strong>{L("Sécurité d'abord", "Safety first")}</strong>{" "}
+              {L(
+                "— évaluation des itinéraires, kits de premiers secours, contacts d'urgence pour chaque circuit.",
+                "— route assessment, first-aid kits and emergency contacts for every tour.",
+              )}
             </li>
             <li>
-              <strong>Transparence des prix</strong> — ce qui est inclus et ce qui ne l'est pas est
-              écrit noir sur blanc.
+              <strong>{L("Transparence des prix", "Transparent pricing")}</strong>{" "}
+              {L(
+                "— ce qui est inclus et ce qui ne l'est pas est écrit noir sur blanc.",
+                "— what is included and what is not is stated in black and white.",
+              )}
             </li>
             <li>
-              <strong>Priorité au local</strong> — guides, hébergeurs, restaurateurs et artisans
-              burundais.
+              <strong>{L("Priorité au local", "Local priority")}</strong>{" "}
+              {L(
+                "— guides, hébergeurs, restaurateurs et artisans burundais.",
+                "— Burundian guides, hosts, restaurateurs and artisans.",
+              )}
             </li>
             <li>
-              <strong>Empreinte minimale</strong> — groupes de taille réduite, gestion des déchets,
-              sensibilisation des visiteurs.
+              <strong>{L("Empreinte minimale", "Minimal footprint")}</strong>{" "}
+              {L(
+                "— groupes de taille réduite, gestion des déchets, sensibilisation des visiteurs.",
+                "— small group sizes, waste management, visitor awareness.",
+              )}
             </li>
             <li>
-              <strong>Consentement des communautés</strong> — aucune visite de village ou de site
-              sacré sans accord préalable.
+              <strong>{L("Consentement des communautés", "Community consent")}</strong>{" "}
+              {L(
+                "— aucune visite de village ou de site sacré sans accord préalable.",
+                "— no visit to a village or sacred site without prior agreement.",
+              )}
             </li>
             <li>
-              <strong>Amélioration continue</strong> — chaque voyage se termine par un retour
-              d'expérience exploité par nos équipes.
+              <strong>{L("Amélioration continue", "Continuous improvement")}</strong>{" "}
+              {L(
+                "— chaque voyage se termine par un retour d'expérience exploité par nos équipes.",
+                "— every trip ends with feedback that our teams use to improve.",
+              )}
             </li>
           </ol>
         </>
       }
     />
-  ),
-});
+  );
+}

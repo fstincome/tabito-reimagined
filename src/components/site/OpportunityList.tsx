@@ -5,6 +5,7 @@ import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { opportunitiesQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 
 export function OpportunityList({
   kind,
@@ -23,6 +24,7 @@ export function OpportunityList({
   heading: string;
   empty: string;
 }) {
+  const { lang, L, tx } = useI18n();
   const { data: items = [], isLoading } = useQuery(opportunitiesQuery(kind));
 
   return (
@@ -41,19 +43,23 @@ export function OpportunityList({
             <p className="mt-14 text-center text-sm text-muted-foreground">{empty}</p>
           ) : (
             <div className="mt-14 space-y-5">
-              {items.map((o) => (
+              {items.map((o) => {
+                const oTitle = tx(o, "title");
+                const oDescription = tx(o, "description");
+                const oOrganisation = tx(o, "organisation");
+                return (
                 <article key={o.id} className="hover-lift surface-card p-7">
                   <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                    {o.organisation && (
+                    {oOrganisation && (
                       <span className="rounded-full bg-secondary px-2.5 py-1 font-semibold text-primary">
-                        {o.organisation}
+                        {oOrganisation}
                       </span>
                     )}
                     {o.deadline && (
                       <span className="flex items-center gap-1.5 text-coral">
                         <CalendarClock className="size-3.5" aria-hidden="true" />
-                        Échéance :{" "}
-                        {new Date(o.deadline).toLocaleDateString("fr-FR", {
+                        {L("Échéance", "Deadline")} :{" "}
+                        {new Date(o.deadline).toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
                           day: "numeric",
                           month: "long",
                           year: "numeric",
@@ -62,11 +68,11 @@ export function OpportunityList({
                     )}
                   </div>
                   <h3 className="mt-3 font-display text-xl font-semibold text-primary">
-                    {o.title}
+                    {oTitle}
                   </h3>
-                  {o.description && (
+                  {oDescription && (
                     <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
-                      {o.description}
+                      {oDescription}
                     </p>
                   )}
                   <div className="mt-5 flex flex-wrap gap-4 text-sm font-medium">
@@ -77,7 +83,7 @@ export function OpportunityList({
                         rel="noreferrer"
                         className="inline-flex items-center gap-1.5 text-accent"
                       >
-                        Postuler / en savoir plus{" "}
+                        {L("Postuler / en savoir plus", "Apply / learn more")}{" "}
                         <ExternalLink className="size-3.5" aria-hidden="true" />
                       </a>
                     )}
@@ -88,13 +94,14 @@ export function OpportunityList({
                         rel="noreferrer"
                         className="inline-flex items-center gap-1.5 text-primary"
                       >
-                        Télécharger le document{" "}
+                        {L("Télécharger le document", "Download the document")}{" "}
                         <Download className="size-3.5" aria-hidden="true" />
                       </a>
                     )}
                   </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

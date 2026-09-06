@@ -36,6 +36,7 @@ import {
   testimonialsQuery,
 } from "@/lib/content";
 import { imageOr } from "@/lib/media";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,35 +58,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const FALLBACK_SLIDES = [
-  {
-    id: "f1",
-    title: "Le Burundi, cœur vert de l'Afrique",
-    subtitle:
-      "Des collines infinies aux plages du lac Tanganyika : laissez TABITO composer votre voyage.",
-    cta_label: "Découvrir nos destinations",
-    cta_link: "/destinations",
-    image_url: tanganyika,
-  },
-  {
-    id: "f2",
-    title: "Une culture qui bat au rythme des tambours",
-    subtitle:
-      "Rencontrez les tambourinaires du Burundi, les musées vivants et l'artisanat des collines.",
-    cta_label: "Voir nos circuits",
-    cta_link: "/circuits",
-    image_url: tambours,
-  },
-  {
-    id: "f3",
-    title: "Kibira, sanctuaires et cascades",
-    subtitle: "Forêts de montagne, chutes de la Karera, sources du Nil et faune protégée.",
-    cta_label: "Nos bouquets de voyage",
-    cta_link: "/bouquets",
-    image_url: kibira,
-  },
-];
-
 const SERVICE_ICONS: Record<string, typeof Compass> = {
   route: RouteIcon,
   bus: BusFront,
@@ -95,52 +67,74 @@ const SERVICE_ICONS: Record<string, typeof Compass> = {
   ticket: Ticket,
 };
 
-const SERVICES = [
-  {
-    icon: "route",
-    title: "Itinéraires sur mesure",
-    text: "Nous concevons votre programme de voyage jour par jour selon vos envies, votre budget et la saison.",
-  },
-  {
-    icon: "bus",
-    title: "Transport terrestre",
-    text: "Véhicules confortables et chauffeurs expérimentés pour tous vos déplacements à travers le pays.",
-  },
-  {
-    icon: "compass",
-    title: "Visites guidées",
-    text: "Des guides locaux passionnés qui racontent l'histoire, la nature et les traditions du Burundi.",
-  },
-  {
-    icon: "ambulance",
-    title: "Premiers secours & santé",
-    text: "Kits de premiers soins, assistance et conseils sanitaires pendant toute la durée du séjour.",
-  },
-  {
-    icon: "mappin",
-    title: "Attractions & loisirs",
-    text: "Accès aux parcs, réserves, plages, musées vivants et évènements culturels du pays.",
-  },
-  {
-    icon: "ticket",
-    title: "Billetterie de voyage",
-    text: "Réservation de billets, transferts aéroport et formalités simplifiées pour vos déplacements.",
-  },
-];
-
-const FALLBACK_DESTINATIONS = [
-  { id: "d1", name: "Parc national de la Kibira", categorie: "Nature", image_url: kibira },
-  { id: "d2", name: "Lac Tanganyika", categorie: "Plages", image_url: tanganyika },
-  { id: "d3", name: "Chutes de la Karera", categorie: "Cascades", image_url: karera },
-  { id: "d4", name: "Musées vivants", categorie: "Culture", image_url: tambours },
-];
+type LocalizedSlide = {
+  id: string;
+  title: string;
+  subtitle: string;
+  cta_label: string;
+  cta_link: string;
+  image_url: string;
+};
 
 function Hero() {
+  const { L, tx } = useI18n();
   const { data: slides, isPending } = useQuery(slidesQuery);
+
+  const fallbackSlides: LocalizedSlide[] = [
+    {
+      id: "f1",
+      title: L(
+        "Le Burundi, cœur vert de l'Afrique",
+        "Burundi, the green heart of Africa",
+      ),
+      subtitle: L(
+        "Des collines infinies aux plages du lac Tanganyika : laissez TABITO composer votre voyage.",
+        "From endless hills to the shores of Lake Tanganyika: let TABITO craft your journey.",
+      ),
+      cta_label: L("Découvrir nos destinations", "Discover our destinations"),
+      cta_link: "/destinations",
+      image_url: tanganyika,
+    },
+    {
+      id: "f2",
+      title: L(
+        "Une culture qui bat au rythme des tambours",
+        "A culture that beats to the rhythm of drums",
+      ),
+      subtitle: L(
+        "Rencontrez les tambourinaires du Burundi, les musées vivants et l'artisanat des collines.",
+        "Meet Burundi's drummers, living museums and hillside craftsmanship.",
+      ),
+      cta_label: L("Voir nos circuits", "See our tours"),
+      cta_link: "/circuits",
+      image_url: tambours,
+    },
+    {
+      id: "f3",
+      title: L("Kibira, sanctuaires et cascades", "Kibira, sanctuaries and waterfalls"),
+      subtitle: L(
+        "Forêts de montagne, chutes de la Karera, sources du Nil et faune protégée.",
+        "Mountain forests, Karera falls, source of the Nile and protected wildlife.",
+      ),
+      cta_label: L("Nos bouquets de voyage", "Our travel packages"),
+      cta_link: "/bouquets",
+      image_url: kibira,
+    },
+  ];
+
   // Pendant le chargement seulement, on montre les diapos de secours.
   // Ensuite, ce sont exclusivement les diapos publiées du tableau de bord :
   // en cacher ou en supprimer réduit réellement le carrousel.
-  const list = isPending ? FALLBACK_SLIDES : (slides ?? []);
+  const list: LocalizedSlide[] = isPending
+    ? fallbackSlides
+    : (slides ?? []).map((slide) => ({
+        id: slide.id,
+        title: tx(slide, "title"),
+        subtitle: tx(slide, "subtitle"),
+        cta_label: tx(slide, "cta_label"),
+        cta_link: slide.cta_link ?? "/destinations",
+        image_url: imageOr(slide.image_url, tanganyika),
+      }));
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -161,7 +155,7 @@ function Hero() {
         list.map((slide, i) => (
           <img
             key={slide.id}
-            src={imageOr(slide.image_url, tanganyika)}
+            src={slide.image_url || tanganyika}
             alt={slide.title ?? ""}
             width={1920}
             height={1088}
@@ -185,32 +179,32 @@ function Hero() {
       <div className="relative mx-auto flex min-h-[76vh] max-w-[95%] flex-col justify-center px-6 py-24">
         <p className="eyebrow">Tanganyika e-Bridge International Tours</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-          {active?.title ?? "Bienvenue chez TABITO"}
+          {active?.title || L("Bienvenue chez TABITO", "Welcome to TABITO")}
         </h1>
         {active?.subtitle && (
           <p className="mt-5 max-w-xl text-base text-primary-foreground/85">{active.subtitle}</p>
         )}
         <div className="mt-9 flex flex-wrap gap-3">
           <Button asChild size="xl" variant="lagoon">
-            <Link to={(active?.cta_link as string) || "/destinations"}>
-              {active?.cta_label || "Découvrir"}
+            <Link to={active?.cta_link || "/destinations"}>
+              {active?.cta_label || L("Découvrir", "Discover")}
               <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
           <Button asChild size="xl" variant="outlineLight">
-            <Link to="/contacts">Nous contacter</Link>
+            <Link to="/contacts">{L("Nous contacter", "Contact us")}</Link>
           </Button>
         </div>
 
         {list.length > 1 && (
-          <div className="mt-12 flex gap-2" role="tablist" aria-label="Diapositives">
+          <div className="mt-12 flex gap-2" role="tablist" aria-label={L("Diapositives", "Slides")}>
             {list.map((s, i) => (
               <button
                 key={s.id}
                 type="button"
                 role="tab"
                 aria-selected={i === index}
-                aria-label={`Diapositive ${i + 1}`}
+                aria-label={L(`Diapositive ${i + 1}`, `Slide ${i + 1}`)}
                 onClick={() => setIndex(i)}
                 className={`h-1.5 rounded-full transition-all ${
                   i === index ? "w-10 bg-accent" : "w-5 bg-primary-foreground/40"
@@ -226,6 +220,7 @@ function Hero() {
 }
 
 function Home() {
+  const { L, tx } = useI18n();
   const { data: sections = {} } = useQuery(homeSectionsQuery);
   const { data: services = [] } = useQuery(servicesQuery);
   const { data: destinations } = useQuery(destinationsQuery);
@@ -234,25 +229,127 @@ function Home() {
   const { data: posts = [] } = useQuery(blogQuery);
   const { data: testimonials = [] } = useQuery(testimonialsQuery);
 
-  const dests =
-    destinations && destinations.length > 0 ? destinations.slice(0, 4) : FALLBACK_DESTINATIONS;
+  const fallbackDestinations = [
+    {
+      id: "d1",
+      name: L("Parc national de la Kibira", "Kibira National Park"),
+      categorie: L("Nature", "Nature"),
+      image_url: kibira,
+    },
+    {
+      id: "d2",
+      name: L("Lac Tanganyika", "Lake Tanganyika"),
+      categorie: L("Plages", "Beaches"),
+      image_url: tanganyika,
+    },
+    {
+      id: "d3",
+      name: L("Chutes de la Karera", "Karera Falls"),
+      categorie: L("Cascades", "Waterfalls"),
+      image_url: karera,
+    },
+    {
+      id: "d4",
+      name: L("Musées vivants", "Living museums"),
+      categorie: L("Culture", "Culture"),
+      image_url: tambours,
+    },
+  ];
+
+  const localizedDestinations =
+    destinations && destinations.length > 0
+      ? destinations.slice(0, 4).map((d) => ({
+          id: d.id,
+          name: tx(d, "name"),
+          categorie: tx(d, "categorie"),
+          image_url: imageOr(d.image_url, karera),
+        }))
+      : fallbackDestinations;
+
   const sec = (slug: string, fb: { eyebrow: string; title: string; description?: string }) => {
     const row = sections[`accueil-${slug}`];
     return {
-      eyebrow: row?.subtitle || fb.eyebrow,
-      title: row?.title || fb.title,
-      description: row?.body || fb.description || "",
+      eyebrow: (row ? tx(row, "subtitle") : "") || fb.eyebrow,
+      title: (row ? tx(row, "title") : "") || fb.title,
+      description: (row ? tx(row, "body") : "") || fb.description || "",
       image: row?.hero_image_url ?? null,
     };
   };
 
   const about = sec("apropos", {
-    eyebrow: "À propos de nous",
-    title: "TABITO, votre pont vers le Burundi",
+    eyebrow: L("À propos de nous", "About us"),
+    title: L("TABITO, votre pont vers le Burundi", "TABITO, your bridge to Burundi"),
   });
+
+  const localizedServices =
+    services.length > 0
+      ? services.map((s) => ({
+          icon: s.icon ?? "compass",
+          title: tx(s, "title"),
+          text: tx(s, "description"),
+        }))
+      : [
+          {
+            icon: "route",
+            title: L("Itinéraires sur mesure", "Custom itineraries"),
+            text: L(
+              "Nous concevons votre programme de voyage jour par jour selon vos envies, votre budget et la saison.",
+              "We design your day-by-day travel programme based on your wishes, budget and the season.",
+            ),
+          },
+          {
+            icon: "bus",
+            title: L("Transport terrestre", "Land transport"),
+            text: L(
+              "Véhicules confortables et chauffeurs expérimentés pour tous vos déplacements à travers le pays.",
+              "Comfortable vehicles and experienced drivers for all your journeys across the country.",
+            ),
+          },
+          {
+            icon: "compass",
+            title: L("Visites guidées", "Guided tours"),
+            text: L(
+              "Des guides locaux passionnés qui racontent l'histoire, la nature et les traditions du Burundi.",
+              "Passionate local guides who share the history, nature and traditions of Burundi.",
+            ),
+          },
+          {
+            icon: "ambulance",
+            title: L("Premiers secours & santé", "First aid & health"),
+            text: L(
+              "Kits de premiers soins, assistance et conseils sanitaires pendant toute la durée du séjour.",
+              "First-aid kits, assistance and health advice throughout your stay.",
+            ),
+          },
+          {
+            icon: "mappin",
+            title: L("Attractions & loisirs", "Attractions & leisure"),
+            text: L(
+              "Accès aux parcs, réserves, plages, musées vivants et évènements culturels du pays.",
+              "Access to parks, reserves, beaches, living museums and cultural events across the country.",
+            ),
+          },
+          {
+            icon: "ticket",
+            title: L("Billetterie de voyage", "Travel ticketing"),
+            text: L(
+              "Réservation de billets, transferts aéroport et formalités simplifiées pour vos déplacements.",
+              "Ticket booking, airport transfers and simplified formalities for your travels.",
+            ),
+          },
+        ];
 
   const circuits = packages.filter((p) => p.type !== "bouquet").slice(0, 3);
   const bouquets = packages.filter((p) => p.type === "bouquet").slice(0, 3);
+  const localizedPackages = [...circuits, ...bouquets].map((p) => ({
+    id: p.id,
+    image_url: imageOr(p.image_url, kibira),
+    title: tx(p, "title"),
+    description: tx(p, "description"),
+    duration: p.duration,
+    type: p.type,
+    price: p.price,
+  }));
 
   return (
     <SiteLayout>
@@ -264,7 +361,7 @@ function Home() {
           <div className="relative">
             <img
               src={imageOr(about.image, tanganyika)}
-              alt="Rivage du lac Tanganyika au Burundi"
+              alt={L("Rivage du lac Tanganyika au Burundi", "Shore of Lake Tanganyika in Burundi")}
               width={1920}
               height={1088}
               loading="lazy"
@@ -273,7 +370,7 @@ function Home() {
             <div className="absolute -bottom-6 -right-4 hidden w-48 rounded-2xl bg-card p-5 shadow-[var(--shadow-lift)] sm:block">
               <p className="font-display text-3xl font-bold text-accent">+18</p>
               <p className="text-xs text-muted-foreground">
-                provinces et sites couverts par nos circuits
+                {L("provinces et sites couverts par nos circuits", "provinces and sites covered by our tours")}
               </p>
             </div>
           </div>
@@ -284,10 +381,10 @@ function Home() {
             </div>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {[
-                "Guides locaux certifiés",
-                "Circuits personnalisés",
-                "Transport et logistique inclus",
-                "Tourisme durable et communautaire",
+                L("Guides locaux certifiés", "Certified local guides"),
+                L("Circuits personnalisés", "Personalized tours"),
+                L("Transport et logistique inclus", "Transport and logistics included"),
+                L("Tourisme durable et communautaire", "Sustainable, community-based tourism"),
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm">
                   <BadgeCheck className="size-4 shrink-0 text-leaf" aria-hidden="true" />
@@ -297,7 +394,7 @@ function Home() {
             </ul>
             <Button asChild className="mt-8" variant="hero" size="lg">
               <Link to="/apropos">
-                En savoir plus <ArrowRight aria-hidden="true" />
+                {L("En savoir plus", "Learn more")} <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
           </div>
@@ -308,7 +405,10 @@ function Home() {
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
-            {...sec("carte", { eyebrow: "Carte interactive", title: "Les sites touristiques du Burundi" })}
+            {...sec("carte", {
+              eyebrow: L("Carte interactive", "Interactive map"),
+              title: L("Les sites touristiques du Burundi", "Tourist sites of Burundi"),
+            })}
           />
           <div className="mt-14">
             <ClientOnly
@@ -326,13 +426,13 @@ function Home() {
       <section className="section-y bg-background">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
-            {...sec("services", { eyebrow: "Nos services", title: "Tout ce qu'il faut pour bien voyager" })}
+            {...sec("services", {
+              eyebrow: L("Nos services", "Our services"),
+              title: L("Tout ce qu'il faut pour bien voyager", "Everything you need for a great trip"),
+            })}
           />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {(services.length > 0
-              ? services.map((s) => ({ icon: s.icon ?? "compass", title: s.title, text: s.description ?? "" }))
-              : SERVICES
-            ).map(({ icon, title, text }) => {
+            {localizedServices.map(({ icon, title, text }) => {
               const Icon = SERVICE_ICONS[icon] ?? Compass;
               return (
                 <article key={title} className="hover-lift surface-card p-7">
@@ -352,17 +452,20 @@ function Home() {
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading
-            {...sec("destinations", { eyebrow: "Destinations", title: "Des lieux qui marquent à vie" })}
+            {...sec("destinations", {
+              eyebrow: L("Destinations", "Destinations"),
+              title: L("Des lieux qui marquent à vie", "Places that mark you for life"),
+            })}
           />
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {dests.map((d) => (
+            {localizedDestinations.map((d) => (
               <Link
                 key={d.id}
                 to="/destinations"
                 className="hover-lift group relative block overflow-hidden rounded-2xl"
               >
                 <img
-                  src={imageOr(d.image_url, karera)}
+                  src={d.image_url}
                   alt={d.name}
                   width={1200}
                   height={900}
@@ -384,7 +487,7 @@ function Home() {
           <div className="mt-10 text-center">
             <Button asChild variant="hero" size="lg">
               <Link to="/destinations">
-                Toutes les destinations <ArrowRight aria-hidden="true" />
+                {L("Toutes les destinations", "All destinations")} <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
           </div>
@@ -392,20 +495,20 @@ function Home() {
       </section>
 
       {/* Circuits & bouquets */}
-      {(circuits.length > 0 || bouquets.length > 0) && (
+      {localizedPackages.length > 0 && (
         <section className="section-y bg-background">
           <div className="mx-auto max-w-[95%] px-6">
             <SectionHeading
               {...sec("formules", {
-                eyebrow: "Circuits & bouquets",
-                title: "Nos formules de voyage",
+                eyebrow: L("Circuits & bouquets", "Tours & packages"),
+                title: L("Nos formules de voyage", "Our travel packages"),
               })}
             />
             <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[...circuits, ...bouquets].map((p) => (
+              {localizedPackages.map((p) => (
                 <article key={p.id} className="hover-lift surface-card overflow-hidden">
                   <img
-                    src={imageOr(p.image_url, kibira)}
+                    src={p.image_url}
                     alt={p.title}
                     width={1200}
                     height={800}
@@ -445,8 +548,8 @@ function Home() {
           <div className="mx-auto max-w-[95%] px-6">
             <SectionHeading
               {...sec("guides", {
-                eyebrow: "Nos guides",
-                title: "Des passionnés à vos côtés",
+                eyebrow: L("Nos guides", "Our guides"),
+                title: L("Des passionnés à vos côtés", "Passionate guides by your side"),
               })}
             />
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -462,13 +565,13 @@ function Home() {
                   />
                   <div className="p-5">
                     <h3 className="font-display text-base font-semibold text-primary">{g.name}</h3>
-                    {g.speciality && (
-                      <p className="mt-1 text-xs text-muted-foreground">{g.speciality}</p>
+                    {tx(g, "speciality") && (
+                      <p className="mt-1 text-xs text-muted-foreground">{tx(g, "speciality")}</p>
                     )}
-                    {g.languages && (
+                    {tx(g, "languages") && (
                       <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-accent">
                         <Languages className="size-3.5" aria-hidden="true" />
-                        {g.languages}
+                        {tx(g, "languages")}
                       </p>
                     )}
                   </div>
@@ -484,46 +587,53 @@ function Home() {
         <section className="section-y bg-background">
           <div className="mx-auto max-w-[95%] px-6">
             <SectionHeading
-              {...sec("blog", { eyebrow: "Actualités", title: "Les dernières nouvelles" })}
+              {...sec("blog", { eyebrow: L("Actualités", "News"), title: L("Les dernières nouvelles", "The latest news") })}
             />
             <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {posts.slice(0, 3).map((post) => (
-                <article key={post.id} className="hover-lift surface-card overflow-hidden">
-                  <img
-                    src={imageOr(post.image_url, kibira)}
-                    alt={post.title}
-                    width={1200}
-                    height={800}
-                    loading="lazy"
-                    className="h-48 w-full object-cover"
-                  />
-                  <div className="p-6">
-                    {post.published_at && (
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(post.published_at).toLocaleDateString("fr-FR", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </p>
-                    )}
-                    <h3 className="mt-2 font-display text-lg font-semibold text-primary">
-                      {post.title}
-                    </h3>
-                    {post.excerpt && (
-                      <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
-                        {post.excerpt}
-                      </p>
-                    )}
-                    <Link
-                      to="/blog"
-                      className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent"
-                    >
-                      Lire la suite <ArrowRight className="size-4" aria-hidden="true" />
-                    </Link>
-                  </div>
-                </article>
-              ))}
+              {posts.slice(0, 3).map((post) => {
+                const title = tx(post, "title");
+                const excerpt = tx(post, "excerpt");
+                return (
+                  <article key={post.id} className="hover-lift surface-card overflow-hidden">
+                    <img
+                      src={imageOr(post.image_url, kibira)}
+                      alt={title}
+                      width={1200}
+                      height={800}
+                      loading="lazy"
+                      className="h-48 w-full object-cover"
+                    />
+                    <div className="p-6">
+                      {post.published_at && (
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(post.published_at).toLocaleDateString(
+                            L("fr-FR", "en-US"),
+                            {
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            },
+                          )}
+                        </p>
+                      )}
+                      <h3 className="mt-2 font-display text-lg font-semibold text-primary">
+                        {title}
+                      </h3>
+                      {excerpt && (
+                        <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
+                          {excerpt}
+                        </p>
+                      )}
+                      <Link
+                        to="/blog"
+                        className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent"
+                      >
+                        {L("Lire la suite", "Read more")} <ArrowRight className="size-4" aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -546,8 +656,8 @@ function Home() {
             <SectionHeading
               light
               {...sec("temoignages", {
-                eyebrow: "Témoignages",
-                title: "Ils ont voyagé avec TABITO",
+                eyebrow: L("Témoignages", "Testimonials"),
+                title: L("Ils ont voyagé avec TABITO", "They travelled with TABITO"),
               })}
             />
             <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -555,7 +665,7 @@ function Home() {
                 <figure key={t.id} className="surface-card p-7">
                   <Quote className="size-7 text-accent" aria-hidden="true" />
                   <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                    {t.message}
+                    {tx(t, "message")}
                   </blockquote>
                   <div className="mt-5 flex items-center gap-1">
                     {Array.from({ length: t.rating ?? 5 }).map((_, i) => (
@@ -564,8 +674,8 @@ function Home() {
                   </div>
                   <figcaption className="mt-4">
                     <p className="font-display font-semibold text-primary">{t.author}</p>
-                    {t.role_title && (
-                      <p className="text-xs text-muted-foreground">{t.role_title}</p>
+                    {tx(t, "role_title") && (
+                      <p className="text-xs text-muted-foreground">{tx(t, "role_title")}</p>
                     )}
                   </figcaption>
                 </figure>

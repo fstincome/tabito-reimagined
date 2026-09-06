@@ -9,6 +9,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { packagesQuery } from "@/lib/content";
 import { imageOr } from "@/lib/media";
+import { useI18n } from "@/lib/i18n";
 
 export function PackageList({
   mode,
@@ -31,6 +32,7 @@ export function PackageList({
   empty: string;
   heroImage?: string;
 }) {
+  const { L, tx, tlist } = useI18n();
   const { data: packages = [], isLoading } = useQuery(packagesQuery);
   const items = packages.filter((p) =>
     mode === "bouquet" ? p.type === "bouquet" : p.type !== "bouquet",
@@ -53,30 +55,34 @@ export function PackageList({
           ) : (
             <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {items.map((p) => {
-                const highlights = Array.isArray(p.highlights) ? (p.highlights as string[]) : [];
+                const highlights = tlist(p, "highlights");
+                const pTitle = tx(p, "title");
+                const pDescription = tx(p, "description");
+                const pDuration = tx(p, "duration");
+                const pPrice = tx(p, "price");
                 return (
                   <article key={p.id} className="hover-lift surface-card flex flex-col overflow-hidden">
                     <img
                       src={imageOr(p.image_url, kibira)}
-                      alt={p.title}
+                      alt={pTitle}
                       width={1200}
                       height={800}
                       loading="lazy"
                       className="h-52 w-full object-cover"
                     />
                     <div className="flex flex-1 flex-col p-6">
-                      {p.duration && (
+                      {pDuration && (
                         <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                           <CalendarDays className="size-3.5" aria-hidden="true" />
-                          {p.duration}
+                          {pDuration}
                         </p>
                       )}
                       <h3 className="mt-2 font-display text-lg font-semibold text-primary">
-                        {p.title}
+                        {pTitle}
                       </h3>
-                      {p.description && (
+                      {pDescription && (
                         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                          {p.description}
+                          {pDescription}
                         </p>
                       )}
                       {highlights.length > 0 && (
@@ -90,11 +96,11 @@ export function PackageList({
                         </ul>
                       )}
                       <div className="mt-auto pt-6">
-                        {p.price && (
-                          <p className="font-display text-xl font-semibold text-accent">{p.price}</p>
+                        {pPrice && (
+                          <p className="font-display text-xl font-semibold text-accent">{pPrice}</p>
                         )}
                         <Button asChild className="mt-3 w-full" variant="hero">
-                          <Link to="/contacts">Demander un devis</Link>
+                          <Link to="/contacts">{L("Demander un devis", "Request a quote")}</Link>
                         </Button>
                       </div>
                     </div>

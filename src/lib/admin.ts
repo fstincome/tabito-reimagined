@@ -395,10 +395,49 @@ export async function deleteRow(resource: Resource, id: string) {
   if (error) throw error;
 }
 
+
+/** Columns holding translatable text, per table (an `_en` twin exists in the database). */
+const TRANSLATABLE: Record<string, string[]> = {
+  sites: ["nom_site", "categorie", "description"],
+  services: ["title", "description"],
+  slides: ["title", "subtitle", "cta_label"],
+  destinations: ["name", "categorie", "summary", "description"],
+  cities: ["name", "summary", "description", "highlights"],
+  packages: ["title", "duration", "price", "description", "highlights"],
+  blog_posts: ["title", "excerpt", "content"],
+  events: ["title", "description", "place"],
+  opportunities: ["title", "description", "organisation"],
+  gallery_images: ["title", "categorie"],
+  partners: ["description"],
+  team_members: ["role_title", "bio"],
+  guides: ["speciality", "languages"],
+  testimonials: ["role_title", "message"],
+  pages: ["title", "subtitle", "body"],
+};
+
+/** Fields of the French tab (all editable fields). */
+export function frFields(resource: Resource): Field[] {
+  return resource.fields;
+}
+
+/** Fields of the English tab: `<column>_en` twins of the translatable columns. */
+export function enFields(resource: Resource): Field[] {
+  const cols = TRANSLATABLE[resource.table] ?? [];
+  return resource.fields
+    .filter((f) => cols.includes(f.name))
+    .map((f) => ({ ...f, name: `${f.name}_en`, required: false }));
+}
+
+export function hasEnglishTab(resource: Resource): boolean {
+  return !resource.readOnly && enFields(resource).length > 0;
+}
+
 export function emptyValues(resource: Resource): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const f of resource.fields) {
     out[f.name] = f.type === "bool" ? f.name === "published" : f.type === "number" ? 0 : "";
   }
+  for (const f of enFields(resource)) out[f.name] = "";
   return out;
 }
+

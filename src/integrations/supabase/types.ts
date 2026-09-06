@@ -18,40 +18,49 @@ export type Database = {
         Row: {
           author: string | null
           content: string | null
+          content_en: string | null
           created_at: string
           excerpt: string | null
+          excerpt_en: string | null
           id: string
           image_url: string | null
           published: boolean
           published_at: string | null
           slug: string | null
           title: string
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           author?: string | null
           content?: string | null
+          content_en?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
           id?: string
           image_url?: string | null
           published?: boolean
           published_at?: string | null
           slug?: string | null
           title: string
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           author?: string | null
           content?: string | null
+          content_en?: string | null
           created_at?: string
           excerpt?: string | null
+          excerpt_en?: string | null
           id?: string
           image_url?: string | null
           published?: boolean
           published_at?: string | null
           slug?: string | null
           title?: string
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -120,40 +129,52 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          description_en: string | null
           highlights: Json
+          highlights_en: Json
           id: string
           image_url: string | null
           name: string
+          name_en: string | null
           province: string | null
           published: boolean
           sort_order: number
           summary: string | null
+          summary_en: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           highlights?: Json
+          highlights_en?: Json
           id?: string
           image_url?: string | null
           name: string
+          name_en?: string | null
           province?: string | null
           published?: boolean
           sort_order?: number
           summary?: string | null
+          summary_en?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           highlights?: Json
+          highlights_en?: Json
           id?: string
           image_url?: string | null
           name?: string
+          name_en?: string | null
           province?: string | null
           published?: boolean
           sort_order?: number
           summary?: string | null
+          summary_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -194,41 +215,53 @@ export type Database = {
       destinations: {
         Row: {
           categorie: string | null
+          categorie_en: string | null
           created_at: string
           description: string | null
+          description_en: string | null
           gallery: Json
           id: string
           image_url: string | null
           name: string
+          name_en: string | null
           published: boolean
           sort_order: number
           summary: string | null
+          summary_en: string | null
           updated_at: string
         }
         Insert: {
           categorie?: string | null
+          categorie_en?: string | null
           created_at?: string
           description?: string | null
+          description_en?: string | null
           gallery?: Json
           id?: string
           image_url?: string | null
           name: string
+          name_en?: string | null
           published?: boolean
           sort_order?: number
           summary?: string | null
+          summary_en?: string | null
           updated_at?: string
         }
         Update: {
           categorie?: string | null
+          categorie_en?: string | null
           created_at?: string
           description?: string | null
+          description_en?: string | null
           gallery?: Json
           id?: string
           image_url?: string | null
           name?: string
+          name_en?: string | null
           published?: boolean
           sort_order?: number
           summary?: string | null
+          summary_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -237,40 +270,49 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          description_en: string | null
           end_date: string | null
           id: string
           image_url: string | null
           place: string | null
+          place_en: string | null
           published: boolean
           start_date: string | null
           status: string
           title: string
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           end_date?: string | null
           id?: string
           image_url?: string | null
           place?: string | null
+          place_en?: string | null
           published?: boolean
           start_date?: string | null
           status?: string
           title: string
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           end_date?: string | null
           id?: string
           image_url?: string | null
           place?: string | null
+          place_en?: string | null
           published?: boolean
           start_date?: string | null
           status?: string
           title?: string
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -278,32 +320,38 @@ export type Database = {
       gallery_images: {
         Row: {
           categorie: string | null
+          categorie_en: string | null
           created_at: string
           id: string
           image_url: string
           published: boolean
           sort_order: number
           title: string | null
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           categorie?: string | null
+          categorie_en?: string | null
           created_at?: string
           id?: string
           image_url: string
           published?: boolean
           sort_order?: number
           title?: string | null
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           categorie?: string | null
+          categorie_en?: string | null
           created_at?: string
           id?: string
           image_url?: string
           published?: boolean
           sort_order?: number
           title?: string | null
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -313,36 +361,42 @@ export type Database = {
           created_at: string
           id: string
           languages: string | null
+          languages_en: string | null
           name: string
           phone: string | null
           photo_url: string | null
           published: boolean
           sort_order: number
           speciality: string | null
+          speciality_en: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           id?: string
           languages?: string | null
+          languages_en?: string | null
           name: string
           phone?: string | null
           photo_url?: string | null
           published?: boolean
           sort_order?: number
           speciality?: string | null
+          speciality_en?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           id?: string
           languages?: string | null
+          languages_en?: string | null
           name?: string
           phone?: string | null
           photo_url?: string | null
           published?: boolean
           sort_order?: number
           speciality?: string | null
+          speciality_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -409,42 +463,51 @@ export type Database = {
           created_at: string
           deadline: string | null
           description: string | null
+          description_en: string | null
           file_url: string | null
           id: string
           image_url: string | null
           kind: string
           link: string | null
           organisation: string | null
+          organisation_en: string | null
           published: boolean
           title: string
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           deadline?: string | null
           description?: string | null
+          description_en?: string | null
           file_url?: string | null
           id?: string
           image_url?: string | null
           kind?: string
           link?: string | null
           organisation?: string | null
+          organisation_en?: string | null
           published?: boolean
           title: string
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           deadline?: string | null
           description?: string | null
+          description_en?: string | null
           file_url?: string | null
           id?: string
           image_url?: string | null
           kind?: string
           link?: string | null
           organisation?: string | null
+          organisation_en?: string | null
           published?: boolean
           title?: string
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -453,42 +516,57 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          description_en: string | null
           duration: string | null
+          duration_en: string | null
           highlights: Json
+          highlights_en: Json
           id: string
           image_url: string | null
           price: string | null
+          price_en: string | null
           published: boolean
           sort_order: number
           title: string
+          title_en: string | null
           type: string
           updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           duration?: string | null
+          duration_en?: string | null
           highlights?: Json
+          highlights_en?: Json
           id?: string
           image_url?: string | null
           price?: string | null
+          price_en?: string | null
           published?: boolean
           sort_order?: number
           title: string
+          title_en?: string | null
           type?: string
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           duration?: string | null
+          duration_en?: string | null
           highlights?: Json
+          highlights_en?: Json
           id?: string
           image_url?: string | null
           price?: string | null
+          price_en?: string | null
           published?: boolean
           sort_order?: number
           title?: string
+          title_en?: string | null
           type?: string
           updated_at?: string
         }
@@ -497,32 +575,41 @@ export type Database = {
       pages: {
         Row: {
           body: string | null
+          body_en: string | null
           created_at: string
           hero_image_url: string | null
           id: string
           slug: string
           subtitle: string | null
+          subtitle_en: string | null
           title: string
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           body?: string | null
+          body_en?: string | null
           created_at?: string
           hero_image_url?: string | null
           id?: string
           slug: string
           subtitle?: string | null
+          subtitle_en?: string | null
           title: string
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           body?: string | null
+          body_en?: string | null
           created_at?: string
           hero_image_url?: string | null
           id?: string
           slug?: string
           subtitle?: string | null
+          subtitle_en?: string | null
           title?: string
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -531,6 +618,7 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          description_en: string | null
           id: string
           logo_url: string | null
           name: string
@@ -542,6 +630,7 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           id?: string
           logo_url?: string | null
           name: string
@@ -553,6 +642,7 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           id?: string
           logo_url?: string | null
           name?: string
@@ -588,31 +678,37 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          description_en: string | null
           icon: string
           id: string
           published: boolean
           sort_order: number
           title: string
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           icon?: string
           id?: string
           published?: boolean
           sort_order?: number
           title: string
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
+          description_en?: string | null
           icon?: string
           id?: string
           published?: boolean
           sort_order?: number
           title?: string
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -620,42 +716,51 @@ export type Database = {
       sites: {
         Row: {
           categorie: string | null
+          categorie_en: string | null
           commune: string | null
           created_at: string
           description: string | null
+          description_en: string | null
           id: string
           image_url: string | null
           latitude: number
           longitude: number
           nom_site: string
+          nom_site_en: string | null
           province: string | null
           published: boolean
           updated_at: string
         }
         Insert: {
           categorie?: string | null
+          categorie_en?: string | null
           commune?: string | null
           created_at?: string
           description?: string | null
+          description_en?: string | null
           id?: string
           image_url?: string | null
           latitude: number
           longitude: number
           nom_site: string
+          nom_site_en?: string | null
           province?: string | null
           published?: boolean
           updated_at?: string
         }
         Update: {
           categorie?: string | null
+          categorie_en?: string | null
           commune?: string | null
           created_at?: string
           description?: string | null
+          description_en?: string | null
           id?: string
           image_url?: string | null
           latitude?: number
           longitude?: number
           nom_site?: string
+          nom_site_en?: string | null
           province?: string | null
           published?: boolean
           updated_at?: string
@@ -666,37 +771,46 @@ export type Database = {
         Row: {
           created_at: string
           cta_label: string | null
+          cta_label_en: string | null
           cta_link: string | null
           id: string
           image_url: string | null
           published: boolean
           sort_order: number
           subtitle: string | null
+          subtitle_en: string | null
           title: string
+          title_en: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           cta_label?: string | null
+          cta_label_en?: string | null
           cta_link?: string | null
           id?: string
           image_url?: string | null
           published?: boolean
           sort_order?: number
           subtitle?: string | null
+          subtitle_en?: string | null
           title: string
+          title_en?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           cta_label?: string | null
+          cta_label_en?: string | null
           cta_link?: string | null
           id?: string
           image_url?: string | null
           published?: boolean
           sort_order?: number
           subtitle?: string | null
+          subtitle_en?: string | null
           title?: string
+          title_en?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -704,6 +818,7 @@ export type Database = {
       team_members: {
         Row: {
           bio: string | null
+          bio_en: string | null
           created_at: string
           facebook: string | null
           groupe: string
@@ -713,12 +828,14 @@ export type Database = {
           photo_url: string | null
           published: boolean
           role_title: string | null
+          role_title_en: string | null
           sort_order: number
           twitter: string | null
           updated_at: string
         }
         Insert: {
           bio?: string | null
+          bio_en?: string | null
           created_at?: string
           facebook?: string | null
           groupe?: string
@@ -728,12 +845,14 @@ export type Database = {
           photo_url?: string | null
           published?: boolean
           role_title?: string | null
+          role_title_en?: string | null
           sort_order?: number
           twitter?: string | null
           updated_at?: string
         }
         Update: {
           bio?: string | null
+          bio_en?: string | null
           created_at?: string
           facebook?: string | null
           groupe?: string
@@ -743,6 +862,7 @@ export type Database = {
           photo_url?: string | null
           published?: boolean
           role_title?: string | null
+          role_title_en?: string | null
           sort_order?: number
           twitter?: string | null
           updated_at?: string
@@ -755,10 +875,12 @@ export type Database = {
           created_at: string
           id: string
           message: string
+          message_en: string | null
           photo_url: string | null
           published: boolean
           rating: number
           role_title: string | null
+          role_title_en: string | null
           sort_order: number
           updated_at: string
         }
@@ -767,10 +889,12 @@ export type Database = {
           created_at?: string
           id?: string
           message: string
+          message_en?: string | null
           photo_url?: string | null
           published?: boolean
           rating?: number
           role_title?: string | null
+          role_title_en?: string | null
           sort_order?: number
           updated_at?: string
         }
@@ -779,10 +903,12 @@ export type Database = {
           created_at?: string
           id?: string
           message?: string
+          message_en?: string | null
           photo_url?: string | null
           published?: boolean
           rating?: number
           role_title?: string | null
+          role_title_en?: string | null
           sort_order?: number
           updated_at?: string
         }

@@ -100,9 +100,40 @@ type I18nValue = {
   lang: Lang;
   setLang: (l: Lang) => void;
   t: (key: string) => string;
+  /** Inline translation: L("texte français", "english text"). */
+  L: (fr: string, en: string) => string;
+  /** Localized CMS column: tx(row, "title") reads title_en in English when filled. */
+  tx: <T extends Record<string, unknown>>(row: T | null | undefined, field: string) => string;
+  /** Localized CMS list column (jsonb arrays). */
+  tlist: <T extends Record<string, unknown>>(
+    row: T | null | undefined,
+    field: string,
+  ) => string[];
 };
 
 const I18nContext = createContext<I18nValue | null>(null);
+
+function makeHelpers(lang: Lang) {
+  const L = (fr: string, en: string) => (lang === "en" ? en : fr);
+
+  const tx = <T extends Record<string, unknown>>(row: T | null | undefined, field: string) => {
+    if (!row) return "";
+    const en = row[`${field}_en`];
+    if (lang === "en" && typeof en === "string" && en.trim() !== "") return en;
+    const fr = row[field];
+    return typeof fr === "string" ? fr : "";
+  };
+
+  const tlist = <T extends Record<string, unknown>>(row: T | null | undefined, field: string) => {
+    if (!row) return [];
+    const pick = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => !!x) : []);
+    const en = pick(row[`${field}_en`]);
+    if (lang === "en" && en.length > 0) return en;
+    return pick(row[field]);
+  };
+
+  return { L, tx, tlist };
+}
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("fr");
@@ -127,7 +158,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback((key: string) => DICT[key]?.[lang] ?? key, [lang]);
 
-  const value = useMemo(() => ({ lang, setLang, t }), [lang, setLang, t]);
+  const value = useMemo<I18nValue>(
+    () => ({ lang, setLang, t, ...makeHelpers(lang) }),
+    [lang, setLang, t],
+  );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
@@ -136,5 +170,11 @@ export function useI18n(): I18nValue {
   const ctx = useContext(I18nContext);
   if (ctx) return ctx;
   // Safe fallback (e.g. components rendered outside the provider during SSR).
-  return { lang: "fr", setLang: () => {}, t: (key) => DICT[key]?.fr ?? key };
+  return {
+    lang: "fr",
+    setLang: () => {},
+    t: (key) => DICT[key]?.fr ?? key,
+    ...makeHelpers("fr"),
+  };
 }
+

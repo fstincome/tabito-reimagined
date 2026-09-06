@@ -7,6 +7,7 @@ import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { eventsQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 import { imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/evenements")({
@@ -28,31 +29,38 @@ export const Route = createFileRoute("/evenements")({
   component: Evenements,
 });
 
-function fmt(value: string | null) {
-  if (!value) return null;
-  return new Date(value).toLocaleDateString("fr-FR", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-}
-
 function Evenements() {
+  const { L, tx, lang } = useI18n();
   const { data: events = [] } = useQuery(eventsQuery);
+
+  function fmt(value: string | null) {
+    if (!value) return null;
+    return new Date(value).toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  }
 
   return (
     <SiteLayout>
       <CmsPageHero slug="evenements"
-        title="Évènements"
-        subtitle="Festivals, expositions, rencontres professionnelles et célébrations culturelles."
+        title={L("Évènements", "Events")}
+        subtitle={L(
+          "Festivals, expositions, rencontres professionnelles et célébrations culturelles.",
+          "Festivals, exhibitions, professional meetups and cultural celebrations.",
+        )}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
-          <SectionHeading eyebrow="Agenda" title="Prochains et derniers évènements" />
+          <SectionHeading eyebrow={L("Agenda", "Calendar")} title={L("Prochains et derniers évènements", "Upcoming and past events")} />
 
           {events.length === 0 ? (
             <p className="mt-14 text-center text-sm text-muted-foreground">
-              L'agenda sera alimenté prochainement depuis le tableau de bord.
+              {L(
+                "L'agenda sera alimenté prochainement depuis le tableau de bord.",
+                "The calendar will be updated soon from the dashboard.",
+              )}
             </p>
           ) : (
             <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -63,7 +71,7 @@ function Evenements() {
                 >
                   <img
                     src={imageOr(ev.image_url, karera)}
-                    alt={ev.title}
+                    alt={tx(ev, "title")}
                     width={800}
                     height={800}
                     loading="lazy"
@@ -74,7 +82,7 @@ function Evenements() {
                       {ev.status}
                     </span>
                     <h2 className="mt-3 font-display text-lg font-semibold text-primary">
-                      {ev.title}
+                      {tx(ev, "title")}
                     </h2>
                     <div className="mt-2 space-y-1 text-xs text-muted-foreground">
                       {fmt(ev.start_date) && (
@@ -92,7 +100,7 @@ function Evenements() {
                       )}
                     </div>
                     {ev.description && (
-                      <p className="mt-3 text-sm text-muted-foreground">{ev.description}</p>
+                      <p className="mt-3 text-sm text-muted-foreground">{tx(ev, "description")}</p>
                     )}
                   </div>
                 </article>

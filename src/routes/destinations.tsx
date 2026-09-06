@@ -10,6 +10,7 @@ import { CmsPageHero } from "@/components/site/PageHero";
 import { CmsSectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SitesMap } from "@/components/site/SitesMap";
+import { useI18n } from "@/lib/i18n";
 import { destinationsQuery, sitesQuery } from "@/lib/content";
 import { imageOr } from "@/lib/media";
 
@@ -33,22 +34,27 @@ export const Route = createFileRoute("/destinations")({
 });
 
 function Destinations() {
+  const { L, tx } = useI18n();
   const { data: destinations = [] } = useQuery(destinationsQuery);
   const { data: sites = [] } = useQuery(sitesQuery);
-  const [filter, setFilter] = useState<string>("Tous");
+  const allLabel = L("Tous", "All");
+  const [filter, setFilter] = useState<string>(allLabel);
 
   const categories = [
-    "Tous",
+    allLabel,
     ...Array.from(new Set(destinations.map((d) => d.categorie).filter(Boolean) as string[])),
   ];
   const visible =
-    filter === "Tous" ? destinations : destinations.filter((d) => d.categorie === filter);
+    filter === allLabel ? destinations : destinations.filter((d) => d.categorie === filter);
 
   return (
     <SiteLayout>
       <CmsPageHero slug="destinations"
-        title="Destinations"
-        subtitle="Du lac Tanganyika aux forêts de montagne, une mosaïque de paysages à moins de trois heures de route."
+        title={L("Destinations", "Destinations")}
+        subtitle={L(
+          "Du lac Tanganyika aux forêts de montagne, une mosaïque de paysages à moins de trois heures de route.",
+          "From Lake Tanganyika to mountain forests, a mosaic of landscapes less than three hours away.",
+        )}
         image={kibira}
       />
 
@@ -56,9 +62,12 @@ function Destinations() {
         <div className="mx-auto max-w-[95%] px-6">
           <CmsSectionHeading
             slug="destinations-selection"
-            eyebrow="Sélection"
-            title="Nos destinations phares"
-            description="Chaque destination peut être visitée seule ou intégrée dans un circuit plus large."
+            eyebrow={L("Sélection", "Selection")}
+            title={L("Nos destinations phares", "Our flagship destinations")}
+            description={L(
+              "Chaque destination peut être visitée seule ou intégrée dans un circuit plus large.",
+              "Each destination can be visited on its own or included in a broader tour.",
+            )}
           />
 
           {categories.length > 1 && (
@@ -82,7 +91,10 @@ function Destinations() {
 
           {visible.length === 0 ? (
             <p className="mt-12 text-center text-sm text-muted-foreground">
-              Les destinations seront publiées prochainement depuis le tableau de bord.
+              {L(
+                "Les destinations seront publiées prochainement depuis le tableau de bord.",
+                "Destinations will be published soon from the dashboard.",
+              )}
             </p>
           ) : (
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -90,7 +102,7 @@ function Destinations() {
                 <article key={d.id} className="hover-lift surface-card overflow-hidden">
                   <img
                     src={imageOr(d.image_url, karera)}
-                    alt={d.name}
+                    alt={tx(d, "name")}
                     width={1200}
                     height={800}
                     loading="lazy"
@@ -103,11 +115,11 @@ function Destinations() {
                       </span>
                     )}
                     <h3 className="mt-3 font-display text-lg font-semibold text-primary">
-                      {d.name}
+                      {tx(d, "name")}
                     </h3>
                     {(d.summary || d.description) && (
                       <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-muted-foreground">
-                        {d.summary || d.description}
+                        {tx(d, "summary") || tx(d, "description")}
                       </p>
                     )}
                   </div>
@@ -122,9 +134,12 @@ function Destinations() {
         <div className="mx-auto max-w-[95%] px-6">
           <CmsSectionHeading
             slug="destinations-carte"
-            eyebrow="Carte"
-            title="Tous les sites recensés"
-            description="Les coordonnées sont saisies par notre équipe depuis le tableau de bord et s'affichent instantanément ici."
+            eyebrow={L("Carte", "Map")}
+            title={L("Tous les sites recensés", "All listed sites")}
+            description={L(
+              "Les coordonnées sont saisies par notre équipe depuis le tableau de bord et s'affichent instantanément ici.",
+              "The coordinates are entered by our team from the dashboard and appear here instantly.",
+            )}
           />
           <div className="mt-14">
             <ClientOnly
@@ -140,7 +155,7 @@ function Destinations() {
                 <div key={s.id} className="surface-card p-5">
                   <h3 className="flex items-start gap-2 font-display text-base font-semibold text-primary">
                     <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden="true" />
-                    {s.nom_site}
+                    {tx(s, "nom_site")}
                   </h3>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {[s.commune, s.province].filter(Boolean).join(", ")}
@@ -148,7 +163,7 @@ function Destinations() {
                   </p>
                   {s.description && (
                     <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
-                      {s.description}
+                      {tx(s, "description")}
                     </p>
                   )}
                 </div>

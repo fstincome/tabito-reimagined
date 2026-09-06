@@ -5,6 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { useI18n } from "@/lib/i18n";
 import { partnersQuery } from "@/lib/content";
 import { isHttpUrl } from "@/lib/media";
 
@@ -25,20 +26,28 @@ export const Route = createFileRoute("/partenaires")({
 });
 
 function Partenaires() {
+  const { L, tx } = useI18n();
   const { data: partners = [] } = useQuery(partnersQuery);
 
   return (
     <SiteLayout>
-      <CmsPageHero slug="partenaires"
-        title="Nos partenaires"
-        subtitle="Nous travaillons main dans la main avec les institutions et les opérateurs du secteur."
+      <CmsPageHero
+        slug="partenaires"
+        title={L("Nos partenaires", "Our partners")}
+        subtitle={L(
+          "Nous travaillons main dans la main avec les institutions et les opérateurs du secteur.",
+          "We work hand in hand with institutions and operators in the sector.",
+        )}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
-          <SectionHeading eyebrow="Réseau" title="Ils nous font confiance" />
+          <SectionHeading eyebrow={L("Réseau", "Network")} title={L("Ils nous font confiance", "They trust us")} />
           {partners.length === 0 ? (
             <p className="mt-14 text-center text-sm text-muted-foreground">
-              La liste de nos partenaires sera publiée prochainement.
+              {L(
+                "La liste de nos partenaires sera publiée prochainement.",
+                "The list of our partners will be published soon.",
+              )}
             </p>
           ) : (
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -47,7 +56,7 @@ function Partenaires() {
                   {isHttpUrl(p.logo_url) ? (
                     <img
                       src={p.logo_url as string}
-                      alt={`Logo ${p.name}`}
+                      alt={L(`Logo ${p.name}`, `${p.name} logo`)}
                       width={240}
                       height={96}
                       loading="lazy"
@@ -62,7 +71,7 @@ function Partenaires() {
                     {p.name}
                   </h3>
                   {p.description && (
-                    <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
+                    <p className="mt-2 text-sm text-muted-foreground">{tx(p, "description")}</p>
                   )}
                   {p.website && (
                     <a
@@ -71,7 +80,7 @@ function Partenaires() {
                       rel="noreferrer"
                       className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent"
                     >
-                      Visiter le site <ExternalLink className="size-3.5" aria-hidden="true" />
+                      {L("Visiter le site", "Visit website")} <ExternalLink className="size-3.5" aria-hidden="true" />
                     </a>
                   )}
                 </article>

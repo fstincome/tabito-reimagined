@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import kibira from "@/assets/hero-kibira.jpg";
 import { PackageList } from "@/components/site/PackageList";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/circuits")({
   head: () => ({
@@ -19,17 +20,31 @@ export const Route = createFileRoute("/circuits")({
       },
     ],
   }),
-  component: () => (
+  component: CircuitsPage,
+});
+
+function CircuitsPage() {
+  const { L } = useI18n();
+  return (
     <PackageList
       mode="circuit"
       slug="circuits"
       heroImage={kibira}
-      title="Circuits"
-      subtitle="Des itinéraires pensés par nos guides, du week-end à la grande traversée du pays."
-      eyebrow="Programmes"
-      heading="Nos circuits au Burundi"
-      description="Chaque circuit inclut le transport, l'accompagnement et l'accès aux sites. Les hébergements et repas sont adaptés à votre budget."
-      empty="Les circuits seront publiés prochainement depuis le tableau de bord."
+      title={L("Circuits", "Tours")}
+      subtitle={L(
+        "Des itinéraires pensés par nos guides, du week-end à la grande traversée du pays.",
+        "Itineraries designed by our guides, from a weekend getaway to a full crossing of the country.",
+      )}
+      eyebrow={L("Programmes", "Programs")}
+      heading={L("Nos circuits au Burundi", "Our tours in Burundi")}
+      description={L(
+        "Chaque circuit inclut le transport, l'accompagnement et l'accès aux sites. Les hébergements et repas sont adaptés à votre budget.",
+        "Each tour includes transport, guiding and site access. Accommodation and meals are tailored to your budget.",
+      )}
+      empty={L(
+        "Les circuits seront publiés prochainement depuis le tableau de bord.",
+        "Tours will be published soon from the dashboard.",
+      )}
     />
-  ),
-});
+  );
+}
