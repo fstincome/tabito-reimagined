@@ -20,7 +20,7 @@ import {
   type Resource,
 } from "@/lib/admin";
 import { isHttpUrl, uploadMedia } from "@/lib/media";
-import { notifyEventAnnouncement } from "@/lib/notify.functions";
+
 
 const logo = logoAsset.url;
 
