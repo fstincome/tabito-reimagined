@@ -14,6 +14,8 @@ import {
   RESOURCES,
   deleteRow,
   emptyValues,
+  enFields,
+  hasEnglishTab,
   listRows,
   resourceKey,
   saveRow,
@@ -49,6 +51,9 @@ function Dashboard() {
   const [editing, setEditing] = useState<{ id: string | null; values: Record<string, any> } | null>(
     null,
   );
+  const [formLang, setFormLang] = useState<"fr" | "en">("fr");
+  const allFields = [...resource.fields, ...enFields(resource)];
+  const shownFields = formLang === "en" ? enFields(resource) : resource.fields;
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -82,12 +87,14 @@ function Dashboard() {
   }
 
   function startCreate() {
+    setFormLang("fr");
     setEditing({ id: null, values: emptyValues(resource) });
   }
 
   function startEdit(row: any) {
     const values: Record<string, any> = {};
-    for (const f of resource.fields) {
+    setFormLang("fr");
+    for (const f of allFields) {
       const raw = row[f.name];
       values[f.name] =
         f.type === "list"
@@ -104,7 +111,7 @@ function Dashboard() {
   async function submit() {
     if (!editing) return;
     const payload: Record<string, any> = {};
-    for (const f of resource.fields) {
+    for (const f of allFields) {
       const v = editing.values[f.name];
       if (f.required && (v === "" || v === null || v === undefined)) {
         toast.error(`Le champ « ${f.label} » est obligatoire.`);
@@ -222,8 +229,42 @@ function Dashboard() {
                   <X className="size-5 text-muted-foreground" />
                 </button>
               </div>
+              {hasEnglishTab(resource) && (
+                <div
+                  className="flex gap-2 border-b border-border"
+                  role="tablist"
+                  aria-label="Langue du contenu"
+                >
+                  {(
+                    [
+                      { id: "fr", label: "Français" },
+                      { id: "en", label: "English" },
+                    ] as const
+                  ).map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={formLang === tab.id}
+                      onClick={() => setFormLang(tab.id)}
+                      className={`-mb-px rounded-t-md px-4 py-2 text-sm font-semibold transition-colors ${
+                        formLang === tab.id
+                          ? "border-b-2 border-accent text-primary"
+                          : "text-muted-foreground hover:text-primary"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {formLang === "en" && (
+                <p className="text-xs text-muted-foreground">
+                  Traduction anglaise facultative : laissez vide pour afficher le texte français.
+                </p>
+              )}
               <div className="grid gap-4 md:grid-cols-2">
-                {resource.fields.map((f) => (
+                {shownFields.map((f) => (
                   <FieldInput
                     key={f.name}
                     field={f}
