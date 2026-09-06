@@ -4,7 +4,7 @@ import { CalendarCheck, Send, UserCircle } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
@@ -179,7 +179,7 @@ function Reservation() {
 
   return (
     <SiteLayout>
-      <PageHero
+      <CmsPageHero slug="reservation"
         title="Réserver"
         subtitle="Choisissez une catégorie, puis l'offre exacte qui vous intéresse : nous préparons votre séjour sur mesure."
       />

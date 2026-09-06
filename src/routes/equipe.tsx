@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Linkedin, Twitter } from "lucide-react";
 
 import { BioDialog, initialsOf } from "@/components/site/BioDialog";
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { teamQuery, type TeamMember } from "@/lib/content";
@@ -127,7 +127,7 @@ function Equipe() {
 
   return (
     <SiteLayout>
-      <PageHero
+      <CmsPageHero slug="equipe"
         title="Notre équipe"
         subtitle="Des professionnels burundais du voyage, de la logistique et de la médiation culturelle."
       />

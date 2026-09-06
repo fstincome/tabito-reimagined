@@ -6,7 +6,7 @@ import { useState } from "react";
 import kibira from "@/assets/hero-kibira.jpg";
 import karera from "@/assets/karera.jpg";
 import { ClientOnly } from "@/components/site/ClientOnly";
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SitesMap } from "@/components/site/SitesMap";
@@ -46,7 +46,7 @@ function Destinations() {
 
   return (
     <SiteLayout>
-      <PageHero
+      <CmsPageHero slug="destinations"
         title="Destinations"
         subtitle="Du lac Tanganyika aux forêts de montagne, une mosaïque de paysages à moins de trois heures de route."
         image={kibira}

@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { CONTACT } from "@/components/site/nav-data";
@@ -78,7 +78,7 @@ function Contacts() {
 
   return (
     <SiteLayout>
-      <PageHero
+      <CmsPageHero slug="contacts"
         title="Contacts"
         subtitle="Une question, un devis, une réservation ? Notre équipe vous répond depuis Bujumbura."
       />
