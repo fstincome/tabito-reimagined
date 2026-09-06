@@ -136,39 +136,60 @@ const FALLBACK_DESTINATIONS = [
 ];
 
 function Hero() {
-  const { data: slides } = useQuery(slidesQuery);
-  const list = slides && slides.length > 0 ? slides : FALLBACK_SLIDES;
+  const { data: slides, isPending } = useQuery(slidesQuery);
+  // Pendant le chargement seulement, on montre les diapos de secours.
+  // Ensuite, ce sont exclusivement les diapos publiées du tableau de bord :
+  // en cacher ou en supprimer réduit réellement le carrousel.
+  const list = isPending ? FALLBACK_SLIDES : (slides ?? []);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    setIndex(0);
+  }, [list.length]);
+
+  useEffect(() => {
+    if (list.length < 2) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % list.length), 6500);
     return () => clearInterval(id);
   }, [list.length]);
 
-  const active = list[Math.min(index, list.length - 1)];
+  const active = list.length > 0 ? list[Math.min(index, list.length - 1)] : undefined;
 
   return (
     <section className="relative isolate min-h-[76vh] overflow-hidden">
-      {list.map((slide, i) => (
+      {list.length > 0 ? (
+        list.map((slide, i) => (
+          <img
+            key={slide.id}
+            src={imageOr(slide.image_url, tanganyika)}
+            alt={slide.title ?? ""}
+            width={1920}
+            height={1088}
+            className={`absolute inset-0 size-full object-cover transition-opacity duration-1000 ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))
+      ) : (
         <img
-          key={slide.id}
-          src={imageOr(slide.image_url, tanganyika)}
-          alt={slide.title ?? ""}
+          src={tanganyika}
+          alt=""
+          aria-hidden="true"
           width={1920}
           height={1088}
-          className={`absolute inset-0 size-full object-cover transition-opacity duration-1000 ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
+          className="absolute inset-0 size-full object-cover"
         />
-      ))}
+      )}
       <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.19_0.05_262/0.88)] via-[oklch(0.19_0.05_262/0.55)] to-transparent" />
 
       <div className="relative mx-auto flex min-h-[76vh] max-w-[95%] flex-col justify-center px-6 py-24">
         <p className="eyebrow">Tanganyika e-Bridge International Tours</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-          {active?.title}
+          {active?.title ?? "Bienvenue chez TABITO"}
         </h1>
-        <p className="mt-5 max-w-xl text-base text-primary-foreground/85">{active?.subtitle}</p>
+        {active?.subtitle && (
+          <p className="mt-5 max-w-xl text-base text-primary-foreground/85">{active.subtitle}</p>
+        )}
         <div className="mt-9 flex flex-wrap gap-3">
           <Button asChild size="xl" variant="lagoon">
             <Link to={(active?.cta_link as string) || "/destinations"}>
@@ -181,23 +202,26 @@ function Hero() {
           </Button>
         </div>
 
-        <div className="mt-12 flex gap-2" role="tablist" aria-label="Diapositives">
-          {list.map((s, i) => (
-            <button
-              key={s.id}
-              type="button"
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Diapositive ${i + 1}`}
-              onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${
-                i === index ? "w-10 bg-accent" : "w-5 bg-primary-foreground/40"
-              }`}
-            />
-          ))}
-        </div>
+        {list.length > 1 && (
+          <div className="mt-12 flex gap-2" role="tablist" aria-label="Diapositives">
+            {list.map((s, i) => (
+              <button
+                key={s.id}
+                type="button"
+                role="tab"
+                aria-selected={i === index}
+                aria-label={`Diapositive ${i + 1}`}
+                onClick={() => setIndex(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === index ? "w-10 bg-accent" : "w-5 bg-primary-foreground/40"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
+
   );
 }
 
