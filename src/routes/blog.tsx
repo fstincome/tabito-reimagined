@@ -4,7 +4,7 @@ import { CalendarDays, User } from "lucide-react";
 
 import karera from "@/assets/karera.jpg";
 import { CmsPageHero } from "@/components/site/PageHero";
-import { SectionHeading } from "@/components/site/SectionHeading";
+import { CmsSectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { blogQuery } from "@/lib/content";
 import { imageOr } from "@/lib/media";
@@ -48,7 +48,7 @@ function Blog() {
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
-          <SectionHeading eyebrow="Actualités" title="Derniers articles" />
+          <CmsSectionHeading slug="blog-articles" eyebrow="Actualités" title="Derniers articles" />
 
           {posts.length === 0 ? (
             <p className="mt-14 text-center text-sm text-muted-foreground">
