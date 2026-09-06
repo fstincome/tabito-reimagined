@@ -37,11 +37,11 @@ export function SectionHeading({
   align = "center",
   light = false,
 }: {
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  description?: string;
-  align?: "center" | "left";
-  light?: boolean;
+  description?: string | undefined;
+  align?: "center" | "left" | undefined;
+  light?: boolean | undefined;
 }) {
   const centered = align === "center";
   return (
