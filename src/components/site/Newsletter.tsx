@@ -27,7 +27,12 @@ export function Newsletter() {
       );
       return;
     }
-    void notifyNewsletterSignup({ data: { email: email.trim() } }).catch(() => undefined);
+    void messageTeam({
+      kind: "newsletter",
+      title: "Nouvel abonné à la newsletter",
+      body: `E-mail : ${email.trim()}`,
+      link: "/dashboard",
+    }).catch(() => undefined);
     setEmail("");
     toast.success(t("newsletter.success"));
   }
