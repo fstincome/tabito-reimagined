@@ -22,6 +22,7 @@ export const Route = createFileRoute("/circuits")({
   component: () => (
     <PackageList
       mode="circuit"
+      slug="circuits"
       heroImage={kibira}
       title="Circuits"
       subtitle="Des itinéraires pensés par nos guides, du week-end à la grande traversée du pays."

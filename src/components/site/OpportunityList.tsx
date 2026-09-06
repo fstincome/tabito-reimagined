@@ -27,7 +27,7 @@ export function OpportunityList({
 
   return (
     <SiteLayout>
-      <PageHero title={title} subtitle={subtitle} />
+      <CmsPageHero slug={slug} title={title} subtitle={subtitle} />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow={eyebrow} title={heading} />

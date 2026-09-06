@@ -38,7 +38,7 @@ export function PackageList({
 
   return (
     <SiteLayout>
-      <PageHero title={title} subtitle={subtitle} image={heroImage} />
+      <CmsPageHero slug={slug} title={title} subtitle={subtitle} image={heroImage} />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow={eyebrow} title={heading} description={description} />
