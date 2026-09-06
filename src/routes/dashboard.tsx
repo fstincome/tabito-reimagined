@@ -21,7 +21,7 @@ import {
   type Field,
   type Resource,
 } from "@/lib/admin";
-import { isHttpUrl, uploadMedia } from "@/lib/media";
+import { isHttpUrl, registerGalleryImage, uploadMedia } from "@/lib/media";
 
 
 const logo = logoAsset.url;
