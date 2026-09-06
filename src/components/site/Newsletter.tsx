@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
-import { notifyNewsletterSignup } from "@/lib/notify.functions";
+import { messageTeam } from "@/lib/messages";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
