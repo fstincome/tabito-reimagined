@@ -8,6 +8,7 @@ import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { galleryQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 import { imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/galerie")({
@@ -27,26 +28,31 @@ export const Route = createFileRoute("/galerie")({
 });
 
 function Galerie() {
+  const { L, tx } = useI18n();
   const { data: images = [] } = useQuery(galleryQuery);
   const [active, setActive] = useState<string | null>(null);
-  const [filter, setFilter] = useState("Tous");
+  const allLabel = L("Tous", "All");
+  const [filter, setFilter] = useState(allLabel);
 
   const categories = [
-    "Tous",
+    allLabel,
     ...Array.from(new Set(images.map((i) => i.categorie).filter(Boolean) as string[])),
   ];
-  const visible = filter === "Tous" ? images : images.filter((i) => i.categorie === filter);
+  const visible = filter === allLabel ? images : images.filter((i) => i.categorie === filter);
 
   return (
     <SiteLayout>
       <CmsPageHero slug="galerie"
-        title="Galerie"
-        subtitle="Un aperçu de ce que vous verrez : collines, lac, faune, traditions et villes."
+        title={L("Galerie", "Gallery")}
+        subtitle={L(
+          "Un aperçu de ce que vous verrez : collines, lac, faune, traditions et villes.",
+          "A preview of what you'll see: hills, lake, wildlife, traditions and cities.",
+        )}
         image={karera}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
-          <SectionHeading eyebrow="Images" title="Le Burundi en photos" />
+          <SectionHeading eyebrow={L("Images", "Images")} title={L("Le Burundi en photos", "Burundi in pictures")} />
 
           {categories.length > 1 && (
             <div className="mt-12 flex flex-wrap justify-center gap-2">
@@ -69,7 +75,10 @@ function Galerie() {
 
           {visible.length === 0 ? (
             <p className="mt-14 text-center text-sm text-muted-foreground">
-              Les photos seront ajoutées prochainement depuis le tableau de bord.
+              {L(
+                "Les photos seront ajoutées prochainement depuis le tableau de bord.",
+                "Photos will be added soon from the dashboard.",
+              )}
             </p>
           ) : (
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -82,7 +91,7 @@ function Galerie() {
                 >
                   <img
                     src={imageOr(img.image_url, karera)}
-                    alt={img.title ?? "Photo du Burundi"}
+                    alt={tx(img, "title") || L("Photo du Burundi", "Photo of Burundi")}
                     width={1200}
                     height={900}
                     loading="lazy"
@@ -98,13 +107,13 @@ function Galerie() {
       {active && (
         <div
           role="dialog"
-          aria-label="Photo agrandie"
+          aria-label={L("Photo agrandie", "Enlarged photo")}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[oklch(0.19_0.05_262/0.92)] p-6"
           onClick={() => setActive(null)}
         >
           <button
             type="button"
-            aria-label="Fermer"
+            aria-label={L("Fermer", "Close")}
             onClick={() => setActive(null)}
             className="absolute right-6 top-6 text-primary-foreground"
           >
