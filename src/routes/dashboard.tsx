@@ -180,18 +180,19 @@ function Dashboard() {
           <nav className="space-y-1">
             {RESOURCES.map((r) => (
               <button
-                key={r.table}
+                key={resourceKey(r)}
                 type="button"
                 onClick={() => {
                   setResource(r);
                   setEditing(null);
                 }}
                 className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                  resource.table === r.table
+                  resourceKey(resource) === resourceKey(r)
                     ? "bg-secondary font-semibold text-primary"
                     : "text-foreground hover:bg-muted"
                 }`}
               >
+
                 {r.label}
               </button>
             ))}
