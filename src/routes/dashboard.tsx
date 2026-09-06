@@ -228,11 +228,14 @@ function Dashboard() {
                     key={f.name}
                     field={f}
                     value={editing.values[f.name]}
+                    galleryCategory={resource.label}
+                    galleryTitle={String(editing.values[resource.titleField] ?? "")}
                     onChange={(v) =>
                       setEditing((e) => (e ? { ...e, values: { ...e.values, [f.name]: v } } : e))
                     }
                   />
                 ))}
+
               </div>
               <div className="flex gap-2">
                 <Button variant="lagoon" onClick={submit}>
