@@ -18,6 +18,7 @@ export const Route = createFileRoute("/formations")({
   component: () => (
     <OpportunityList
       kind="formation"
+      slug="formations"
       title="Formations"
       subtitle="Se former aux métiers de l'accueil, du guidage et de la gestion touristique."
       eyebrow="SMED LAB"
