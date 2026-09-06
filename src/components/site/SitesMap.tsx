@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
 import { sitesQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 
 const BURUNDI_CENTER: [number, number] = [-3.4275804, 29.9218864];
 
 export function SitesMap() {
+  const { lang, L, tx } = useI18n();
   const { data: sites = [] } = useQuery(sitesQuery);
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<unknown>(null);
@@ -61,36 +63,38 @@ export function SitesMap() {
         .forEach((s) => {
           const lat = s.latitude as number;
           const lng = s.longitude as number;
+          const nomSite = tx(s, "nom_site");
+          const categorie = tx(s, "categorie");
           const lieu = [s.commune, s.province].filter(Boolean).join(", ");
-          const desc = (s.description ?? "").trim();
+          const desc = tx(s, "description").trim();
           const shortDesc = desc.length > 180 ? `${desc.slice(0, 180)}…` : desc;
 
           const html = `
             <div style="width:230px;font-family:inherit">
               ${
                 s.image_url
-                  ? `<img src="${esc(s.image_url)}" alt="${esc(s.nom_site)}" style="width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px" loading="lazy" />`
+                  ? `<img src="${esc(s.image_url)}" alt="${esc(nomSite)}" style="width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:8px" loading="lazy" />`
                   : ""
               }
-              <strong style="font-size:14px;display:block;line-height:1.3">${esc(s.nom_site)}</strong>
+              <strong style="font-size:14px;display:block;line-height:1.3">${esc(nomSite)}</strong>
               ${
-                s.categorie
-                  ? `<span style="display:inline-block;margin-top:5px;padding:2px 8px;border-radius:999px;background:oklch(0.72 0.113 205 / .18);color:oklch(0.35 0.09 230);font-size:11px;font-weight:600">${esc(s.categorie)}</span>`
+                categorie
+                  ? `<span style="display:inline-block;margin-top:5px;padding:2px 8px;border-radius:999px;background:oklch(0.72 0.113 205 / .18);color:oklch(0.35 0.09 230);font-size:11px;font-weight:600">${esc(categorie)}</span>`
                   : ""
               }
               ${lieu ? `<div style="margin-top:6px;font-size:12px;opacity:.75">📍 ${esc(lieu)}</div>` : ""}
               ${shortDesc ? `<p style="margin:6px 0 0;font-size:12px;line-height:1.45">${esc(shortDesc)}</p>` : ""}
               <div style="margin-top:6px;font-size:11px;opacity:.6">${lat.toFixed(4)}, ${lng.toFixed(4)}</div>
               <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-                <a href="/reservation" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">Réserver</a>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">Itinéraire</a>
+                <a href="/reservation" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">${esc(L("Réserver", "Book"))}</a>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">${esc(L("Itinéraire", "Directions"))}</a>
               </div>
             </div>`;
 
-          L.marker([lat, lng], { icon })
+          Leaf.marker([lat, lng], { icon })
             .addTo(map)
             .bindPopup(html, { minWidth: 230 })
-            .bindTooltip(s.nom_site, { direction: "top", offset: [0, -10] });
+            .bindTooltip(nomSite, { direction: "top", offset: [0, -10] });
         });
     }
 

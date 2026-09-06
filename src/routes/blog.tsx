@@ -7,6 +7,7 @@ import { CmsPageHero } from "@/components/site/PageHero";
 import { CmsSectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { blogQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 import { imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/blog")({
@@ -28,31 +29,38 @@ export const Route = createFileRoute("/blog")({
   component: Blog,
 });
 
-function formatDate(value: string | null) {
-  if (!value) return null;
-  return new Date(value).toLocaleDateString("fr-FR", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-}
-
 function Blog() {
+  const { L, tx, lang } = useI18n();
   const { data: posts = [] } = useQuery(blogQuery);
+
+  function formatDate(value: string | null) {
+    if (!value) return null;
+    return new Date(value).toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  }
 
   return (
     <SiteLayout>
       <CmsPageHero slug="blog"
-        title="Blog"
-        subtitle="Nos récits, conseils pratiques et actualités sur le tourisme au Burundi."
+        title={L("Blog", "Blog")}
+        subtitle={L(
+          "Nos récits, conseils pratiques et actualités sur le tourisme au Burundi.",
+          "Our stories, practical tips and news about tourism in Burundi.",
+        )}
       />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
-          <CmsSectionHeading slug="blog-articles" eyebrow="Actualités" title="Derniers articles" />
+          <CmsSectionHeading slug="blog-articles" eyebrow={L("Actualités", "News")} title={L("Derniers articles", "Latest articles")} />
 
           {posts.length === 0 ? (
             <p className="mt-14 text-center text-sm text-muted-foreground">
-              Les articles seront publiés prochainement depuis le tableau de bord.
+              {L(
+                "Les articles seront publiés prochainement depuis le tableau de bord.",
+                "Articles will be published soon from the dashboard.",
+              )}
             </p>
           ) : (
             <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -60,7 +68,7 @@ function Blog() {
                 <article key={post.id} className="surface-card hover-lift overflow-hidden">
                   <img
                     src={imageOr(post.image_url, karera)}
-                    alt={post.title}
+                    alt={tx(post, "title")}
                     width={1200}
                     height={800}
                     loading="lazy"
@@ -82,11 +90,11 @@ function Blog() {
                       )}
                     </div>
                     <h2 className="mt-3 font-display text-lg font-semibold text-primary">
-                      {post.title}
+                      {tx(post, "title")}
                     </h2>
                     {post.excerpt && (
                       <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
-                        {post.excerpt}
+                        {tx(post, "excerpt")}
                       </p>
                     )}
                     <Link
@@ -94,7 +102,7 @@ function Blog() {
                       params={{ slug: post.slug || post.id }}
                       className="mt-4 inline-flex font-display text-sm font-semibold text-accent hover:underline"
                     >
-                      Lire l'article
+                      {L("Lire l'article", "Read the article")}
                     </Link>
                   </div>
                 </article>

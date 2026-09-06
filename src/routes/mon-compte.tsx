@@ -254,6 +254,15 @@ function Space({ session }: { session: Session }) {
   );
   const [savingProfile, setSavingProfile] = useState(false);
 
+  const CATEGORY_LABELS: Record<string, string> = {
+    "Sites touristiques": L("Sites touristiques", "Tourist sites"),
+    Destinations: L("Destinations", "Destinations"),
+    Circuits: L("Circuits", "Tours"),
+    Bouquets: L("Bouquets", "Packages"),
+    "Villes du Burundi": L("Villes du Burundi", "Cities of Burundi"),
+    "Guide touristique": L("Guide touristique", "Tour guide"),
+  };
+
   const STATUS_LABELS: Record<string, string> = {
     en_attente: L("En attente de confirmation", "Awaiting confirmation"),
     confirmee: L("Confirmée", "Confirmed"),
@@ -390,7 +399,7 @@ function Space({ session }: { session: Session }) {
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                      {b.category}
+                      {CATEGORY_LABELS[b.category] ?? b.category}
                     </p>
                     <p className="font-display text-lg font-bold text-primary">
                       {b.item_label ?? L("Séjour sur mesure", "Tailor-made stay")}
