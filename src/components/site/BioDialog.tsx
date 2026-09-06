@@ -1,5 +1,7 @@
 import { Facebook, Languages, Linkedin, Phone, Twitter } from "lucide-react";
 
+import { useI18n } from "@/lib/i18n";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -33,19 +35,21 @@ export type BioPerson = {
 };
 
 /** "Voir bio" button + modal detailing a team member or a tourist guide. */
-export function BioDialog({ person, label = "Voir bio" }: { person: BioPerson; label?: string }) {
+export function BioDialog({ person, label }: { person: BioPerson; label?: string }) {
+  const { L } = useI18n();
+  const buttonLabel = label ?? L("Voir bio", "View bio");
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="mt-4">
-          {label}
+          {buttonLabel}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="font-display text-xl text-primary">{person.name}</DialogTitle>
           <DialogDescription>
-            {person.role || person.speciality || "Équipe TABITO"}
+            {person.role || person.speciality || L("Équipe TABITO", "TABITO team")}
           </DialogDescription>
         </DialogHeader>
 
@@ -76,7 +80,7 @@ export function BioDialog({ person, label = "Voir bio" }: { person: BioPerson; l
         <dl className="space-y-2 text-sm">
           {person.speciality && (
             <div className="flex gap-2">
-              <dt className="font-medium text-primary">Spécialité :</dt>
+              <dt className="font-medium text-primary">{L("Spécialité", "Speciality")} :</dt>
               <dd className="text-muted-foreground">{person.speciality}</dd>
             </div>
           )}
@@ -99,17 +103,17 @@ export function BioDialog({ person, label = "Voir bio" }: { person: BioPerson; l
         {(person.facebook || person.twitter || person.linkedin) && (
           <div className="flex gap-4 text-muted-foreground">
             {person.facebook && (
-              <a href={person.facebook} aria-label={`Facebook de ${person.name}`}>
+              <a href={person.facebook} aria-label={L(`Facebook de ${person.name}`, `${person.name}'s Facebook`)}>
                 <Facebook className="size-4" aria-hidden="true" />
               </a>
             )}
             {person.twitter && (
-              <a href={person.twitter} aria-label={`Twitter de ${person.name}`}>
+              <a href={person.twitter} aria-label={L(`Twitter de ${person.name}`, `${person.name}'s Twitter`)}>
                 <Twitter className="size-4" aria-hidden="true" />
               </a>
             )}
             {person.linkedin && (
-              <a href={person.linkedin} aria-label={`LinkedIn de ${person.name}`}>
+              <a href={person.linkedin} aria-label={L(`LinkedIn de ${person.name}`, `${person.name}'s LinkedIn`)}>
                 <Linkedin className="size-4" aria-hidden="true" />
               </a>
             )}
