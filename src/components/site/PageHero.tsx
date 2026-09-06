@@ -1,7 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 
 import heroDefault from "@/assets/hero-tanganyika.jpg";
+import { pageQuery } from "@/lib/content";
+import { isHttpUrl } from "@/lib/media";
 
 export function PageHero({
   title,
