@@ -67,12 +67,74 @@ const SERVICE_ICONS: Record<string, typeof Compass> = {
   ticket: Ticket,
 };
 
+type LocalizedSlide = {
+  id: string;
+  title: string;
+  subtitle: string;
+  cta_label: string;
+  cta_link: string;
+  image_url: string;
+};
+
 function Hero() {
+  const { L, tx } = useI18n();
   const { data: slides, isPending } = useQuery(slidesQuery);
+
+  const fallbackSlides: LocalizedSlide[] = [
+    {
+      id: "f1",
+      title: L(
+        "Le Burundi, cœur vert de l'Afrique",
+        "Burundi, the green heart of Africa",
+      ),
+      subtitle: L(
+        "Des collines infinies aux plages du lac Tanganyika : laissez TABITO composer votre voyage.",
+        "From endless hills to the shores of Lake Tanganyika: let TABITO craft your journey.",
+      ),
+      cta_label: L("Découvrir nos destinations", "Discover our destinations"),
+      cta_link: "/destinations",
+      image_url: tanganyika,
+    },
+    {
+      id: "f2",
+      title: L(
+        "Une culture qui bat au rythme des tambours",
+        "A culture that beats to the rhythm of drums",
+      ),
+      subtitle: L(
+        "Rencontrez les tambourinaires du Burundi, les musées vivants et l'artisanat des collines.",
+        "Meet Burundi's drummers, living museums and hillside craftsmanship.",
+      ),
+      cta_label: L("Voir nos circuits", "See our tours"),
+      cta_link: "/circuits",
+      image_url: tambours,
+    },
+    {
+      id: "f3",
+      title: L("Kibira, sanctuaires et cascades", "Kibira, sanctuaries and waterfalls"),
+      subtitle: L(
+        "Forêts de montagne, chutes de la Karera, sources du Nil et faune protégée.",
+        "Mountain forests, Karera falls, source of the Nile and protected wildlife.",
+      ),
+      cta_label: L("Nos bouquets de voyage", "Our travel packages"),
+      cta_link: "/bouquets",
+      image_url: kibira,
+    },
+  ];
+
   // Pendant le chargement seulement, on montre les diapos de secours.
   // Ensuite, ce sont exclusivement les diapos publiées du tableau de bord :
   // en cacher ou en supprimer réduit réellement le carrousel.
-  const list = isPending ? FALLBACK_SLIDES : (slides ?? []);
+  const list: LocalizedSlide[] = isPending
+    ? fallbackSlides
+    : (slides ?? []).map((slide) => ({
+        id: slide.id,
+        title: tx(slide, "title"),
+        subtitle: tx(slide, "subtitle"),
+        cta_label: tx(slide, "cta_label"),
+        cta_link: slide.cta_link ?? "/destinations",
+        image_url: imageOr(slide.image_url, tanganyika),
+      }));
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -93,7 +155,7 @@ function Hero() {
         list.map((slide, i) => (
           <img
             key={slide.id}
-            src={imageOr(slide.image_url, tanganyika)}
+            src={slide.image_url || tanganyika}
             alt={slide.title ?? ""}
             width={1920}
             height={1088}
@@ -117,32 +179,32 @@ function Hero() {
       <div className="relative mx-auto flex min-h-[76vh] max-w-[95%] flex-col justify-center px-6 py-24">
         <p className="eyebrow">Tanganyika e-Bridge International Tours</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-          {active?.title ?? "Bienvenue chez TABITO"}
+          {active?.title || L("Bienvenue chez TABITO", "Welcome to TABITO")}
         </h1>
         {active?.subtitle && (
           <p className="mt-5 max-w-xl text-base text-primary-foreground/85">{active.subtitle}</p>
         )}
         <div className="mt-9 flex flex-wrap gap-3">
           <Button asChild size="xl" variant="lagoon">
-            <Link to={(active?.cta_link as string) || "/destinations"}>
-              {active?.cta_label || "Découvrir"}
+            <Link to={active?.cta_link || "/destinations"}>
+              {active?.cta_label || L("Découvrir", "Discover")}
               <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
           <Button asChild size="xl" variant="outlineLight">
-            <Link to="/contacts">Nous contacter</Link>
+            <Link to="/contacts">{L("Nous contacter", "Contact us")}</Link>
           </Button>
         </div>
 
         {list.length > 1 && (
-          <div className="mt-12 flex gap-2" role="tablist" aria-label="Diapositives">
+          <div className="mt-12 flex gap-2" role="tablist" aria-label={L("Diapositives", "Slides")}>
             {list.map((s, i) => (
               <button
                 key={s.id}
                 type="button"
                 role="tab"
                 aria-selected={i === index}
-                aria-label={`Diapositive ${i + 1}`}
+                aria-label={L(`Diapositive ${i + 1}`, `Slide ${i + 1}`)}
                 onClick={() => setIndex(i)}
                 className={`h-1.5 rounded-full transition-all ${
                   i === index ? "w-10 bg-accent" : "w-5 bg-primary-foreground/40"
