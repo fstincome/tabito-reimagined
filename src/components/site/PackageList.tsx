@@ -12,6 +12,7 @@ import { imageOr } from "@/lib/media";
 
 export function PackageList({
   mode,
+  slug,
   title,
   subtitle,
   eyebrow,
@@ -21,6 +22,7 @@ export function PackageList({
   heroImage,
 }: {
   mode: "circuit" | "bouquet";
+  slug: string;
   title: string;
   subtitle: string;
   eyebrow: string;

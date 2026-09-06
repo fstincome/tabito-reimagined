@@ -8,6 +8,7 @@ import { opportunitiesQuery } from "@/lib/content";
 
 export function OpportunityList({
   kind,
+  slug,
   title,
   subtitle,
   eyebrow,
@@ -15,6 +16,7 @@ export function OpportunityList({
   empty,
 }: {
   kind: string;
+  slug: string;
   title: string;
   subtitle: string;
   eyebrow: string;
