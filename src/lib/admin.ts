@@ -137,12 +137,13 @@ export const RESOURCES: Resource[] = [
   },
   {
     table: "packages",
-    label: "Circuits & bouquets",
+    key: "packages-circuits",
+    label: "Circuits",
     titleField: "title",
     orderBy: { column: "sort_order", ascending: true },
+    filter: { type: "circuit" },
     fields: [
-      { name: "title", label: "Titre", type: "text", required: true },
-      { name: "type", label: "Type", type: "select", options: ["circuit", "bouquet"] },
+      { name: "title", label: "Titre du circuit", type: "text", required: true },
       { name: "duration", label: "Durée", type: "text" },
       { name: "price", label: "Prix", type: "text" },
       { name: "description", label: "Description", type: "textarea" },
@@ -152,6 +153,25 @@ export const RESOURCES: Resource[] = [
       PUBLISHED,
     ],
   },
+  {
+    table: "packages",
+    key: "packages-bouquets",
+    label: "Bouquets",
+    titleField: "title",
+    orderBy: { column: "sort_order", ascending: true },
+    filter: { type: "bouquet" },
+    fields: [
+      { name: "title", label: "Titre du bouquet", type: "text", required: true },
+      { name: "duration", label: "Durée", type: "text" },
+      { name: "price", label: "Prix", type: "text" },
+      { name: "description", label: "Description", type: "textarea" },
+      { name: "highlights", label: "Points forts (un par ligne)", type: "list" },
+      { name: "image_url", label: "Image", type: "image" },
+      SORT,
+      PUBLISHED,
+    ],
+  },
+
   {
     table: "blog_posts",
     label: "Articles du blog",
