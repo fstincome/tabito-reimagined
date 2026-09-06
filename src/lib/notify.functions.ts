@@ -51,10 +51,35 @@ async function sendGmail(options: {
   html: string;
   replyTo?: string | null;
 }): Promise<SendResult> {
+  // Voie 1 : pont Google Apps Script déployé depuis la boîte TABITO
+  // (envoie réellement depuis u.connectburundi.tabito@gmail.com).
+  const bridgeUrl = process.env["GMAIL_BRIDGE_URL"];
+  const bridgeToken = process.env["GMAIL_BRIDGE_TOKEN"];
+  if (bridgeUrl && bridgeToken) {
+    const response = await fetch(bridgeUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: bridgeToken,
+        to: options.to,
+        subject: options.subject,
+        html: options.html,
+        replyTo: options.replyTo ?? undefined,
+      }),
+    });
+    if (!response.ok) {
+      const body = await response.text();
+      console.error(`Gmail bridge send failed [${response.status}]: ${body}`);
+      return { sent: false, reason: `bridge_error_${response.status}` };
+    }
+    return { sent: true };
+  }
+
+  // Voie 2 : connexion Google officielle si elle est reliée au projet.
   const lovableKey = process.env["LOVABLE_API_KEY"];
   const connectionKey = process.env["GOOGLE_MAIL_API_KEY"];
   if (!lovableKey || !connectionKey) {
-    console.warn("Gmail notification skipped: Gmail connection is not linked yet.");
+    console.warn("Gmail notification skipped: no Gmail bridge or connection configured.");
     return { sent: false, reason: "gmail_not_connected" };
   }
 
