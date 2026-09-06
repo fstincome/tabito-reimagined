@@ -673,6 +673,7 @@ export type Database = {
           bio: string | null
           created_at: string
           facebook: string | null
+          groupe: string
           id: string
           linkedin: string | null
           name: string
@@ -687,6 +688,7 @@ export type Database = {
           bio?: string | null
           created_at?: string
           facebook?: string | null
+          groupe?: string
           id?: string
           linkedin?: string | null
           name: string
@@ -701,6 +703,7 @@ export type Database = {
           bio?: string | null
           created_at?: string
           facebook?: string | null
+          groupe?: string
           id?: string
           linkedin?: string | null
           name?: string
