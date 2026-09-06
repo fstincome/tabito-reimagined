@@ -51,6 +51,6 @@ export const NAV: NavItem[] = [
 
 export const CONTACT = {
   phone: "+257 79 505 127",
-  email: "info@tabito.travel",
+  email: "u.connectburundi.tabito@gmail.com",
   address: "Avenue du Lac Tanganyika, Bujumbura, Burundi",
 };
