@@ -21,13 +21,20 @@ export type Field = {
 
 export type Resource = {
   table: string;
+  /** Unique tab id when several tabs share one table. */
+  key?: string;
   label: string;
   /** Column shown in the list view. */
   titleField: string;
   orderBy: { column: string; ascending: boolean };
   fields: Field[];
   readOnly?: boolean;
+  /** Restricts the tab to rows matching these column values (also applied on create). */
+  filter?: Record<string, string>;
 };
+
+export const resourceKey = (r: Resource) => r.key ?? r.table;
+
 
 const PUBLISHED: Field = { name: "published", label: "Publié", type: "bool" };
 const SORT: Field = { name: "sort_order", label: "Ordre d'affichage", type: "number" };
@@ -130,12 +137,13 @@ export const RESOURCES: Resource[] = [
   },
   {
     table: "packages",
-    label: "Circuits & bouquets",
+    key: "packages-circuits",
+    label: "Circuits",
     titleField: "title",
     orderBy: { column: "sort_order", ascending: true },
+    filter: { type: "circuit" },
     fields: [
-      { name: "title", label: "Titre", type: "text", required: true },
-      { name: "type", label: "Type", type: "select", options: ["circuit", "bouquet"] },
+      { name: "title", label: "Titre du circuit", type: "text", required: true },
       { name: "duration", label: "Durée", type: "text" },
       { name: "price", label: "Prix", type: "text" },
       { name: "description", label: "Description", type: "textarea" },
@@ -145,6 +153,25 @@ export const RESOURCES: Resource[] = [
       PUBLISHED,
     ],
   },
+  {
+    table: "packages",
+    key: "packages-bouquets",
+    label: "Bouquets",
+    titleField: "title",
+    orderBy: { column: "sort_order", ascending: true },
+    filter: { type: "bouquet" },
+    fields: [
+      { name: "title", label: "Titre du bouquet", type: "text", required: true },
+      { name: "duration", label: "Durée", type: "text" },
+      { name: "price", label: "Prix", type: "text" },
+      { name: "description", label: "Description", type: "textarea" },
+      { name: "highlights", label: "Points forts (un par ligne)", type: "list" },
+      { name: "image_url", label: "Image", type: "image" },
+      SORT,
+      PUBLISHED,
+    ],
+  },
+
   {
     table: "blog_posts",
     label: "Articles du blog",
@@ -341,25 +368,26 @@ export const RESOURCES: Resource[] = [
 const db = supabase as any;
 
 export async function listRows(resource: Resource): Promise<any[]> {
-  const { data, error } = await db
-    .from(resource.table)
-    .select("*")
-    .order(resource.orderBy.column, {
-      ascending: resource.orderBy.ascending,
-      nullsFirst: false,
-    });
+  let q = db.from(resource.table).select("*");
+  for (const [col, val] of Object.entries(resource.filter ?? {})) q = q.eq(col, val);
+  const { data, error } = await q.order(resource.orderBy.column, {
+    ascending: resource.orderBy.ascending,
+    nullsFirst: false,
+  });
   if (error) throw error;
   return data ?? [];
 }
 
 export async function saveRow(resource: Resource, id: string | null, values: any) {
+  const payload = { ...values, ...(resource.filter ?? {}) };
   const query = id
-    ? db.from(resource.table).update(values).eq("id", id).select("id")
-    : db.from(resource.table).insert(values).select("id");
+    ? db.from(resource.table).update(payload).eq("id", id).select("id")
+    : db.from(resource.table).insert(payload).select("id");
   const { data, error } = await query;
   if (error) throw error;
   return (data?.[0] as { id?: string } | undefined) ?? null;
 }
+
 
 export async function deleteRow(resource: Resource, id: string) {
   const { error } = await db.from(resource.table).delete().eq("id", id);
