@@ -4,7 +4,7 @@ import { Languages, Phone } from "lucide-react";
 
 import tambours from "@/assets/hero-tambours.jpg";
 import { BioDialog } from "@/components/site/BioDialog";
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { guidesQuery } from "@/lib/content";
@@ -31,7 +31,7 @@ function Guides() {
 
   return (
     <SiteLayout>
-      <PageHero
+      <CmsPageHero slug="guides"
         title="Guides touristiques"
         subtitle="Ils connaissent les sentiers, les histoires et les meilleurs moments pour chaque visite."
         image={tambours}

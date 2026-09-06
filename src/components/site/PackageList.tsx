@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { CalendarDays, Check } from "lucide-react";
 
 import kibira from "@/assets/hero-kibira.jpg";
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { imageOr } from "@/lib/media";
 
 export function PackageList({
   mode,
+  slug,
   title,
   subtitle,
   eyebrow,
@@ -21,6 +22,7 @@ export function PackageList({
   heroImage,
 }: {
   mode: "circuit" | "bouquet";
+  slug: string;
   title: string;
   subtitle: string;
   eyebrow: string;
@@ -36,7 +38,7 @@ export function PackageList({
 
   return (
     <SiteLayout>
-      <PageHero title={title} subtitle={subtitle} image={heroImage} />
+      <CmsPageHero slug={slug} title={title} subtitle={subtitle} image={heroImage} />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow={eyebrow} title={heading} description={description} />

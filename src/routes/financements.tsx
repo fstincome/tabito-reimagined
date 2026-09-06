@@ -18,6 +18,7 @@ export const Route = createFileRoute("/financements")({
   component: () => (
     <OpportunityList
       kind="financement"
+      slug="financements"
       title="Financements"
       subtitle="Subventions, appels à projets et dispositifs d'appui pour les entrepreneurs du secteur."
       eyebrow="Opportunités"

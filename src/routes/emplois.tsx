@@ -18,6 +18,7 @@ export const Route = createFileRoute("/emplois")({
   component: () => (
     <OpportunityList
       kind="emploi"
+      slug="emplois"
       title="Emplois"
       subtitle="Les opportunités professionnelles du tourisme et de l'économie créative au Burundi."
       eyebrow="Carrières"

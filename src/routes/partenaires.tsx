@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink } from "lucide-react";
 
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { partnersQuery } from "@/lib/content";
@@ -29,7 +29,7 @@ function Partenaires() {
 
   return (
     <SiteLayout>
-      <PageHero
+      <CmsPageHero slug="partenaires"
         title="Nos partenaires"
         subtitle="Nous travaillons main dans la main avec les institutions et les opérateurs du secteur."
       />

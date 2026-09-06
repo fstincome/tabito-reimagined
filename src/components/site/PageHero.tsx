@@ -1,7 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 
 import heroDefault from "@/assets/hero-tanganyika.jpg";
+import { pageQuery } from "@/lib/content";
+import { isHttpUrl } from "@/lib/media";
 
 export function PageHero({
   title,
@@ -43,5 +46,30 @@ export function PageHero({
         </nav>
       </div>
     </section>
+  );
+}
+
+/**
+ * PageHero whose title, subtitle and background image can be overridden
+ * from the dashboard (rubrique « Pages », champ « Image d'entête »).
+ */
+export function CmsPageHero({
+  slug,
+  title,
+  subtitle,
+  image,
+}: {
+  slug: string;
+  title: string;
+  subtitle?: string | undefined;
+  image?: string | undefined;
+}) {
+  const { data: page } = useQuery(pageQuery(slug));
+  return (
+    <PageHero
+      title={page?.title || title}
+      subtitle={page?.subtitle || subtitle}
+      image={isHttpUrl(page?.hero_image_url) ? (page?.hero_image_url as string) : image}
+    />
   );
 }

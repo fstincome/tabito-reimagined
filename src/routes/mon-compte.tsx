@@ -11,7 +11,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
@@ -94,7 +94,7 @@ function Account() {
 
   return (
     <SiteLayout hideNewsletter>
-      <PageHero
+      <CmsPageHero slug="mon-compte"
         title="Mon espace voyageur"
         subtitle="Créez votre compte pour retrouver vos demandes de réservation et suivre l'avancement de vos trajets."
       />

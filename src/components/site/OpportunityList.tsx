@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { CalendarClock, Download, ExternalLink } from "lucide-react";
 
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { opportunitiesQuery } from "@/lib/content";
 
 export function OpportunityList({
   kind,
+  slug,
   title,
   subtitle,
   eyebrow,
@@ -15,6 +16,7 @@ export function OpportunityList({
   empty,
 }: {
   kind: string;
+  slug: string;
   title: string;
   subtitle: string;
   eyebrow: string;
@@ -25,7 +27,7 @@ export function OpportunityList({
 
   return (
     <SiteLayout>
-      <PageHero title={title} subtitle={subtitle} />
+      <CmsPageHero slug={slug} title={title} subtitle={subtitle} />
       <section className="section-y bg-sand">
         <div className="mx-auto max-w-[95%] px-6">
           <SectionHeading eyebrow={eyebrow} title={heading} />

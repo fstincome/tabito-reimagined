@@ -21,6 +21,7 @@ export const Route = createFileRoute("/bouquets")({
   component: () => (
     <PackageList
       mode="bouquet"
+      slug="bouquets"
       title="Bouquets"
       subtitle="Des formules modulables : vous choisissez les composantes, nous assemblons le séjour."
       eyebrow="Formules"

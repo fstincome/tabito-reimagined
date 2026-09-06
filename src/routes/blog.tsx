@@ -3,7 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { CalendarDays, User } from "lucide-react";
 
 import karera from "@/assets/karera.jpg";
-import { PageHero } from "@/components/site/PageHero";
+import { CmsPageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { blogQuery } from "@/lib/content";
@@ -42,7 +42,7 @@ function Blog() {
 
   return (
     <SiteLayout>
-      <PageHero
+      <CmsPageHero slug="blog"
         title="Blog"
         subtitle="Nos récits, conseils pratiques et actualités sur le tourisme au Burundi."
       />
