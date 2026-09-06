@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react";
 
-import logoAsset from "@/assets/tabito-logo.png.asset.json";
+import logo from "@/assets/tabito-logo.png";
 
-const logo = logoAsset.url;
 
 import { useI18n } from "@/lib/i18n";
 
