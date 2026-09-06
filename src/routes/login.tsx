@@ -3,7 +3,7 @@ import { LockKeyhole } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import logoAsset from "@/assets/tabito-logo.png.asset.json";
+import logo from "@/assets/tabito-logo.png";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,6 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 
-const logo = logoAsset.url;
 
 export const Route = createFileRoute("/login")({
   head: () => ({

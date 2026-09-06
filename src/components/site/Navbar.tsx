@@ -2,9 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
 
-import logoAsset from "@/assets/tabito-logo.png.asset.json";
+import logo from "@/assets/tabito-logo.png";
 
-const logo = logoAsset.url;
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
 
