@@ -141,7 +141,32 @@ function Reservation() {
       toast.error("Réservation impossible pour le moment. Réessayez plus tard.");
       return;
     }
-    void notifyBooking({ data: { email: form.email.trim() } }).catch(() => undefined);
+    const recap = [
+      `Nom : ${form.name.trim()}`,
+      `E-mail : ${form.email.trim()}`,
+      form.phone.trim() ? `Téléphone : ${form.phone.trim()}` : null,
+      `Catégorie : ${category}`,
+      selected?.label ? `Choix : ${selected.label}` : null,
+      form.travel_date ? `Date souhaitée : ${form.travel_date}` : null,
+      form.people ? `Voyageurs : ${form.people}` : null,
+      form.message.trim() ? `Message : ${form.message.trim()}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+    void messageTeam({
+      kind: "reservation",
+      title: `Nouvelle réservation — ${form.name.trim()}`,
+      body: recap,
+      link: "/dashboard",
+    }).catch(() => undefined);
+    if (userId) {
+      void messageUser(userId, {
+        kind: "reservation",
+        title: "Votre demande de réservation est enregistrée",
+        body: `Nous avons bien reçu votre demande.\n\n${recap}\n\nNotre équipe vous répond très vite ici même.`,
+        link: "/mon-compte",
+      }).catch(() => undefined);
+    }
     setCategory("");
     setItem("");
     setForm({ name: "", email: "", phone: "", travel_date: "", people: "2", message: "" });
