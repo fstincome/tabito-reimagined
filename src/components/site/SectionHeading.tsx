@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { pageQuery } from "@/lib/content";
+import { useI18n } from "@/lib/i18n";
 
 /**
  * Section heading whose eyebrow (sous-titre), title and description
@@ -19,16 +20,18 @@ export function CmsSectionHeading({
   description?: string;
   align?: "center" | "left";
 }) {
+  const { tx } = useI18n();
   const { data: page } = useQuery(pageQuery(slug));
   return (
     <SectionHeading
-      eyebrow={page?.subtitle || eyebrow}
-      title={page?.title || title}
-      description={page?.body || description}
+      eyebrow={tx(page, "subtitle") || eyebrow}
+      title={tx(page, "title") || title}
+      description={tx(page, "body") || description}
       align={align}
     />
   );
 }
+
 
 export function SectionHeading({
   eyebrow,
