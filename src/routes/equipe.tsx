@@ -2,13 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Linkedin, Twitter } from "lucide-react";
 
-import tambours from "@/assets/hero-tambours.jpg";
-import { BioDialog } from "@/components/site/BioDialog";
+import { BioDialog, initialsOf } from "@/components/site/BioDialog";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { teamQuery, type TeamMember } from "@/lib/content";
-import { imageOr } from "@/lib/media";
 
 export const Route = createFileRoute("/equipe")({
   head: () => ({
