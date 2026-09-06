@@ -47,7 +47,7 @@ const DICT: Record<string, { fr: string; en: string }> = {
   "top.language": { fr: "Langue", en: "Language" },
 
   // Navbar
-  "navbar.tagline": { fr: "Tanganyika e-Bridge", en: "Tanganyika e-Bridge" },
+  "navbar.tagline": { fr: "votre partenaire de voyage", en: "your travel partner" },
   "navbar.openMenu": { fr: "Ouvrir le menu", en: "Open menu" },
   "navbar.submenu": { fr: "Sous-menu", en: "Submenu" },
   "navbar.logoAlt": { fr: "Logo TABITO", en: "TABITO logo" },

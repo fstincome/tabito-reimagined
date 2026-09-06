@@ -29,7 +29,7 @@ export function Navbar() {
           />
           <span className="flex flex-col leading-none">
             <span className="font-display text-xl font-bold tracking-tight text-primary">TABITO</span>
-            <span className="text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="text-[0.62rem] tracking-[0.18em] text-muted-foreground">
               {t("navbar.tagline")}
             </span>
           </span>
