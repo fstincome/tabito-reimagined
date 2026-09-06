@@ -223,13 +223,14 @@ export const RESOURCES: Resource[] = [
   },
   {
     table: "gallery_images",
-    label: "Galerie photos",
+    label: "Galerie photos (automatique)",
     titleField: "title",
-    orderBy: { column: "sort_order", ascending: true },
+    orderBy: { column: "created_at", ascending: false },
     fields: [
       { name: "title", label: "Légende", type: "text" },
       { name: "categorie", label: "Catégorie", type: "text" },
       { name: "image_url", label: "Image", type: "image", required: true },
+
       SORT,
       PUBLISHED,
     ],

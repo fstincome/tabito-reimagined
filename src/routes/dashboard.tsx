@@ -21,7 +21,7 @@ import {
   type Field,
   type Resource,
 } from "@/lib/admin";
-import { isHttpUrl, uploadMedia } from "@/lib/media";
+import { isHttpUrl, registerGalleryImage, uploadMedia } from "@/lib/media";
 
 
 const logo = logoAsset.url;
@@ -228,11 +228,14 @@ function Dashboard() {
                     key={f.name}
                     field={f}
                     value={editing.values[f.name]}
+                    galleryCategory={resource.label}
+                    galleryTitle={String(editing.values[resource.titleField] ?? "")}
                     onChange={(v) =>
                       setEditing((e) => (e ? { ...e, values: { ...e.values, [f.name]: v } } : e))
                     }
                   />
                 ))}
+
               </div>
               <div className="flex gap-2">
                 <Button variant="lagoon" onClick={submit}>
@@ -304,10 +307,14 @@ function FieldInput({
   field,
   value,
   onChange,
+  galleryCategory,
+  galleryTitle,
 }: {
   field: Field;
   value: any;
   onChange: (value: any) => void;
+  galleryCategory?: string;
+  galleryTitle?: string;
 }) {
   const [uploading, setUploading] = useState(false);
 
@@ -316,12 +323,16 @@ function FieldInput({
     try {
       const url = await uploadMedia(file, field.name);
       onChange(url);
-      toast.success("Fichier téléversé.");
+      if (galleryCategory) {
+        await registerGalleryImage(url, galleryCategory, galleryTitle).catch(() => undefined);
+      }
+      toast.success("Fichier téléversé et ajouté à la galerie.");
     } catch {
       toast.error("Téléversement impossible.");
     }
     setUploading(false);
   }
+
 
   const wide = field.type === "textarea" || field.type === "list";
 
