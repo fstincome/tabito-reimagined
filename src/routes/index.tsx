@@ -305,15 +305,21 @@ function Home() {
             {...sec("services", { eyebrow: "Nos services", title: "Tout ce qu'il faut pour bien voyager" })}
           />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map(({ Icon, title, text }) => (
-              <article key={title} className="hover-lift surface-card p-7">
-                <span className="flex size-12 items-center justify-center rounded-xl bg-secondary text-primary">
-                  <Icon className="size-6" aria-hidden="true" />
-                </span>
-                <h3 className="mt-5 text-lg font-semibold text-primary">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
-              </article>
-            ))}
+            {(services.length > 0
+              ? services.map((s) => ({ icon: s.icon ?? "compass", title: s.title, text: s.description ?? "" }))
+              : SERVICES
+            ).map(({ icon, title, text }) => {
+              const Icon = SERVICE_ICONS[icon] ?? Compass;
+              return (
+                <article key={title} className="hover-lift surface-card p-7">
+                  <span className="flex size-12 items-center justify-center rounded-xl bg-secondary text-primary">
+                    <Icon className="size-6" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold text-primary">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
