@@ -34,6 +34,20 @@ const SORT: Field = { name: "sort_order", label: "Ordre d'affichage", type: "num
 
 export const RESOURCES: Resource[] = [
   {
+    table: "notifications",
+    label: "Boîte de messages",
+    titleField: "title",
+    orderBy: { column: "created_at", ascending: false },
+    fields: [
+      { name: "title", label: "Objet", type: "text", required: true },
+      { name: "kind", label: "Type", type: "text" },
+      { name: "audience", label: "Destinataire (admin / user)", type: "text" },
+      { name: "body", label: "Message", type: "textarea" },
+      { name: "link", label: "Lien", type: "text" },
+      { name: "read", label: "Lu", type: "bool" },
+    ],
+  },
+  {
     table: "sites",
     label: "Sites touristiques (carte)",
     titleField: "nom_site",
