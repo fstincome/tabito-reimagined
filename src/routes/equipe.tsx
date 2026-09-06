@@ -58,7 +58,7 @@ function MemberCard({ m }: { m: TeamMember }) {
         width={600}
         height={600}
         loading="lazy"
-        className="h-64 w-full object-cover"
+        className="h-64 w-full bg-muted object-contain p-2"
       />
       <div className="p-5">
         <h3 className="font-display text-base font-semibold text-primary">{m.name}</h3>

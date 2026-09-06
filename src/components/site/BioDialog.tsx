@@ -45,7 +45,7 @@ export function BioDialog({ person, label = "Voir bio" }: { person: BioPerson; l
           alt={person.name}
           width={800}
           height={600}
-          className="h-56 w-full rounded-xl object-cover"
+          className="max-h-72 w-full rounded-xl bg-muted object-contain p-2"
         />
 
         {person.bio && (
