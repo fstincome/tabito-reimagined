@@ -21,13 +21,20 @@ export type Field = {
 
 export type Resource = {
   table: string;
+  /** Unique tab id when several tabs share one table. */
+  key?: string;
   label: string;
   /** Column shown in the list view. */
   titleField: string;
   orderBy: { column: string; ascending: boolean };
   fields: Field[];
   readOnly?: boolean;
+  /** Restricts the tab to rows matching these column values (also applied on create). */
+  filter?: Record<string, string>;
 };
+
+export const resourceKey = (r: Resource) => r.key ?? r.table;
+
 
 const PUBLISHED: Field = { name: "published", label: "Publié", type: "bool" };
 const SORT: Field = { name: "sort_order", label: "Ordre d'affichage", type: "number" };
