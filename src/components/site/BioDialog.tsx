@@ -10,9 +10,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+export function initialsOf(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 export type BioPerson = {
   name: string;
-  photo: string;
+  photo?: string | null;
   role?: string | null;
   bio?: string | null;
   speciality?: string | null;
