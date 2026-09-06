@@ -1,0 +1,1 @@
+ALTER TABLE public.team_members ADD COLUMN IF NOT EXISTS groupe text NOT NULL DEFAULT 'operational';

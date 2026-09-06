@@ -211,6 +211,12 @@ export const RESOURCES: Resource[] = [
     fields: [
       { name: "name", label: "Nom", type: "text", required: true },
       { name: "role_title", label: "Fonction", type: "text" },
+      {
+        name: "groupe",
+        label: "Groupe",
+        type: "select",
+        options: ["board", "advisors", "operational", "it"],
+      },
       { name: "bio", label: "Biographie", type: "textarea" },
       { name: "photo_url", label: "Photo", type: "image" },
       { name: "facebook", label: "Facebook", type: "text" },
