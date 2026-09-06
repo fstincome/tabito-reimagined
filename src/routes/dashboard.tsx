@@ -304,10 +304,14 @@ function FieldInput({
   field,
   value,
   onChange,
+  galleryCategory,
+  galleryTitle,
 }: {
   field: Field;
   value: any;
   onChange: (value: any) => void;
+  galleryCategory?: string;
+  galleryTitle?: string;
 }) {
   const [uploading, setUploading] = useState(false);
 
@@ -316,12 +320,16 @@ function FieldInput({
     try {
       const url = await uploadMedia(file, field.name);
       onChange(url);
-      toast.success("Fichier téléversé.");
+      if (galleryCategory) {
+        await registerGalleryImage(url, galleryCategory, galleryTitle).catch(() => undefined);
+      }
+      toast.success("Fichier téléversé et ajouté à la galerie.");
     } catch {
       toast.error("Téléversement impossible.");
     }
     setUploading(false);
   }
+
 
   const wide = field.type === "textarea" || field.type === "list";
 
