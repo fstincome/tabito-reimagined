@@ -31,6 +31,7 @@ import {
   destinationsQuery,
   guidesQuery,
   packagesQuery,
+  servicesQuery,
   slidesQuery,
   testimonialsQuery,
 } from "@/lib/content";
@@ -193,6 +194,7 @@ function Hero() {
 
 function Home() {
   const { data: sections = {} } = useQuery(homeSectionsQuery);
+  const { data: services = [] } = useQuery(servicesQuery);
   const { data: destinations } = useQuery(destinationsQuery);
   const { data: packages = [] } = useQuery(packagesQuery);
   const { data: guides = [] } = useQuery(guidesQuery);
