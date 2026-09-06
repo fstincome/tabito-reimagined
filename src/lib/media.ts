@@ -33,3 +33,28 @@ export async function uploadMedia(file: File, folder = "uploads"): Promise<strin
 export function imageOr(url: string | null | undefined, fallback: string): string {
   return isHttpUrl(url) ? (url as string) : fallback;
 }
+
+/**
+ * Registers an uploaded image in the gallery so every upload made anywhere in
+ * the dashboard shows up on /galerie under its own category.
+ */
+export async function registerGalleryImage(
+  imageUrl: string,
+  categorie: string,
+  title?: string | null,
+): Promise<void> {
+  if (!isHttpUrl(imageUrl)) return;
+  const db = supabase as any;
+  const { data: existing } = await db
+    .from("gallery_images")
+    .select("id")
+    .eq("image_url", imageUrl)
+    .limit(1);
+  if (existing?.length) return;
+  await db.from("gallery_images").insert({
+    image_url: imageUrl,
+    categorie,
+    title: title?.trim() ? title.trim() : null,
+    published: true,
+  });
+}
