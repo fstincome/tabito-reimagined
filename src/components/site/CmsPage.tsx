@@ -15,11 +15,14 @@ export function CmsPage({
   title,
   subtitle,
   fallback,
+  children,
 }: {
   slug: string;
   title: string;
   subtitle?: string;
   fallback: React.ReactNode;
+  /** Contenu additionnel affiché sous le corps de la page. */
+  children?: React.ReactNode;
 }) {
   const { tx } = useI18n();
   const { data: page } = useQuery(pageQuery(slug));
