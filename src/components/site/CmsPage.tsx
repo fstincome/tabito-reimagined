@@ -49,6 +49,7 @@ export function CmsPage({
           </div>
         </div>
       </section>
+      {children}
     </SiteLayout>
   );
 }
