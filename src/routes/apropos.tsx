@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CmsPage } from "@/components/site/CmsPage";
+import { SectionHeading } from "@/components/site/SectionHeading";
+import { TeamGroups } from "@/components/site/TeamGroups";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/apropos")({
@@ -77,6 +79,19 @@ function Apropos() {
           </p>
         </>
       }
-    />
+    >
+      <section className="section-y bg-card">
+        <div className="mx-auto max-w-[95%] px-6">
+          <SectionHeading
+            eyebrow={L("Gouvernance", "Governance")}
+            title={L(
+              "Conseil d'administration et conseil de direction",
+              "Board of Directors and Board of Advisors",
+            )}
+          />
+          <TeamGroups only={["board", "advisors"]} />
+        </div>
+      </section>
+    </CmsPage>
   );
 }
