@@ -23,6 +23,7 @@ import { Route as EvenementsRouteImport } from './routes/evenements'
 import { Route as FinancementsRouteImport } from './routes/financements'
 import { Route as FormationsRouteImport } from './routes/formations'
 import { Route as GalerieRouteImport } from './routes/galerie'
+import { Route as GrandBujumburaRouteImport } from './routes/grand-bujumbura'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MerciRouteImport } from './routes/merci'
@@ -107,6 +108,11 @@ const GalerieRoute = GalerieRouteImport.update({
   path: '/galerie',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GrandBujumburaRoute = GrandBujumburaRouteImport.update({
+  id: '/grand-bujumbura',
+  path: '/grand-bujumbura',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuidesRoute = GuidesRouteImport.update({
   id: '/guides',
   path: '/guides',
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
+  '/grand-bujumbura': typeof GrandBujumburaRoute
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
   '/merci': typeof MerciRoute
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
+  '/grand-bujumbura': typeof GrandBujumburaRoute
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
   '/merci': typeof MerciRoute
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/financements': typeof FinancementsRoute
   '/formations': typeof FormationsRoute
   '/galerie': typeof GalerieRoute
+  '/grand-bujumbura': typeof GrandBujumburaRoute
   '/guides': typeof GuidesRoute
   '/login': typeof LoginRoute
   '/merci': typeof MerciRoute
@@ -278,6 +287,7 @@ export interface FileRouteTypes {
     | '/financements'
     | '/formations'
     | '/galerie'
+    | '/grand-bujumbura'
     | '/guides'
     | '/login'
     | '/merci'
@@ -307,6 +317,7 @@ export interface FileRouteTypes {
     | '/financements'
     | '/formations'
     | '/galerie'
+    | '/grand-bujumbura'
     | '/guides'
     | '/login'
     | '/merci'
@@ -336,6 +347,7 @@ export interface FileRouteTypes {
     | '/financements'
     | '/formations'
     | '/galerie'
+    | '/grand-bujumbura'
     | '/guides'
     | '/login'
     | '/merci'
@@ -366,6 +378,7 @@ export interface RootRouteChildren {
   FinancementsRoute: typeof FinancementsRoute
   FormationsRoute: typeof FormationsRoute
   GalerieRoute: typeof GalerieRoute
+  GrandBujumburaRoute: typeof GrandBujumburaRoute
   GuidesRoute: typeof GuidesRoute
   LoginRoute: typeof LoginRoute
   MerciRoute: typeof MerciRoute
@@ -478,6 +491,13 @@ declare module '@tanstack/react-router' {
       path: '/galerie'
       fullPath: '/galerie'
       preLoaderRoute: typeof GalerieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grand-bujumbura': {
+      id: '/grand-bujumbura'
+      path: '/grand-bujumbura'
+      fullPath: '/grand-bujumbura'
+      preLoaderRoute: typeof GrandBujumburaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides': {
@@ -599,6 +619,7 @@ const rootRouteChildren: RootRouteChildren = {
   FinancementsRoute: FinancementsRoute,
   FormationsRoute: FormationsRoute,
   GalerieRoute: GalerieRoute,
+  GrandBujumburaRoute: GrandBujumburaRoute,
   GuidesRoute: GuidesRoute,
   LoginRoute: LoginRoute,
   MerciRoute: MerciRoute,
