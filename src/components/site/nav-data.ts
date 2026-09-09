@@ -36,6 +36,7 @@ export const NAV: NavItem[] = [
     to: "/destinations",
     children: [
       { labelKey: "nav.sites", to: "/destinations" },
+      { labelKey: "nav.grandBuja", to: "/grand-bujumbura" },
       { labelKey: "nav.cities", to: "/villes" },
       { labelKey: "nav.tours", to: "/circuits" },
       { labelKey: "nav.bundles", to: "/bouquets" },

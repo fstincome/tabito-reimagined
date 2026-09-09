@@ -221,6 +221,11 @@ function Home() {
   const { data: services = [] } = useQuery(servicesQuery);
   const { data: destinations } = useQuery(destinationsQuery);
   const { data: packages = [] } = useQuery(packagesQuery);
+  const FLAGSHIP_TITLES = [
+    "Le Tour de la Ville BUJA",
+    "La Route des Femmes Vendeuses du Mukeke et Akarobe",
+  ];
+  const flagshipTours = packages.filter((p) => FLAGSHIP_TITLES.includes(p.title));
   const { data: guides = [] } = useQuery(guidesQuery);
   const { data: posts = [] } = useQuery(blogQuery);
   const { data: testimonials = [] } = useQuery(testimonialsQuery);
@@ -489,6 +494,65 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* Circuits phares */}
+      {flagshipTours.length > 0 && (
+        <section className="section-y bg-card">
+          <div className="mx-auto max-w-[95%] px-6">
+            <SectionHeading
+              eyebrow={L("Circuits phares", "Flagship tours")}
+              title={L("Nos deux circuits vedettes", "Our two signature tours")}
+              description={L(
+                "Le Tour de la Ville BUJA et La Route des Femmes Vendeuses du Mukeke et Akarobe, au cœur de la Destination du Grand Bujumbura.",
+                "The BUJA City Tour and the Mukeke and Akarobe Women Sellers Route, at the heart of the Bujumbura Great City Destination.",
+              )}
+            />
+            <div className="mt-14 grid gap-6 md:grid-cols-2">
+              {flagshipTours.map((p) => (
+                <article key={p.id} className="hover-lift surface-card overflow-hidden">
+                  <img
+                    src={imageOr(p.image_url, PLACEHOLDER_IMAGE)}
+                    alt={tx(p, "title")}
+                    width={1200}
+                    height={800}
+                    loading="lazy"
+                    className="h-60 w-full object-cover"
+                  />
+                  <div className="p-6">
+                    {tx(p, "duration") && (
+                      <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <CalendarDays className="size-3.5" aria-hidden="true" />
+                        {tx(p, "duration")}
+                      </p>
+                    )}
+                    <h3 className="mt-2 font-display text-xl font-semibold text-primary">
+                      {tx(p, "title")}
+                    </h3>
+                    {tx(p, "description") && (
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        {tx(p, "description")}
+                      </p>
+                    )}
+                    {tx(p, "price") && (
+                      <p className="mt-4 font-display text-lg text-accent">{tx(p, "price")}</p>
+                    )}
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      <Button asChild variant="lagoon">
+                        <Link to="/reservation">{L("Réserver", "Book")}</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                        <Link to="/grand-bujumbura">
+                          {L("Grand Bujumbura", "Greater Bujumbura")}
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Circuits & bouquets */}
       {localizedPackages.length > 0 && (
