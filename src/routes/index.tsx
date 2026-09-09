@@ -221,6 +221,11 @@ function Home() {
   const { data: services = [] } = useQuery(servicesQuery);
   const { data: destinations } = useQuery(destinationsQuery);
   const { data: packages = [] } = useQuery(packagesQuery);
+  const FLAGSHIP_TITLES = [
+    "Le Tour de la Ville BUJA",
+    "La Route des Femmes Vendeuses du Mukeke et Akarobe",
+  ];
+  const flagshipTours = packages.filter((p) => FLAGSHIP_TITLES.includes(p.title));
   const { data: guides = [] } = useQuery(guidesQuery);
   const { data: posts = [] } = useQuery(blogQuery);
   const { data: testimonials = [] } = useQuery(testimonialsQuery);
