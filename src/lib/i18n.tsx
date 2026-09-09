@@ -32,6 +32,10 @@ const DICT: Record<string, { fr: string; en: string }> = {
   "nav.training": { fr: "Formations", en: "Training" },
   "nav.destinations": { fr: "Destinations", en: "Destinations" },
   "nav.sites": { fr: "Sites touristiques", en: "Tourist sites" },
+  "nav.grandBuja": {
+    fr: "Destination du Grand Bujumbura",
+    en: "Bujumbura Great City Destination",
+  },
   "nav.cities": { fr: "Villes du Burundi", en: "Cities of Burundi" },
   "nav.tours": { fr: "Circuits", en: "Tours" },
   "nav.bundles": { fr: "Bouquets", en: "Packages" },
