@@ -5,6 +5,7 @@ import { MapPin } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { WeatherBadge } from "@/components/site/WeatherBadge";
 import { citiesQuery, pageQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { PLACEHOLDER_IMAGE, imageOr, isHttpUrl } from "@/lib/media";
@@ -96,6 +97,9 @@ function Villes() {
                     <h2 className="mt-3 font-display text-lg font-semibold text-primary">
                       {tx(c, "name")}
                     </h2>
+                    <div className="mt-3">
+                      <WeatherBadge place={`${tx(c, "name")}, Burundi`} />
+                    </div>
                     {(c.summary || c.description) && (
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                         {tx(c, "summary") || tx(c, "description")}

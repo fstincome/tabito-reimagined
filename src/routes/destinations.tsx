@@ -8,6 +8,7 @@ import { CmsPageHero } from "@/components/site/PageHero";
 import { CmsSectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SitesMap } from "@/components/site/SitesMap";
+import { WeatherBadge } from "@/components/site/WeatherBadge";
 import { useI18n } from "@/lib/i18n";
 import { destinationsQuery, sitesQuery } from "@/lib/content";
 import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
@@ -159,6 +160,12 @@ function Destinations() {
                     {[s.commune, s.province].filter(Boolean).join(", ")}
                     {s.categorie ? ` · ${s.categorie}` : ""}
                   </p>
+                  <p className="mt-1 text-[0.7rem] text-muted-foreground">
+                    {s.latitude.toFixed(4)}, {s.longitude.toFixed(4)}
+                  </p>
+                  <div className="mt-2">
+                    <WeatherBadge lat={s.latitude} lng={s.longitude} />
+                  </div>
                   {s.description && (
                     <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
                       {tx(s, "description")}

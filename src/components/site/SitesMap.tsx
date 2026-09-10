@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 
 import { sitesQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
+import { describeWeather, fetchWeather } from "@/lib/weather";
 
 const BURUNDI_CENTER: [number, number] = [-3.4275804, 29.9218864];
 
@@ -85,6 +86,7 @@ export function SitesMap() {
               ${lieu ? `<div style="margin-top:6px;font-size:12px;opacity:.75">📍 ${esc(lieu)}</div>` : ""}
               ${shortDesc ? `<p style="margin:6px 0 0;font-size:12px;line-height:1.45">${esc(shortDesc)}</p>` : ""}
               <div style="margin-top:6px;font-size:11px;opacity:.6">${lat.toFixed(4)}, ${lng.toFixed(4)}</div>
+              <div data-weather="${lat},${lng}" style="margin-top:4px;font-size:12px;font-weight:600;color:oklch(0.35 0.09 230)">${esc(L("Météo…", "Weather…"))}</div>
               <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
                 <a href="/reservation" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">${esc(L("Réserver", "Book"))}</a>
                 <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">${esc(L("Itinéraire", "Directions"))}</a>
@@ -96,7 +98,28 @@ export function SitesMap() {
             .bindPopup(html, { minWidth: 230 })
             .bindTooltip(nomSite, { direction: "top", offset: [0, -10] });
         });
+
+      map.off("popupopen");
+      map.on("popupopen", (event) => {
+        const node = (event as unknown as { popup: { getElement: () => HTMLElement | undefined } })
+          .popup.getElement()
+          ?.querySelector<HTMLElement>("[data-weather]");
+        if (!node) return;
+        const [wLat, wLng] = (node.dataset["weather"] ?? "").split(",").map(Number);
+        if (!Number.isFinite(wLat) || !Number.isFinite(wLng)) return;
+        fetchWeather(wLat as number, wLng as number)
+          .then((w) => {
+            const d = describeWeather(w.code);
+            node.textContent = `${d.icon} ${w.temperature}°C · ${L(d.fr, d.en)} · ${w.windSpeed} km/h${
+              w.humidity != null ? ` · ${w.humidity}%` : ""
+            }`;
+          })
+          .catch(() => {
+            node.textContent = L("Météo indisponible", "Weather unavailable");
+          });
+      });
     }
+
 
     void render();
     return () => {
