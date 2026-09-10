@@ -159,6 +159,12 @@ function Destinations() {
                     {[s.commune, s.province].filter(Boolean).join(", ")}
                     {s.categorie ? ` · ${s.categorie}` : ""}
                   </p>
+                  <p className="mt-1 text-[0.7rem] text-muted-foreground">
+                    {s.latitude.toFixed(4)}, {s.longitude.toFixed(4)}
+                  </p>
+                  <div className="mt-2">
+                    <WeatherBadge lat={s.latitude} lng={s.longitude} />
+                  </div>
                   {s.description && (
                     <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
                       {tx(s, "description")}
