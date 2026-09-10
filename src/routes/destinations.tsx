@@ -8,6 +8,7 @@ import { CmsPageHero } from "@/components/site/PageHero";
 import { CmsSectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SitesMap } from "@/components/site/SitesMap";
+import { WeatherBadge } from "@/components/site/WeatherBadge";
 import { useI18n } from "@/lib/i18n";
 import { destinationsQuery, sitesQuery } from "@/lib/content";
 import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
