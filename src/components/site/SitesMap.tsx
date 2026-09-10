@@ -98,7 +98,28 @@ export function SitesMap() {
             .bindPopup(html, { minWidth: 230 })
             .bindTooltip(nomSite, { direction: "top", offset: [0, -10] });
         });
+
+      map.off("popupopen");
+      map.on("popupopen", (event) => {
+        const node = (event as unknown as { popup: { getElement: () => HTMLElement | undefined } })
+          .popup.getElement()
+          ?.querySelector<HTMLElement>("[data-weather]");
+        if (!node) return;
+        const [wLat, wLng] = (node.dataset["weather"] ?? "").split(",").map(Number);
+        if (!Number.isFinite(wLat) || !Number.isFinite(wLng)) return;
+        fetchWeather(wLat as number, wLng as number)
+          .then((w) => {
+            const d = describeWeather(w.code);
+            node.textContent = `${d.icon} ${w.temperature}°C · ${L(d.fr, d.en)} · ${w.windSpeed} km/h${
+              w.humidity != null ? ` · ${w.humidity}%` : ""
+            }`;
+          })
+          .catch(() => {
+            node.textContent = L("Météo indisponible", "Weather unavailable");
+          });
+      });
     }
+
 
     void render();
     return () => {
