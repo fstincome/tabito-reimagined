@@ -85,6 +85,7 @@ export function SitesMap() {
               ${lieu ? `<div style="margin-top:6px;font-size:12px;opacity:.75">📍 ${esc(lieu)}</div>` : ""}
               ${shortDesc ? `<p style="margin:6px 0 0;font-size:12px;line-height:1.45">${esc(shortDesc)}</p>` : ""}
               <div style="margin-top:6px;font-size:11px;opacity:.6">${lat.toFixed(4)}, ${lng.toFixed(4)}</div>
+              <div data-weather="${lat},${lng}" style="margin-top:4px;font-size:12px;font-weight:600;color:oklch(0.35 0.09 230)">${esc(L("Météo…", "Weather…"))}</div>
               <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
                 <a href="/reservation" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">${esc(L("Réserver", "Book"))}</a>
                 <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:600;color:oklch(0.45 0.13 235);text-decoration:underline">${esc(L("Itinéraire", "Directions"))}</a>
