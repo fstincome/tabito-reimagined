@@ -14,6 +14,104 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_track_points: {
+        Row: {
+          accuracy: number | null
+          created_at: string
+          id: string
+          latitude: number
+          longitude: number
+          recorded_at: string
+          speed: number | null
+          track_id: string
+        }
+        Insert: {
+          accuracy?: number | null
+          created_at?: string
+          id?: string
+          latitude: number
+          longitude: number
+          recorded_at?: string
+          speed?: number | null
+          track_id: string
+        }
+        Update: {
+          accuracy?: number | null
+          created_at?: string
+          id?: string
+          latitude?: number
+          longitude?: number
+          recorded_at?: string
+          speed?: number | null
+          track_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_track_points_track_id_fkey"
+            columns: ["track_id"]
+            isOneToOne: false
+            referencedRelation: "admin_tracks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      admin_tracks: {
+        Row: {
+          created_at: string
+          distance_m: number
+          end_label: string | null
+          end_lat: number | null
+          end_lng: number | null
+          ended_at: string | null
+          id: string
+          label: string | null
+          notes: string | null
+          start_label: string | null
+          start_lat: number | null
+          start_lng: number | null
+          started_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          distance_m?: number
+          end_label?: string | null
+          end_lat?: number | null
+          end_lng?: number | null
+          ended_at?: string | null
+          id?: string
+          label?: string | null
+          notes?: string | null
+          start_label?: string | null
+          start_lat?: number | null
+          start_lng?: number | null
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          distance_m?: number
+          end_label?: string | null
+          end_lat?: number | null
+          end_lng?: number | null
+          ended_at?: string | null
+          id?: string
+          label?: string | null
+          notes?: string | null
+          start_label?: string | null
+          start_lat?: number | null
+          start_lng?: number | null
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author: string | null
