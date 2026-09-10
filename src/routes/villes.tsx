@@ -96,6 +96,9 @@ function Villes() {
                     <h2 className="mt-3 font-display text-lg font-semibold text-primary">
                       {tx(c, "name")}
                     </h2>
+                    <div className="mt-3">
+                      <WeatherBadge place={`${tx(c, "name")}, Burundi`} />
+                    </div>
                     {(c.summary || c.description) && (
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                         {tx(c, "summary") || tx(c, "description")}
