@@ -47,7 +47,7 @@ export async function geocodePlace(name: string): Promise<{ lat: number; lng: nu
 export function weatherQuery(lat: number, lng: number) {
   return queryOptions({
     queryKey: ["weather", lat.toFixed(3), lng.toFixed(3)],
-    queryFn: () => fetchWeather(lat, lng),
+    queryFn: async (): Promise<Weather | null> => fetchWeather(lat, lng),
     staleTime: 15 * 60 * 1000,
     retry: 1,
   });
