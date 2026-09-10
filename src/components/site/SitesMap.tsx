@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 
 import { sitesQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
+import { describeWeather, fetchWeather } from "@/lib/weather";
 
 const BURUNDI_CENTER: [number, number] = [-3.4275804, 29.9218864];
 
