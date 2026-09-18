@@ -195,9 +195,10 @@ function Dashboard() {
                 onClick={() => {
                   setResource(r);
                   setEditing(null);
+                  setTracking(false);
                 }}
                 className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                  resourceKey(resource) === resourceKey(r)
+                  !tracking && resourceKey(resource) === resourceKey(r)
                     ? "bg-secondary font-semibold text-primary"
                     : "text-foreground hover:bg-muted"
                 }`}
@@ -206,6 +207,20 @@ function Dashboard() {
                 {r.label}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setTracking(true);
+                setEditing(null);
+              }}
+              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                tracking
+                  ? "bg-secondary font-semibold text-primary"
+                  : "text-foreground hover:bg-muted"
+              }`}
+            >
+              Suivi des trajets (GPS)
+            </button>
           </nav>
         </aside>
 
