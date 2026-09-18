@@ -225,6 +225,15 @@ function Dashboard() {
         </aside>
 
         <main className="space-y-6">
+          {tracking ? (
+            <>
+              <h1 className="font-display text-xl font-bold text-primary">
+                Suivi des trajets (GPS)
+              </h1>
+              <TrackingPanel />
+            </>
+          ) : (
+          <>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h1 className="font-display text-xl font-bold text-primary">{resource.label}</h1>
             {!resource.readOnly && (
