@@ -24,6 +24,7 @@ import {
   type Resource,
 } from "@/lib/admin";
 import { isHttpUrl, registerGalleryImage, uploadMedia } from "@/lib/media";
+import { TrackingPanel } from "@/components/site/TrackingPanel";
 
 
 
@@ -51,6 +52,7 @@ function Dashboard() {
     null,
   );
   const [formLang, setFormLang] = useState<"fr" | "en">("fr");
+  const [tracking, setTracking] = useState(false);
   const allFields = [...resource.fields, ...enFields(resource)];
   const shownFields = formLang === "en" ? enFields(resource) : resource.fields;
 
