@@ -24,6 +24,7 @@ import {
   type Resource,
 } from "@/lib/admin";
 import { isHttpUrl, registerGalleryImage, uploadMedia } from "@/lib/media";
+import { TrackingPanel } from "@/components/site/TrackingPanel";
 
 
 
@@ -51,6 +52,7 @@ function Dashboard() {
     null,
   );
   const [formLang, setFormLang] = useState<"fr" | "en">("fr");
+  const [tracking, setTracking] = useState(false);
   const allFields = [...resource.fields, ...enFields(resource)];
   const shownFields = formLang === "en" ? enFields(resource) : resource.fields;
 
@@ -193,9 +195,10 @@ function Dashboard() {
                 onClick={() => {
                   setResource(r);
                   setEditing(null);
+                  setTracking(false);
                 }}
                 className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                  resourceKey(resource) === resourceKey(r)
+                  !tracking && resourceKey(resource) === resourceKey(r)
                     ? "bg-secondary font-semibold text-primary"
                     : "text-foreground hover:bg-muted"
                 }`}
@@ -204,10 +207,33 @@ function Dashboard() {
                 {r.label}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setTracking(true);
+                setEditing(null);
+              }}
+              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                tracking
+                  ? "bg-secondary font-semibold text-primary"
+                  : "text-foreground hover:bg-muted"
+              }`}
+            >
+              Suivi des trajets (GPS)
+            </button>
           </nav>
         </aside>
 
         <main className="space-y-6">
+          {tracking ? (
+            <>
+              <h1 className="font-display text-xl font-bold text-primary">
+                Suivi des trajets (GPS)
+              </h1>
+              <TrackingPanel />
+            </>
+          ) : (
+          <>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h1 className="font-display text-xl font-bold text-primary">{resource.label}</h1>
             {!resource.readOnly && (
@@ -337,6 +363,8 @@ function Dashboard() {
               </ul>
             )}
           </div>
+          </>
+          )}
         </main>
       </div>
     </div>
