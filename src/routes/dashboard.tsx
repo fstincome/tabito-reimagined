@@ -363,6 +363,8 @@ function Dashboard() {
               </ul>
             )}
           </div>
+          </>
+          )}
         </main>
       </div>
     </div>
