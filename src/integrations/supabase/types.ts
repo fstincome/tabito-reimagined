@@ -753,22 +753,91 @@ export type Database = {
       }
       profiles: {
         Row: {
+          accessibility: string | null
+          accommodation: string | null
+          address: string | null
+          avatar_url: string | null
+          bio: string | null
+          birth_date: string | null
+          budget: string | null
+          city: string | null
+          country: string | null
           created_at: string
+          dietary: string | null
           email: string | null
+          emergency_name: string | null
+          emergency_phone: string | null
           full_name: string | null
+          gender: string | null
           id: string
+          interests: Json
+          nationality: string | null
+          notify_messages: boolean
+          notify_offers: boolean
+          passport_number: string | null
+          phone: string | null
+          preferred_language: string
+          transport: string | null
+          travel_style: string | null
+          updated_at: string
         }
         Insert: {
+          accessibility?: string | null
+          accommodation?: string | null
+          address?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          birth_date?: string | null
+          budget?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          dietary?: string | null
           email?: string | null
+          emergency_name?: string | null
+          emergency_phone?: string | null
           full_name?: string | null
+          gender?: string | null
           id: string
+          interests?: Json
+          nationality?: string | null
+          notify_messages?: boolean
+          notify_offers?: boolean
+          passport_number?: string | null
+          phone?: string | null
+          preferred_language?: string
+          transport?: string | null
+          travel_style?: string | null
+          updated_at?: string
         }
         Update: {
+          accessibility?: string | null
+          accommodation?: string | null
+          address?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          birth_date?: string | null
+          budget?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          dietary?: string | null
           email?: string | null
+          emergency_name?: string | null
+          emergency_phone?: string | null
           full_name?: string | null
+          gender?: string | null
           id?: string
+          interests?: Json
+          nationality?: string | null
+          notify_messages?: boolean
+          notify_offers?: boolean
+          passport_number?: string | null
+          phone?: string | null
+          preferred_language?: string
+          transport?: string | null
+          travel_style?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
