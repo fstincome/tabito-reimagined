@@ -172,13 +172,13 @@ export function TravellerSpace({ session }: { session: Session }) {
     payload["preferred_language"] = profile.preferred_language || "fr";
     const { error } = await db.from("profiles").upsert(payload);
     setSaving(false);
-    if (error) return toast.error(L("Enregistrement impossible.", "Unable to save."));
+    if (error) { toast.error(L("Enregistrement impossible.", "Unable to save.")); return; }
     toast.success(L("Modifications enregistrées.", "Changes saved."));
   }
 
   async function cancel(id: string) {
     const { error } = await db.from("bookings").delete().eq("id", id);
-    if (error) return toast.error(L("Cette réservation ne peut plus être annulée.", "This booking can no longer be cancelled."));
+    if (error) { toast.error(L("Cette réservation ne peut plus être annulée.", "This booking can no longer be cancelled.")); return; }
     toast.success(L("Réservation annulée.", "Booking cancelled."));
     void load();
   }
@@ -503,11 +503,11 @@ function SecurityForm() {
   const [busy, setBusy] = useState(false);
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (next.length < 8) return toast.error(L("8 caractères minimum.", "At least 8 characters."));
+    if (next.length < 8) { toast.error(L("8 caractères minimum.", "At least 8 characters.")); return; }
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password: next, current_password: current } as any);
     setBusy(false);
-    if (error) return toast.error(L("Modification impossible. Vérifiez votre mot de passe actuel.", "Unable to update. Check your current password."));
+    if (error) { toast.error(L("Modification impossible. Vérifiez votre mot de passe actuel.", "Unable to update. Check your current password.")); return; }
     setCurrent(""); setNext("");
     toast.success(L("Mot de passe modifié.", "Password updated."));
   }
