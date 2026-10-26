@@ -52,6 +52,7 @@ type Profile = {
   emergency_name: string;
   emergency_phone: string;
   bio: string;
+  avatar_url: string;
   preferred_language: string;
   interests: string[];
   travel_style: string;
@@ -67,7 +68,7 @@ type Profile = {
 const EMPTY: Profile = {
   full_name: "", phone: "", birth_date: "", gender: "", nationality: "", country: "", city: "",
   address: "", passport_number: "", emergency_name: "", emergency_phone: "", bio: "",
-  preferred_language: "fr", interests: [], travel_style: "", budget: "", accommodation: "",
+  avatar_url: "", preferred_language: "fr", interests: [], travel_style: "", budget: "", accommodation: "",
   transport: "", dietary: "", accessibility: "", notify_messages: true, notify_offers: false,
 };
 
@@ -94,6 +95,7 @@ export function TravellerSpace({ session }: { session: Session }) {
   const [messages, setMessages] = useState<InternalMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const INTERESTS = [
     ["plages", L("Plages & lac Tanganyika", "Beaches & Lake Tanganyika")],
@@ -188,6 +190,37 @@ export function TravellerSpace({ session }: { session: Session }) {
     setMessages((ms) => ms.map((m) => (m.id === id ? { ...m, read: true } : m)));
   }
 
+  async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error(L("Choisissez un fichier image.", "Please choose an image file."));
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(L("Image trop lourde (5 Mo maximum).", "Image too large (5 MB max)."));
+      return;
+    }
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+      const path = `avatars/${session.user.id}/${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage.from("media").upload(path, file, { cacheControl: "31536000" });
+      if (upErr) throw upErr;
+      const { data: signed, error: signErr } = await supabase.storage.from("media").createSignedUrl(path, 315_360_000);
+      if (signErr || !signed?.signedUrl) throw signErr ?? new Error("sign");
+      const { error: dbErr } = await db.from("profiles").upsert({ id: session.user.id, avatar_url: signed.signedUrl });
+      if (dbErr) throw dbErr;
+      set("avatar_url", signed.signedUrl);
+      toast.success(L("Photo de profil mise à jour.", "Profile photo updated."));
+    } catch {
+      toast.error(L("Envoi de la photo impossible.", "Unable to upload the photo."));
+    } finally {
+      setUploading(false);
+    }
+  }
+
   async function signOut() {
     await supabase.auth.signOut();
     toast.success(L("Vous êtes déconnecté.", "You are signed out."));
@@ -241,13 +274,27 @@ export function TravellerSpace({ session }: { session: Session }) {
     <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
       <aside className="surface-card h-fit p-5 lg:sticky lg:top-24">
         <div className="flex items-center gap-3">
-          <div className="flex size-12 items-center justify-center rounded-full bg-primary font-display text-lg font-bold text-primary-foreground">
-            {initials}
-          </div>
+          {profile.avatar_url ? (
+            <img
+              src={profile.avatar_url}
+              alt={profile.full_name || L("Photo de profil", "Profile photo")}
+              className="size-12 rounded-full bg-muted object-contain"
+            />
+          ) : (
+            <div className="flex size-12 items-center justify-center rounded-full bg-primary font-display text-lg font-bold text-primary-foreground">
+              {initials}
+            </div>
+          )}
           <div className="min-w-0">
             <p className="truncate font-display font-bold text-primary">{profile.full_name || L("Voyageur", "Traveller")}</p>
             <p className="truncate text-xs text-muted-foreground">{session.user.email}</p>
           </div>
+        </div>
+        <div className="mt-4">
+          <label className="inline-flex cursor-pointer items-center gap-2 text-xs font-medium text-accent hover:underline">
+            <input type="file" accept="image/*" className="hidden" onChange={uploadAvatar} disabled={uploading} />
+            {uploading ? L("Envoi de la photo…", "Uploading photo…") : profile.avatar_url ? L("Changer ma photo", "Change my photo") : L("Ajouter une photo", "Add a photo")}
+          </label>
         </div>
         <div className="mt-4">
           <div className="flex justify-between text-xs text-muted-foreground">
