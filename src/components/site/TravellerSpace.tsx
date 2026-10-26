@@ -274,13 +274,27 @@ export function TravellerSpace({ session }: { session: Session }) {
     <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
       <aside className="surface-card h-fit p-5 lg:sticky lg:top-24">
         <div className="flex items-center gap-3">
-          <div className="flex size-12 items-center justify-center rounded-full bg-primary font-display text-lg font-bold text-primary-foreground">
-            {initials}
-          </div>
+          {profile.avatar_url ? (
+            <img
+              src={profile.avatar_url}
+              alt={profile.full_name || L("Photo de profil", "Profile photo")}
+              className="size-12 rounded-full bg-muted object-contain"
+            />
+          ) : (
+            <div className="flex size-12 items-center justify-center rounded-full bg-primary font-display text-lg font-bold text-primary-foreground">
+              {initials}
+            </div>
+          )}
           <div className="min-w-0">
             <p className="truncate font-display font-bold text-primary">{profile.full_name || L("Voyageur", "Traveller")}</p>
             <p className="truncate text-xs text-muted-foreground">{session.user.email}</p>
           </div>
+        </div>
+        <div className="mt-4">
+          <label className="inline-flex cursor-pointer items-center gap-2 text-xs font-medium text-accent hover:underline">
+            <input type="file" accept="image/*" className="hidden" onChange={uploadAvatar} disabled={uploading} />
+            {uploading ? L("Envoi de la photo…", "Uploading photo…") : profile.avatar_url ? L("Changer ma photo", "Change my photo") : L("Ajouter une photo", "Add a photo")}
+          </label>
         </div>
         <div className="mt-4">
           <div className="flex justify-between text-xs text-muted-foreground">
