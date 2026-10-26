@@ -95,6 +95,7 @@ export function TravellerSpace({ session }: { session: Session }) {
   const [messages, setMessages] = useState<InternalMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const INTERESTS = [
     ["plages", L("Plages & lac Tanganyika", "Beaches & Lake Tanganyika")],
@@ -187,6 +188,37 @@ export function TravellerSpace({ session }: { session: Session }) {
   async function readMsg(id: string) {
     await markMessageRead(id).catch(() => null);
     setMessages((ms) => ms.map((m) => (m.id === id ? { ...m, read: true } : m)));
+  }
+
+  async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error(L("Choisissez un fichier image.", "Please choose an image file."));
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(L("Image trop lourde (5 Mo maximum).", "Image too large (5 MB max)."));
+      return;
+    }
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+      const path = `avatars/${session.user.id}/${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage.from("media").upload(path, file, { cacheControl: "31536000" });
+      if (upErr) throw upErr;
+      const { data: signed, error: signErr } = await supabase.storage.from("media").createSignedUrl(path, 315_360_000);
+      if (signErr || !signed?.signedUrl) throw signErr ?? new Error("sign");
+      const { error: dbErr } = await db.from("profiles").upsert({ id: session.user.id, avatar_url: signed.signedUrl });
+      if (dbErr) throw dbErr;
+      set("avatar_url", signed.signedUrl);
+      toast.success(L("Photo de profil mise à jour.", "Profile photo updated."));
+    } catch {
+      toast.error(L("Envoi de la photo impossible.", "Unable to upload the photo."));
+    } finally {
+      setUploading(false);
+    }
   }
 
   async function signOut() {
