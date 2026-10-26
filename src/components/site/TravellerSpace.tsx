@@ -52,6 +52,7 @@ type Profile = {
   emergency_name: string;
   emergency_phone: string;
   bio: string;
+  avatar_url: string;
   preferred_language: string;
   interests: string[];
   travel_style: string;
@@ -67,7 +68,7 @@ type Profile = {
 const EMPTY: Profile = {
   full_name: "", phone: "", birth_date: "", gender: "", nationality: "", country: "", city: "",
   address: "", passport_number: "", emergency_name: "", emergency_phone: "", bio: "",
-  preferred_language: "fr", interests: [], travel_style: "", budget: "", accommodation: "",
+  avatar_url: "", preferred_language: "fr", interests: [], travel_style: "", budget: "", accommodation: "",
   transport: "", dietary: "", accessibility: "", notify_messages: true, notify_offers: false,
 };
 

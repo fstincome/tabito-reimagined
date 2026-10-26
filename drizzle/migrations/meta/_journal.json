@@ -8,6 +8,13 @@
       "when": 1790497673755,
       "tag": "0000_traveller_profile_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793010160717,
+      "tag": "0001_avatars_user_upload",
+      "breakpoints": true
     }
   ]
 }
