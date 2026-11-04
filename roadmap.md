@@ -1,0 +1,3 @@
+- [ ] Ajouter une interface sécurisée de création d’administrateurs.
+- [ ] Créer le compte administrateur demandé et vérifier la connexion.
+- [ ] Vérifier les accès et le parcours dans l’aperçu.

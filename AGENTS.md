@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Administrator provisioning uses authenticated server functions which check the caller's database role before dynamically loading the privileged client; browser code cannot assign roles.
