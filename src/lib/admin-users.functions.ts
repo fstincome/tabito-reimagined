@@ -15,7 +15,7 @@ export const listAdministrators = createServerFn({ method: "POST" })
       const result = await supabaseAdmin.auth.admin.getUserById(user_id);
       if (result.error || !result.data.user) throw new Error("Chargement impossible.");
       const user = result.data.user;
-      return { id: user.id, email: user.email ?? "", fullName: String(user.user_metadata?.full_name ?? ""), createdAt: user.created_at };
+      return { id: user.id, email: user.email ?? "", fullName: String(user.user_metadata?.['full_name'] ?? ""), createdAt: user.created_at };
     }));
   });
 
