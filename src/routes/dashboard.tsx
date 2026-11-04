@@ -25,6 +25,7 @@ import {
 } from "@/lib/admin";
 import { isHttpUrl, registerGalleryImage, uploadMedia } from "@/lib/media";
 import { TrackingPanel } from "@/components/site/TrackingPanel";
+import { AdminUsersPanel } from "@/components/site/AdminUsersPanel";
 
 
 
@@ -35,6 +36,8 @@ export const Route = createFileRoute("/dashboard")({
       { name: "description", content: "Gestion du contenu du site TABITO." },
       { property: "og:title", content: "Tableau de bord — TABITO" },
       { property: "og:description", content: "Espace de gestion du contenu TABITO." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -53,6 +56,7 @@ function Dashboard() {
   );
   const [formLang, setFormLang] = useState<"fr" | "en">("fr");
   const [tracking, setTracking] = useState(false);
+  const [administrators, setAdministrators] = useState(false);
   const allFields = [...resource.fields, ...enFields(resource)];
   const shownFields = formLang === "en" ? enFields(resource) : resource.fields;
 
@@ -196,9 +200,10 @@ function Dashboard() {
                   setResource(r);
                   setEditing(null);
                   setTracking(false);
+                  setAdministrators(false);
                 }}
                 className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                  !tracking && resourceKey(resource) === resourceKey(r)
+                  !tracking && !administrators && resourceKey(resource) === resourceKey(r)
                     ? "bg-secondary font-semibold text-primary"
                     : "text-foreground hover:bg-muted"
                 }`}
@@ -211,6 +216,7 @@ function Dashboard() {
               type="button"
               onClick={() => {
                 setTracking(true);
+                setAdministrators(false);
                 setEditing(null);
               }}
               className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
@@ -221,11 +227,14 @@ function Dashboard() {
             >
               Suivi des trajets (GPS)
             </button>
+            <Button type="button" variant="ghost" onClick={() => { setAdministrators(true); setTracking(false); setEditing(null); }} className={`w-full justify-start px-3 text-sm ${administrators ? "bg-secondary font-semibold text-primary" : "text-foreground"}`}>
+              Administrateurs
+            </Button>
           </nav>
         </aside>
 
         <main className="space-y-6">
-          {tracking ? (
+          {administrators ? <AdminUsersPanel /> : tracking ? (
             <>
               <h1 className="font-display text-xl font-bold text-primary">
                 Suivi des trajets (GPS)
