@@ -26,6 +26,7 @@ import {
 import { isHttpUrl, registerGalleryImage, uploadMedia } from "@/lib/media";
 import { TrackingPanel } from "@/components/site/TrackingPanel";
 import { AdminUsersPanel } from "@/components/site/AdminUsersPanel";
+import { BookingChat } from "@/components/site/BookingChat";
 
 
 
@@ -312,6 +313,13 @@ function Dashboard() {
                 ))}
 
               </div>
+              {resource.table === "bookings" && editing.id && (
+                <BookingChat
+                  bookingId={editing.id}
+                  role="admin"
+                  travellerId={rows.find((r) => r.id === editing.id)?.user_id ?? null}
+                />
+              )}
               <div className="flex gap-2">
                 <Button variant="lagoon" onClick={submit}>
                   <Save className="size-4" aria-hidden="true" />

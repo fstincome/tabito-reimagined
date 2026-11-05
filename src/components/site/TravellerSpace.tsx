@@ -22,6 +22,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
+import { BookingChat } from "@/components/site/BookingChat";
 import { listMyMessages, markMessageRead, type InternalMessage } from "@/lib/messages";
 
 const db = supabase as any;
@@ -90,6 +91,7 @@ type Section = "overview" | "profile" | "preferences" | "bookings" | "messages" 
 export function TravellerSpace({ session }: { session: Session }) {
   const { L, lang } = useI18n();
   const [section, setSection] = useState<Section>("overview");
+  const [chatFor, setChatFor] = useState<string | null>(null);
   const [profile, setProfile] = useState<Profile>(EMPTY);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [messages, setMessages] = useState<InternalMessage[]>([]);
@@ -506,6 +508,9 @@ export function TravellerSpace({ session }: { session: Session }) {
                       <td className="p-3">{b.people ?? "—"}</td>
                       <td className="p-3"><span className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ${STATUS_CLASSES[b.status] ?? "bg-secondary text-primary"}`}>{STATUS_LABELS[b.status] ?? b.status}</span></td>
                       <td className="p-3">
+                        <Button type="button" variant="outline" size="sm" onClick={() => setChatFor(chatFor === b.id ? null : b.id)}>
+                          {L("Discussion", "Chat")}
+                        </Button>
                         {(b.status === "en_attente" || b.status === "annulee") && (
                           <Button type="button" variant="ghost" size="sm" className="text-destructive" onClick={() => cancel(b.id)} aria-label={L("Annuler", "Cancel")}>
                             <Trash2 className="size-4" aria-hidden="true" />
@@ -516,6 +521,11 @@ export function TravellerSpace({ session }: { session: Session }) {
                   ))}
                 </tbody>
               </table>
+              {chatFor && (
+                <div className="border-t p-4">
+                  <BookingChat bookingId={chatFor} role="traveller" fr={lang !== "en"} />
+                </div>
+              )}
             </div>
           )
         ) : section === "messages" ? (
