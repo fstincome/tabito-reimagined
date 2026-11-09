@@ -19,13 +19,13 @@ export function ArticleEditor({ id, initial, onClose, onSaved }: { id: string | 
   const [busy, setBusy] = useState(false);
   const textarea = useRef<HTMLTextAreaElement>(null);
   const [values, setValues] = useState<ArticleValues>(() => ({
-    title: String(initial.title ?? ""), title_en: String(initial.title_en ?? ""),
-    slug: String(initial.slug ?? ""), category: String(initial.category || "actualites"), author: String(initial.author ?? ""),
-    published_at: String(initial.published_at || new Date().toISOString().slice(0, 10)),
-    excerpt: String(initial.excerpt ?? ""), excerpt_en: String(initial.excerpt_en ?? ""),
-    content: String(initial.content ?? ""), content_en: String(initial.content_en ?? ""),
-    image_url: typeof initial.image_url === "string" ? initial.image_url : "",
-    gallery: Array.isArray(initial.gallery) ? initial.gallery as ArticleValues["gallery"] : [], published: initial.published !== false,
+    title: String(initial["title"] ?? ""), title_en: String(initial["title_en"] ?? ""),
+    slug: String(initial["slug"] ?? ""), category: String(initial["category"] || "actualites"), author: String(initial["author"] ?? ""),
+    published_at: String(initial["published_at"] || new Date().toISOString().slice(0, 10)),
+    excerpt: String(initial["excerpt"] ?? ""), excerpt_en: String(initial["excerpt_en"] ?? ""),
+    content: String(initial["content"] ?? ""), content_en: String(initial["content_en"] ?? ""),
+    image_url: typeof initial["image_url"] === "string" ? initial["image_url"] : "",
+    gallery: Array.isArray(initial["gallery"]) ? initial["gallery"] as ArticleValues["gallery"] : [], published: initial["published"] !== false,
   }));
   const textField = lang === "en" ? "content_en" : "content";
   const titleField = lang === "en" ? "title_en" : "title";
