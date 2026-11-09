@@ -11,7 +11,7 @@ import { ArticleBody } from "@/components/site/ArticleBody";
 import { ArticleGallery } from "@/components/site/ArticleGallery";
 import { articleSchema } from "@/lib/articles";
 
-export const Route = createFileRoute("/blog/$slug")({
+export const Route = createFileRoute("/blog_/$slug")({
   head: () => ({
     meta: [
       { title: "Article — Blog TABITO" },
