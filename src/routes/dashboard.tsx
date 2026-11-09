@@ -27,6 +27,7 @@ import { isHttpUrl, registerGalleryImage, uploadMedia } from "@/lib/media";
 import { TrackingPanel } from "@/components/site/TrackingPanel";
 import { AdminUsersPanel } from "@/components/site/AdminUsersPanel";
 import { BookingChat } from "@/components/site/BookingChat";
+import { ArticleEditor } from "@/components/site/ArticleEditor";
 
 
 
@@ -254,7 +255,9 @@ function Dashboard() {
             )}
           </div>
 
-          {editing && (
+          {editing && resource.table === "blog_posts" ? (
+            <ArticleEditor key={editing.id || "new"} id={editing.id} initial={editing.id ? rows.find((row) => row.id === editing.id) || editing.values : editing.values} onClose={() => setEditing(null)} onSaved={refresh} />
+          ) : editing && (
             <div className="surface-card space-y-4 p-6">
               <div className="flex items-center justify-between">
                 <h2 className="font-display text-base font-semibold text-primary">

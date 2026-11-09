@@ -1,3 +1,4 @@
-- [ ] Ajouter une interface sécurisée de création d’administrateurs.
-- [ ] Créer le compte administrateur demandé et vérifier la connexion.
-- [ ] Vérifier les accès et le parcours dans l’aperçu.
+- [x] Interface de création d’administrateurs et compte TABITO vérifiés.
+- [ ] Ajouter l’édition d’articles avec couverture, photos intégrées et galerie facultative.
+- [ ] Publier l’article fourni en français et anglais dans la catégorie SMED LAB.
+- [ ] Afficher les articles SMED LAB et vérifier la publication et l’édition.
