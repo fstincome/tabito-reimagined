@@ -23,6 +23,8 @@ export const Route = createFileRoute("/blog")({
         property: "og:description",
         content: "Récits de voyage, conseils pratiques et actualités du tourisme au Burundi.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Blog,

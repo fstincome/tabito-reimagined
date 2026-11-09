@@ -7,6 +7,9 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { blogQuery } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
+import { ArticleBody } from "@/components/site/ArticleBody";
+import { ArticleGallery } from "@/components/site/ArticleGallery";
+import { articleSchema } from "@/lib/articles";
 
 export const Route = createFileRoute("/blog/$slug")({
   head: () => ({
@@ -21,6 +24,8 @@ export const Route = createFileRoute("/blog/$slug")({
         property: "og:description",
         content: "Article du blog TABITO sur le tourisme au Burundi.",
       },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: BlogPostPage,
@@ -76,17 +81,16 @@ function BlogPostPage() {
                     </span>
                   )}
                 </div>
-                <div className="prose-tabito mt-6 whitespace-pre-line text-sm lg:text-base">
-                  {tx(post, "content") || tx(post, "excerpt")}
-                </div>
+                <div className="mt-6"><ArticleBody content={tx(post, "content") || tx(post, "excerpt")} /></div>
+                <ArticleGallery images={articleSchema.shape.gallery.safeParse(post.gallery).data || []} />
               </>
             )}
             <Link
-              to="/blog"
+              to={post?.category === "smedlab" ? "/smedlab" : "/blog"}
               className="mt-10 inline-flex items-center gap-2 font-display text-sm font-semibold text-accent hover:underline"
             >
               <ArrowLeft className="size-4" aria-hidden="true" />
-              {L("Retour au blog", "Back to blog")}
+              {post?.category === "smedlab" ? L("Retour à SMED LAB", "Back to SMED LAB") : L("Retour au blog", "Back to blog")}
             </Link>
           </div>
         </div>

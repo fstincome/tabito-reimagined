@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CmsPage } from "@/components/site/CmsPage";
 import { useI18n } from "@/lib/i18n";
+import { CategoryArticles } from "@/components/site/CategoryArticles";
 
 export const Route = createFileRoute("/smedlab")({
   head: () => ({
@@ -17,6 +18,8 @@ export const Route = createFileRoute("/smedlab")({
         property: "og:description",
         content: "Innovation, formation et accompagnement des acteurs du tourisme au Burundi.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SmedLab,
@@ -77,6 +80,6 @@ function SmedLab() {
           </p>
         </>
       }
-    />
+    ><CategoryArticles category="smedlab" /></CmsPage>
   );
 }
