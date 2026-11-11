@@ -29,6 +29,7 @@ import { TrackingPanel } from "@/components/site/TrackingPanel";
 import { AdminUsersPanel } from "@/components/site/AdminUsersPanel";
 import { BookingChat } from "@/components/site/BookingChat";
 import { ArticleEditor } from "@/components/site/ArticleEditor";
+import { GalleryPicker } from "@/components/site/GalleryPicker";
 import { packagesQuery } from "@/lib/content";
 import { validateReferenceTariffs } from "@/lib/package-tariffs";
 
@@ -484,7 +485,7 @@ function FieldInput({
             value={value ?? ""}
             onChange={(e) => onChange(e.target.value)}
           />
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-input px-3 py-2 text-xs font-medium">
               <Upload className="size-4" aria-hidden="true" />
               {uploading ? "Téléversement…" : "Téléverser"}
@@ -497,6 +498,7 @@ function FieldInput({
                 }}
               />
             </label>
+            {field.name !== "file_url" && <GalleryPicker disabled={uploading} onSelect={(images) => { const image = images[0]; if (image) onChange(image.image_url); }} />}
             {isHttpUrl(value) && (
               <img src={value} alt="" className="size-12 rounded-md object-cover" />
             )}
