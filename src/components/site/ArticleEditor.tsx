@@ -11,6 +11,7 @@ import { articleSchema, articleSlug, type ArticleValues } from "@/lib/articles";
 import { registerGalleryImage, uploadMedia } from "@/lib/media";
 import { ArticleBody } from "./ArticleBody";
 import { ArticleGallery } from "./ArticleGallery";
+import { GalleryPicker } from "./GalleryPicker";
 
 export function ArticleEditor({ id, initial, onClose, onSaved }: { id: string | null; initial: Record<string, unknown>; onClose: () => void; onSaved: () => Promise<void> }) {
   const queryClient = useQueryClient();
@@ -86,7 +87,7 @@ export function ArticleEditor({ id, initial, onClose, onSaved }: { id: string | 
       <div className="space-y-2 md:col-span-2"><Label htmlFor="article-excerpt">{lang === "en" ? "Summary" : "Chapeau"}</Label><Textarea id="article-excerpt" value={values[excerptField]} rows={3} maxLength={5000} onChange={(e) => set(excerptField, e.target.value)} /></div>
     </div>
     <div className="space-y-3"><Label htmlFor="article-cover">Image de couverture</Label><Input id="article-cover" type="url" value={values.image_url || ""} onChange={(e) => set("image_url", e.target.value)} />
-      <div className="flex flex-wrap gap-3"><Button variant="outline" disabled={busy} onClick={() => document.getElementById("article-cover-file")?.click()}><Upload className="size-4" />Téléverser la couverture</Button>{values.image_url && <Button variant="ghost" disabled={busy} onClick={() => set("image_url", "")}>Retirer</Button>}</div>
+      <div className="flex flex-wrap gap-3"><Button variant="outline" disabled={busy} onClick={() => document.getElementById("article-cover-file")?.click()}><Upload className="size-4" />Téléverser la couverture</Button><GalleryPicker disabled={busy} onSelect={(images) => { const image = images[0]; if (image) set("image_url", image.image_url); }} />{values.image_url && <Button variant="ghost" disabled={busy} onClick={() => set("image_url", "")}>Retirer</Button>}</div>
       <input id="article-cover-file" type="file" accept="image/*" className="hidden" onChange={(e) => { void images(e.target.files, "cover"); e.target.value = ""; }} />
       {values.image_url && <img src={values.image_url} alt="Couverture" className="max-h-64 w-full rounded-md bg-muted object-contain" />}
     </div>
@@ -97,6 +98,7 @@ export function ArticleEditor({ id, initial, onClose, onSaved }: { id: string | 
         <Button variant="ghost" size="icon" title="Titre de section" aria-label="Titre de section" onClick={() => insert("\n\n## ", "\n\n", "Titre")}><Heading2 className="size-4" /></Button>
         <Button variant="ghost" size="icon" title="Lien" aria-label="Lien" onClick={() => insert("[", "](https://)", "Lien")}><Link2 className="size-4" /></Button>
         <Button variant="ghost" size="icon" title="Insérer une photo" aria-label="Insérer une photo" disabled={busy} onClick={() => { setPreview(false); document.getElementById("article-inline-file")?.click(); }}><ImagePlus className="size-4" /></Button>
+        <GalleryPicker disabled={busy} multiple onSelect={(images) => { setPreview(false); insert(images.map((image) => `\n\n![Photo](${image.image_url})\n\n`).join("")); }} />
         <Button variant={preview ? "secondary" : "ghost"} onClick={() => setPreview(!preview)}>{preview ? "Éditer" : "Aperçu"}</Button>
       </div>
       <input id="article-inline-file" type="file" accept="image/*" multiple className="hidden" onChange={(e) => { void images(e.target.files, "inline"); e.target.value = ""; }} />
@@ -104,6 +106,7 @@ export function ArticleEditor({ id, initial, onClose, onSaved }: { id: string | 
     </div>
     <div className="space-y-4 border-t border-border pt-6"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-display text-lg font-semibold text-primary">Galerie en bas de l’article</h3><Button variant="outline" disabled={busy} onClick={() => document.getElementById("article-gallery-file")?.click()}><ImagePlus className="size-4" />Ajouter des photos</Button></div>
       <input id="article-gallery-file" type="file" multiple accept="image/*" className="hidden" onChange={(e) => { void images(e.target.files, "gallery"); e.target.value = ""; }} />
+      <GalleryPicker disabled={busy} multiple onSelect={(images) => setValues((old) => ({ ...old, gallery: [...old.gallery, ...images.filter((image) => !old.gallery.some((item) => item.url === image.image_url)).map((image) => ({ url: image.image_url, caption: image.title || "", caption_en: image.title_en || "" }))] }))} />
       <div className="grid gap-4 sm:grid-cols-2">{values.gallery.map((image, index) => <div key={`${image.url}-${index}`} className="space-y-2"><img src={image.url} alt={image.caption} className="h-40 w-full rounded-md bg-muted object-contain" /><Input aria-label={`Légende photo ${index + 1}`} maxLength={1000} value={(lang === "en" ? image.caption_en : image.caption) || ""} onChange={(e) => set("gallery", values.gallery.map((item, i) => i === index ? { ...item, [lang === "en" ? "caption_en" : "caption"]: e.target.value } : item))} /><Button variant="ghost" size="sm" onClick={() => set("gallery", values.gallery.filter((_, i) => i !== index))}><Trash2 className="size-4" />Retirer</Button></div>)}</div>
       {preview && <ArticleGallery images={values.gallery} />}
     </div>
