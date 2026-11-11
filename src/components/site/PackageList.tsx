@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { packagesQuery } from "@/lib/content";
 import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 import { useI18n } from "@/lib/i18n";
+import { PackageContents, PackageTariffs } from "@/components/site/PackageDetails";
 
 export function PackageList({
   mode,
@@ -58,7 +59,7 @@ export function PackageList({
                 const pTitle = tx(p, "title");
                 const pDescription = tx(p, "description");
                 const pDuration = tx(p, "duration");
-                const pPrice = tx(p, "price");
+                 const related = mode === "circuit" ? packages.filter((b) => b.type === "bouquet" && b.circuit_id === p.id) : [];
                 return (
                   <article key={p.id} className="hover-lift surface-card flex flex-col overflow-hidden">
                     <img
@@ -84,7 +85,7 @@ export function PackageList({
                           {pDescription}
                         </p>
                       )}
-                      {highlights.length > 0 && (
+                       {mode === "bouquet" ? <PackageContents offer={p} /> : highlights.length > 0 && (
                         <ul className="mt-4 space-y-1.5">
                           {highlights.map((h) => (
                             <li key={h} className="flex items-start gap-2 text-sm">
@@ -95,9 +96,11 @@ export function PackageList({
                         </ul>
                       )}
                       <div className="mt-auto pt-6">
-                        {pPrice && (
-                          <p className="font-display text-xl font-semibold text-accent">{pPrice}</p>
-                        )}
+                         <PackageTariffs offer={p} />
+                         {related.length > 0 && <div className="mt-5 space-y-4 border-t border-border pt-4">
+                           <h4 className="font-display font-semibold text-primary">{L("Les bouquets de ce circuit", "Packages for this tour")}</h4>
+                           {related.map((b) => <details key={b.id} className="border-b border-border pb-4"><summary className="cursor-pointer text-sm font-semibold text-primary">{tx(b, "title")}</summary><p className="mt-3 text-sm text-muted-foreground">{tx(b, "description")}</p><p className="mt-2 text-xs text-muted-foreground">{tx(b, "duration")}</p><PackageContents offer={b} /><PackageTariffs offer={b} /></details>)}
+                         </div>}
                         <Button asChild className="mt-3 w-full" variant="hero">
                           <Link to="/contacts">{L("Demander un devis", "Request a quote")}</Link>
                         </Button>

@@ -14,6 +14,8 @@ export const Route = createFileRoute("/circuits")({
           "Circuits de 1 à 10 jours au Burundi : Kibira, lac Tanganyika, chutes de la Karera, sources du Nil, musées vivants. Devis sur mesure avec TABITO.",
       },
       { property: "og:title", content: "Circuits touristiques au Burundi — TABITO" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Des circuits prêts à partir, guidés par des professionnels burundais.",

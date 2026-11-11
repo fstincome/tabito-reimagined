@@ -33,6 +33,7 @@ import {
 } from "@/lib/content";
 import { PLACEHOLDER_IMAGE, imageOr } from "@/lib/media";
 import { useI18n } from "@/lib/i18n";
+import { PackageTariffs } from "@/components/site/PackageDetails";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -44,6 +45,8 @@ export const Route = createFileRoute("/")({
           "Tanganyika e-Bridge International Tours : circuits, sites touristiques, guides et bouquets de voyage pour découvrir le Burundi et le lac Tanganyika.",
       },
       { property: "og:title", content: "TABITO — Voyages et découverte du Burundi" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content:
@@ -343,11 +346,12 @@ function Home() {
   const circuits = packages.filter((p) => p.type !== "bouquet").slice(0, 3);
   const bouquets = packages.filter((p) => p.type === "bouquet").slice(0, 3);
   const localizedPackages = [...circuits, ...bouquets].map((p) => ({
+    offer: p,
     id: p.id,
     image_url: imageOr(p.image_url, PLACEHOLDER_IMAGE),
     title: tx(p, "title"),
     description: tx(p, "description"),
-    duration: p.duration,
+    duration: tx(p, "duration"),
     type: p.type,
     price: p.price,
   }));
@@ -593,7 +597,7 @@ function Home() {
                         {p.description}
                       </p>
                     )}
-                    {p.price && <p className="mt-4 font-display text-lg text-accent">{p.price}</p>}
+                    <PackageTariffs offer={p.offer} />
                   </div>
                 </article>
               ))}

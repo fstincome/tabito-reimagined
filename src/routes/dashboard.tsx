@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { LogOut, Plus, Save, Trash2, Upload, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import logo from "@/assets/tabito-logo.png";
@@ -28,6 +29,8 @@ import { TrackingPanel } from "@/components/site/TrackingPanel";
 import { AdminUsersPanel } from "@/components/site/AdminUsersPanel";
 import { BookingChat } from "@/components/site/BookingChat";
 import { ArticleEditor } from "@/components/site/ArticleEditor";
+import { packagesQuery } from "@/lib/content";
+import { validateReferenceTariffs } from "@/lib/package-tariffs";
 
 
 
@@ -139,6 +142,10 @@ function Dashboard() {
               : v === ""
                 ? null
                 : v;
+    }
+    if (resource.table === "packages") {
+      const error = validateReferenceTariffs(payload);
+      if (error) { toast.error(error); return; }
     }
     try {
       const saved = await saveRow(resource, editing.id, payload);
@@ -302,7 +309,9 @@ function Dashboard() {
                 </p>
               )}
               <div className="grid gap-4 md:grid-cols-2">
-                {shownFields.map((f) => (
+                {shownFields.map((f, index) => (
+                  <Fragment key={f.name}>
+                  {f.section && f.section !== shownFields[index - 1]?.section && <h3 className="border-b border-border pb-2 pt-4 font-display font-semibold text-primary md:col-span-2">{f.section}</h3>}
                   <FieldInput
                     key={f.name}
                     field={f}
@@ -313,6 +322,7 @@ function Dashboard() {
                       setEditing((e) => (e ? { ...e, values: { ...e.values, [f.name]: v } } : e))
                     }
                   />
+                  </Fragment>
                 ))}
 
               </div>
@@ -405,6 +415,7 @@ function FieldInput({
   galleryTitle?: string;
 }) {
   const [uploading, setUploading] = useState(false);
+  const { data: packages = [] } = useQuery({ ...packagesQuery, enabled: field.type === "circuit" });
 
   async function onFile(file: File) {
     setUploading(true);
@@ -446,6 +457,11 @@ function FieldInput({
           />
           Activer
         </label>
+      ) : field.type === "circuit" ? (
+        <select id={field.name} value={value ?? ""} onChange={(e) => onChange(e.target.value)} className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm">
+          <option value="">—</option>
+          {packages.filter((p) => p.type === "circuit").map((p) => <option key={p.id} value={p.id}>{p.title}</option>)}
+        </select>
       ) : field.type === "select" ? (
         <select
           id={field.name}

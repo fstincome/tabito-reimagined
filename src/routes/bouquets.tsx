@@ -13,6 +13,8 @@ export const Route = createFileRoute("/bouquets")({
           "Assemblez votre séjour au Burundi à partir de bouquets thématiques : nature, culture, détente au lac Tanganyika ou voyage d'affaires.",
       },
       { property: "og:title", content: "Bouquets de voyage — TABITO Burundi" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Des bouquets thématiques à composer selon vos envies et votre budget.",
