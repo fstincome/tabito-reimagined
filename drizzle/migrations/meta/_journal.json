@@ -29,6 +29,13 @@
       "when": 1794206976612,
       "tag": "0003_article_categories_and_galleries",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794369765369,
+      "tag": "0004_package_reference_tariffs",
+      "breakpoints": true
     }
   ]
 }

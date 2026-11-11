@@ -2,3 +2,5 @@
 - [ ] Ajouter l’édition d’articles avec couverture, photos intégrées et galerie facultative.
 - [ ] Publier l’article fourni en français et anglais dans la catégorie SMED LAB.
 - [ ] Afficher les articles SMED LAB et vérifier la publication et l’édition.
+- [ ] Remplacer les offres de test par les trois bouquets du Tour de Bujumbura, avec leurs tarifs de référence.
+- [ ] Organiser la création des offres par dénomination, contenu, durée et tarifs, puis vérifier l’édition et l’affichage.
