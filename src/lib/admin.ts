@@ -9,6 +9,7 @@ export type FieldType =
   | "image"
   | "date"
   | "select"
+  | "circuit"
   | "list";
 
 export type Field = {
@@ -17,6 +18,7 @@ export type Field = {
   type: FieldType;
   options?: string[];
   required?: boolean;
+  section?: string;
 };
 
 export type Resource = {
@@ -38,6 +40,16 @@ export const resourceKey = (r: Resource) => r.key ?? r.table;
 
 const PUBLISHED: Field = { name: "published", label: "Publié", type: "bool" };
 const SORT: Field = { name: "sort_order", label: "Ordre d'affichage", type: "number" };
+
+const TARIFF_FIELDS: Field[] = [
+  { name: "currency", label: "Devise", type: "select", options: ["USD", "BIF", "EUR"], section: "Tarifs de référence" },
+  { name: "economy_price", label: "Économique individuel", type: "number", section: "Tarifs de référence" },
+  { name: "vip_price", label: "VIP individuel", type: "number", section: "Tarifs de référence" },
+  { name: "group_price_min", label: "Groupe — tarif minimum", type: "number", section: "Tarifs de référence" },
+  { name: "group_price_max", label: "Groupe — tarif maximum", type: "number", section: "Tarifs de référence" },
+  { name: "group_people_min", label: "Groupe — personnes minimum", type: "number", section: "Tarifs de référence" },
+  { name: "group_people_max", label: "Groupe — personnes maximum", type: "number", section: "Tarifs de référence" },
+];
 
 export const RESOURCES: Resource[] = [
   {
@@ -143,12 +155,13 @@ export const RESOURCES: Resource[] = [
     orderBy: { column: "sort_order", ascending: true },
     filter: { type: "circuit" },
     fields: [
-      { name: "title", label: "Titre du circuit", type: "text", required: true },
-      { name: "duration", label: "Durée", type: "text" },
-      { name: "price", label: "Prix", type: "text" },
-      { name: "description", label: "Description", type: "textarea" },
-      { name: "highlights", label: "Points forts (un par ligne)", type: "list" },
-      { name: "image_url", label: "Image", type: "image" },
+      { name: "title", label: "Dénomination du circuit", type: "text", required: true, section: "Dénomination" },
+      { name: "description", label: "Présentation du trajet", type: "textarea", section: "Dénomination" },
+      { name: "highlights", label: "Contenu — une prestation par ligne", type: "list", section: "Contenu et durée" },
+      { name: "duration", label: "Durée", type: "text", section: "Contenu et durée" },
+      ...TARIFF_FIELDS,
+      { name: "price", label: "Autre indication tarifaire (facultative)", type: "text", section: "Tarifs de référence" },
+      { name: "image_url", label: "Image", type: "image", section: "Image et publication" },
       SORT,
       PUBLISHED,
     ],
@@ -161,12 +174,14 @@ export const RESOURCES: Resource[] = [
     orderBy: { column: "sort_order", ascending: true },
     filter: { type: "bouquet" },
     fields: [
-      { name: "title", label: "Titre du bouquet", type: "text", required: true },
-      { name: "duration", label: "Durée", type: "text" },
-      { name: "price", label: "Prix", type: "text" },
-      { name: "description", label: "Description", type: "textarea" },
-      { name: "highlights", label: "Points forts (un par ligne)", type: "list" },
-      { name: "image_url", label: "Image", type: "image" },
+      { name: "title", label: "Dénomination du bouquet", type: "text", required: true, section: "Dénomination" },
+      { name: "circuit_id", label: "Circuit associé", type: "circuit", section: "Dénomination" },
+      { name: "description", label: "Présentation du trajet", type: "textarea", section: "Dénomination" },
+      { name: "highlights", label: "Contenu — une prestation par ligne", type: "list", section: "Contenu et durée" },
+      { name: "duration", label: "Durée", type: "text", section: "Contenu et durée" },
+      ...TARIFF_FIELDS,
+      { name: "price", label: "Autre indication tarifaire (facultative)", type: "text", section: "Tarifs de référence" },
+      { name: "image_url", label: "Image", type: "image", section: "Image et publication" },
       SORT,
       PUBLISHED,
     ],
@@ -438,6 +453,7 @@ export function emptyValues(resource: Resource): Record<string, unknown> {
     out[f.name] = f.type === "bool" ? f.name === "published" : f.type === "number" ? 0 : "";
   }
   for (const f of enFields(resource)) out[f.name] = "";
+  if (resource.table === "packages") Object.assign(out, { currency: "USD", economy_price: "", vip_price: "", group_price_min: "", group_price_max: "", group_people_min: 2, group_people_max: 5 });
   return out;
 }
 

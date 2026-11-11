@@ -653,11 +653,18 @@ export type Database = {
       }
       packages: {
         Row: {
+          circuit_id: string | null
           created_at: string
+          currency: string | null
           description: string | null
           description_en: string | null
           duration: string | null
           duration_en: string | null
+          economy_price: number | null
+          group_people_max: number | null
+          group_people_min: number | null
+          group_price_max: number | null
+          group_price_min: number | null
           highlights: Json
           highlights_en: Json
           id: string
@@ -670,13 +677,21 @@ export type Database = {
           title_en: string | null
           type: string
           updated_at: string
+          vip_price: number | null
         }
         Insert: {
+          circuit_id?: string | null
           created_at?: string
+          currency?: string | null
           description?: string | null
           description_en?: string | null
           duration?: string | null
           duration_en?: string | null
+          economy_price?: number | null
+          group_people_max?: number | null
+          group_people_min?: number | null
+          group_price_max?: number | null
+          group_price_min?: number | null
           highlights?: Json
           highlights_en?: Json
           id?: string
@@ -689,13 +704,21 @@ export type Database = {
           title_en?: string | null
           type?: string
           updated_at?: string
+          vip_price?: number | null
         }
         Update: {
+          circuit_id?: string | null
           created_at?: string
+          currency?: string | null
           description?: string | null
           description_en?: string | null
           duration?: string | null
           duration_en?: string | null
+          economy_price?: number | null
+          group_people_max?: number | null
+          group_people_min?: number | null
+          group_price_max?: number | null
+          group_price_min?: number | null
           highlights?: Json
           highlights_en?: Json
           id?: string
@@ -708,8 +731,17 @@ export type Database = {
           title_en?: string | null
           type?: string
           updated_at?: string
+          vip_price?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "packages_circuit_id_fkey"
+            columns: ["circuit_id"]
+            isOneToOne: false
+            referencedRelation: "packages"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pages: {
         Row: {
