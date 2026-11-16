@@ -13,3 +13,4 @@
 - Articles use Markdown without raw HTML, a shared cover URL and ordered gallery objects; the dedicated dashboard editor writes through existing administrator RLS, and category pages select published articles only.
 - Packages store reference tariffs as numeric fields and link bouquets to a parent circuit; shared display and validation helpers keep group quotes distinct from per-person quotes.
 - Dashboard image fields and article photos share a gallery picker that reuses existing media URLs through administrator RLS, avoiding duplicate uploads.
+- AdminShell owns the fixed administrator header and grouped sidebar; resource tables and editors remain in the dashboard using existing CRUD so layout changes preserve content and access rules.

@@ -5,3 +5,4 @@
 - [x] Remplacer les offres de test par les trois bouquets du Tour de Bujumbura, avec leurs tarifs de référence.
 - [x] Organiser la création des offres par dénomination, contenu, durée et tarifs, puis vérifier l’édition et l’affichage.
 - [ ] Choisir des photos existantes depuis la galerie dans les champs image et les articles, puis vérifier le parcours.
+- [x] Réorganiser l’administration en CMS avec barre supérieure, menu latéral et espace éditeur, sans changer les contenus ; tableau, édition bilingue, enregistrement et affichage mobile vérifiés.

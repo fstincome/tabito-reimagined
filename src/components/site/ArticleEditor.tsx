@@ -111,6 +111,6 @@ export function ArticleEditor({ id, initial, onClose, onSaved }: { id: string | 
       {preview && <ArticleGallery images={values.gallery} />}
     </div>
     <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={values.published} onChange={(e) => set("published", e.target.checked)} />Publié</label>
-    <div className="flex gap-3"><Button variant="lagoon" onClick={save} disabled={busy}><Save className="size-4" />{busy ? "Enregistrement…" : values.published ? "Publier" : "Enregistrer le brouillon"}</Button><Button variant="outline" onClick={onClose} disabled={busy}>Annuler</Button></div>
+    <div className="sticky bottom-0 z-10 -mx-6 flex flex-wrap gap-3 border-t border-border bg-card px-6 py-4"><Button variant="lagoon" onClick={save} disabled={busy}><Save className="size-4" />{busy ? "Enregistrement…" : values.published ? "Publier" : "Enregistrer le brouillon"}</Button><Button variant="outline" onClick={onClose} disabled={busy}>Annuler</Button></div>
   </div>;
 }

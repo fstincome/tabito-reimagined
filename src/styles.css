@@ -313,3 +313,16 @@
   border-radius: var(--radius-2xl);
   z-index: 0;
 }
+
+.admin-workspace .font-display,
+.admin-workspace h1,
+.admin-workspace h2,
+.admin-workspace h3 {
+  letter-spacing: 0;
+}
+
+.admin-workspace .surface-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+}
