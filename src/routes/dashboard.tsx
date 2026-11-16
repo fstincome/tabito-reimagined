@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { FileText, Pencil, Plus, RefreshCw, Save, Search, Trash2, Upload, X } from "lucide-react";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -57,6 +57,7 @@ function Dashboard() {
   const [resource, setResource] = useState<Resource>(RESOURCES[0] as Resource);
   const [rows, setRows] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const requestVersion = useRef(0);
   const [editing, setEditing] = useState<{ id: string | null; values: Record<string, any> } | null>(
     null,
   );
@@ -68,6 +69,8 @@ function Dashboard() {
   const shownFields = formLang === "en" ? enFields(resource) : resource.fields;
   const visibleRows = rows.filter((row) => [row[resource.titleField], row.subject, row.summary, row.excerpt, row.message, row.slug, row.email].some((value) => String(value ?? "").toLocaleLowerCase().includes(search.toLocaleLowerCase())));
   function selectResource(next: Resource) {
+    requestVersion.current += 1;
+    setRows([]); setLoading(true);
     setResource(next); setEditing(null); setTracking(false); setAdministrators(false); setSearch("");
   }
 
@@ -83,10 +86,14 @@ function Dashboard() {
   }, [navigate]);
 
   const refresh = useCallback(async () => {
+    const version = ++requestVersion.current;
     setLoading(true);
     try {
-      setRows(await listRows(resource));
+      const nextRows = await listRows(resource);
+      if (version !== requestVersion.current) return;
+      setRows(nextRows);
     } catch {
+      if (version !== requestVersion.current) return;
       toast.error("Chargement impossible. Vérifiez vos droits d'administrateur.");
       setRows([]);
     }
