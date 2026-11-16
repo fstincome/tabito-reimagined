@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
-import { LogOut, Plus, Save, Trash2, Upload, X } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { FileText, Pencil, Plus, RefreshCw, Save, Search, Trash2, Upload, X } from "lucide-react";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import logo from "@/assets/tabito-logo.png";
+import { AdminShell } from "@/components/site/AdminShell";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,7 +19,6 @@ import {
   enFields,
   hasEnglishTab,
   listRows,
-  resourceKey,
   saveRow,
 
   type Field,
@@ -61,10 +61,15 @@ function Dashboard() {
     null,
   );
   const [formLang, setFormLang] = useState<"fr" | "en">("fr");
+  const [search, setSearch] = useState("");
   const [tracking, setTracking] = useState(false);
   const [administrators, setAdministrators] = useState(false);
   const allFields = [...resource.fields, ...enFields(resource)];
   const shownFields = formLang === "en" ? enFields(resource) : resource.fields;
+  const visibleRows = rows.filter((row) => [row[resource.titleField], row.subject, row.summary, row.excerpt, row.message, row.slug, row.email].some((value) => String(value ?? "").toLocaleLowerCase().includes(search.toLocaleLowerCase())));
+  function selectResource(next: Resource) {
+    setResource(next); setEditing(null); setTracking(false); setAdministrators(false); setSearch("");
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -179,71 +184,8 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-sand">
-      <div className="rainbow-bar" />
-      <header className="border-b border-border bg-card">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-6 py-3">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Logo TABITO" width={44} height={44} className="size-11 object-contain" />
-            <span className="font-display text-lg font-bold text-primary">
-              Tableau de bord TABITO
-            </span>
-          </Link>
-          <div className="flex items-center gap-3">
-            {email && <span className="text-xs text-muted-foreground">{email}</span>}
-            <Button variant="outline" size="sm" onClick={signOut}>
-              <LogOut className="size-4" aria-hidden="true" />
-              Déconnexion
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <div className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[260px_1fr]">
-        <aside className="surface-card h-fit p-3">
-          <nav className="space-y-1">
-            {RESOURCES.map((r) => (
-              <button
-                key={resourceKey(r)}
-                type="button"
-                onClick={() => {
-                  setResource(r);
-                  setEditing(null);
-                  setTracking(false);
-                  setAdministrators(false);
-                }}
-                className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                  !tracking && !administrators && resourceKey(resource) === resourceKey(r)
-                    ? "bg-secondary font-semibold text-primary"
-                    : "text-foreground hover:bg-muted"
-                }`}
-              >
-
-                {r.label}
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => {
-                setTracking(true);
-                setAdministrators(false);
-                setEditing(null);
-              }}
-              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                tracking
-                  ? "bg-secondary font-semibold text-primary"
-                  : "text-foreground hover:bg-muted"
-              }`}
-            >
-              Suivi des trajets (GPS)
-            </button>
-            <Button type="button" variant="ghost" onClick={() => { setAdministrators(true); setTracking(false); setEditing(null); }} className={`w-full justify-start px-3 text-sm ${administrators ? "bg-secondary font-semibold text-primary" : "text-foreground"}`}>
-              Administrateurs
-            </Button>
-          </nav>
-        </aside>
-
-        <main className="space-y-6">
+    <AdminShell resource={resource} mode={administrators ? "administrators" : tracking ? "tracking" : "content"} editing={Boolean(editing)} email={email} onResource={selectResource} onMode={(mode) => { setAdministrators(mode === "administrators"); setTracking(mode === "tracking"); setEditing(null); }} onSignOut={signOut}>
+      <div className="space-y-6">
           {administrators ? <AdminUsersPanel /> : tracking ? (
             <>
               <h1 className="font-display text-xl font-bold text-primary">
@@ -254,8 +196,8 @@ function Dashboard() {
           ) : (
           <>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h1 className="font-display text-xl font-bold text-primary">{resource.label}</h1>
-            {!resource.readOnly && (
+            <div><p className="mb-1 text-xs font-semibold text-muted-foreground">{editing ? "ESPACE ÉDITEUR" : "GESTION DES CONTENUS"}</p><h1 className="font-display text-2xl font-bold text-primary">{resource.label}</h1></div>
+            {!resource.readOnly && !editing && (
               <Button variant="lagoon" size="sm" onClick={startCreate}>
                 <Plus className="size-4" aria-hidden="true" />
                 Ajouter
@@ -263,17 +205,21 @@ function Dashboard() {
             )}
           </div>
 
+          {!editing && <div className="flex flex-wrap items-center justify-between gap-3 border-y border-border py-4">
+            <div className="flex flex-wrap items-center gap-5 text-sm"><span className="font-semibold">{rows.length} élément{rows.length > 1 ? "s" : ""}</span>{resource.fields.some((f) => f.name === "published") && <><span className="text-muted-foreground">{rows.filter((row) => row.published).length} publié(s)</span><span className="text-muted-foreground">{rows.filter((row) => !row.published).length} brouillon(s)</span></>}</div>
+            <div className="flex w-full items-center gap-2 sm:w-auto"><div className="relative flex-1 sm:w-64"><Search className="pointer-events-none absolute left-3 top-2.5 size-4 text-muted-foreground" /><Input aria-label="Rechercher dans les contenus" placeholder="Rechercher…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" /></div><Button variant="outline" size="icon" aria-label="Actualiser" title="Actualiser" disabled={loading} onClick={() => void refresh()}><RefreshCw className={loading ? "animate-spin motion-reduce:animate-none" : ""} /></Button></div>
+          </div>}
           {editing && resource.table === "blog_posts" ? (
             <ArticleEditor key={editing.id || "new"} id={editing.id} initial={editing.id ? rows.find((row) => row.id === editing.id) || editing.values : editing.values} onClose={() => setEditing(null)} onSaved={refresh} />
           ) : editing && (
-            <div className="surface-card space-y-4 p-6">
+            <div className="space-y-6 rounded-lg border border-border bg-card p-4 sm:p-6 lg:p-8">
               <div className="flex items-center justify-between">
                 <h2 className="font-display text-base font-semibold text-primary">
                   {editing.id ? "Modifier l'élément" : "Nouvel élément"}
                 </h2>
-                <button type="button" aria-label="Fermer" onClick={() => setEditing(null)}>
+                <Button variant="ghost" size="icon" type="button" aria-label="Fermer" onClick={() => setEditing(null)}>
                   <X className="size-5 text-muted-foreground" />
-                </button>
+                </Button>
               </div>
               {hasEnglishTab(resource) && (
                 <div
@@ -287,7 +233,8 @@ function Dashboard() {
                       { id: "en", label: "English" },
                     ] as const
                   ).map((tab) => (
-                    <button
+                    <Button
+                      variant="ghost"
                       key={tab.id}
                       type="button"
                       role="tab"
@@ -300,7 +247,7 @@ function Dashboard() {
                       }`}
                     >
                       {tab.label}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               )}
@@ -334,7 +281,7 @@ function Dashboard() {
                   travellerId={rows.find((r) => r.id === editing.id)?.user_id ?? null}
                 />
               )}
-              <div className="flex gap-2">
+              <div className="sticky bottom-0 z-10 -mx-4 flex flex-wrap gap-2 border-t border-border bg-card px-4 py-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                 <Button variant="lagoon" onClick={submit}>
                   <Save className="size-4" aria-hidden="true" />
                   Enregistrer
@@ -346,59 +293,27 @@ function Dashboard() {
             </div>
           )}
 
-          <div className="surface-card overflow-hidden">
-            {loading ? (
-              <p className="p-6 text-sm text-muted-foreground">Chargement…</p>
-            ) : rows.length === 0 ? (
-              <p className="p-6 text-sm text-muted-foreground">Aucun élément pour le moment.</p>
-            ) : (
-              <ul className="divide-y divide-border">
-                {rows.map((row) => (
-                  <li key={row.id} className="flex items-center gap-4 p-4">
-                    {(row.image_url || row.photo_url || row.logo_url || row.hero_image_url) && (
-                      <img
-                        src={row.image_url || row.photo_url || row.logo_url || row.hero_image_url}
-                        alt=""
-                        className="size-12 shrink-0 rounded-lg object-cover"
-                      />
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate font-display text-sm font-semibold text-primary">
-                        {row[resource.titleField] || "(sans titre)"}
-                      </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        {row.subject || row.summary || row.excerpt || row.message || row.slug || ""}
-                      </p>
-                    </div>
-                    {"published" in row && (
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-[0.65rem] font-semibold ${
-                          row.published
-                            ? "bg-secondary text-secondary-foreground"
-                            : "bg-muted text-muted-foreground"
-                        }`}
-                      >
-                        {row.published ? "Publié" : "Brouillon"}
-                      </span>
-                    )}
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" onClick={() => startEdit(row)}>
-                        {resource.readOnly ? "Voir" : "Modifier"}
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => remove(row)}>
-                        <Trash2 className="size-4" aria-hidden="true" />
-                      </Button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+          {!editing && <div className="overflow-hidden rounded-lg border border-border bg-card">
+            {loading ? <p className="p-8 text-sm text-muted-foreground">Chargement…</p> : visibleRows.length === 0 ? <div className="flex flex-col items-center gap-3 px-6 py-16 text-center"><FileText className="size-8 text-muted-foreground" /><p className="text-sm text-muted-foreground">{rows.length ? "Aucun résultat." : "Aucun élément pour le moment."}</p></div> : (
+              <Table className="table-fixed min-w-[560px]">
+                <TableHeader className="bg-muted/60"><TableRow><TableHead className="w-16 pl-5">Image</TableHead><TableHead>Contenu</TableHead><TableHead className="w-28">Statut</TableHead><TableHead className="w-28 pr-5 text-right">Actions</TableHead></TableRow></TableHeader>
+                <TableBody>{visibleRows.map((row) => {
+                  const image = row.image_url || row.photo_url || row.logo_url || row.hero_image_url;
+                  return <TableRow key={row.id}>
+                    <TableCell className="py-4 pl-5">{image ? <img src={image} alt="" className="size-10 rounded-md bg-muted object-contain" /> : <div className="flex size-10 items-center justify-center rounded-md bg-muted"><FileText className="size-4 text-muted-foreground" /></div>}</TableCell>
+                    <TableCell className="px-4 py-4"><p className="break-words font-display text-sm font-semibold text-primary">{row[resource.titleField] || "(sans titre)"}</p><p className="mt-1 truncate text-xs text-muted-foreground">{row.subject || row.summary || row.excerpt || row.message || row.slug || row.email || ""}</p></TableCell>
+                    <TableCell>{"published" in row ? <span className={`inline-flex rounded-md px-2 py-1 text-xs font-medium ${row.published ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground"}`}>{row.published ? "Publié" : "Brouillon"}</span> : <span className="break-words text-xs text-muted-foreground">{row.status || ("handled" in row ? row.handled ? "Traité" : "À traiter" : "—")}</span>}</TableCell>
+                    <TableCell className="pr-5"><div className="flex justify-end gap-1"><Button variant="ghost" size="icon" title={resource.readOnly ? "Voir" : "Modifier"} aria-label={`${resource.readOnly ? "Voir" : "Modifier"} ${row[resource.titleField] || "l’élément"}`} onClick={() => startEdit(row)}><Pencil /></Button><Button variant="ghost" size="icon" title="Supprimer" aria-label={`Supprimer ${row[resource.titleField] || "l’élément"}`} onClick={() => remove(row)} className="text-muted-foreground hover:text-destructive"><Trash2 /></Button></div></TableCell>
+                  </TableRow>;
+                })}</TableBody>
+              </Table>
             )}
-          </div>
+            {visibleRows.length > 0 && <div className="border-t border-border px-5 py-3 text-xs text-muted-foreground">{visibleRows.length} sur {rows.length} élément{rows.length > 1 ? "s" : ""}</div>}
+          </div>}
           </>
           )}
-        </main>
       </div>
-    </div>
+    </AdminShell>
   );
 }
 
